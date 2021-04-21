@@ -3,10 +3,10 @@ Lim Shir Yin (31059546)
 Tan Jie Yen (31171184)
 
 
-Deliverable		            Produced By		Reviewed By		Complete By
+Deliverable		            Produced By		Reviewed By		Completed By
 UML Class Diagram	            Lim Shir Yin	Tan Jie Yen		18 April 2021
-UML Interaction Diagram	        Tan Jie Yen	 	Lim Shir Yin	19 April 2021
-Design Rationale		    Lim Shir Yin	Tan Jie Yen		20 April 2021
+UML Interaction Diagram	        Tan Jie Yen	 	Lim Shir Yin	21 April 2021
+Design Rationale		        Lim Shir Yin	Tan Jie Yen		20 April 2021
 	
 
 All deliverables will be checked again before the submission on 23rd April 2021.
