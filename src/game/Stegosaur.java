@@ -1,18 +1,13 @@
 package game;
 
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.DoNothingAction;
-import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.*;
 
 /**
  * A herbivorous dinosaur.
  *
  */
-public class Stegosaur extends Actor {
+public class Stegosaur extends Dinosaur {
 	// Will need to change this to a collection if Stegosaur gets additional Behaviours.
 	private Behaviour behaviour;
 
@@ -23,9 +18,13 @@ public class Stegosaur extends Actor {
 	 * @param name the name of this Stegosaur
 	 */
 	public Stegosaur(String name) {
-		super(name, 'd', 100);
-		
+		super("stegosaur", 'd', 100);
 		behaviour = new WanderBehaviour();
+		this.setGender(this.randomiseGender());
+		this.setFoodLevel(50);
+		this.setMaxFoodLevel(100);
+		this.setUnconsciousTurns(20);
+		this.setPregnantTurns(10);
 	}
 
 	@Override
@@ -48,6 +47,13 @@ public class Stegosaur extends Actor {
 			return wander;
 		
 		return new DoNothingAction();
+	}
+
+	private static void layEgg(Dinosaur d, Location l) {
+		if (d.getPregnantTurns() >= 10) {
+			Egg egg = new Egg(((Stegosaur) d).name);
+			l.addItem(egg);
+		}
 	}
 
 }

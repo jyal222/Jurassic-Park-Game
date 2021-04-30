@@ -107,15 +107,21 @@ public abstract class Ground implements GroundInterface, Capable, Printable {
 
 			}
 
-			// Drop fruit
+			/** A tree has 50% chance to produce ripe fruit and a 10% bush
+			 *  A ripe fruit on the tree has 5% chance to fall
+			 */
 			if (location.getGround() instanceof Tree){
-				if (number <= 5){
-//					Fruit fruit = new Fruit();
-//					location.addItem(fruit);
+				if (number <= 50) {
+					Fruit ripeFruit = new Fruit();
+					if (number <= 5) {
+						location.addItem(ripeFruit);
+					}
+				}
+
+				if (number <= 10) {
+					// bush can grow
 				}
 			}
-
-
 		}
 
 
