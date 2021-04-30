@@ -13,6 +13,7 @@ import edu.monash.fit2099.engine.Menu;
 public class Player extends Actor {
 
 	private Menu menu = new Menu();
+	int ecoPoints = 300;
 
 	/**
 	 * Constructor.
@@ -31,5 +32,21 @@ public class Player extends Actor {
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
 		return menu.showMenu(this, actions, display);
+	}
+
+	/**
+	 * To get the number of EcoPoints that the player currently having
+	 * @return ecoPoints
+	 */
+	public int getEcoPoints() {
+		return ecoPoints;
+	}
+
+	/**
+	 * To set the number of EcoPoints of the player
+	 * @param ecoPoints the amount of starting ecopoints of a player.
+	 */
+	public void setEcoPoints(int ecoPoints) {
+		this.ecoPoints = ecoPoints;
 	}
 }

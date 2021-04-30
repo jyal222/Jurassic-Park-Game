@@ -59,6 +59,73 @@ public class Location implements Printable {
 		return y;
 	}
 
+	public Location getNorthEast(){ return map.at(x+1, y - 1); }
+	public Location getNorthWest(){ return map.at(x-1, y - 1); }
+	public Location getSouthEast(){ return map.at(x+1, y + 1); }
+	public Location getSouthWest(){ return map.at(x-1, y + 1); }
+
+	/**
+	 * This method returns the north location instance from the current location
+	 * @return a location instance
+	 */
+	public Location getNorth(){ return map.at(x, y - 1); }
+
+	/**
+	 * This method returns the south location instance from the current location
+	 * @return a location instance
+	 */
+	public Location getSouth(){ return map.at(x, y+1); }
+
+	/**
+	 * This method returns the east location instance from the current location
+	 * @return a location instance
+	 */
+	public Location getEast(){ return map.at(x+1, y); }
+
+	/**
+	 * This method returns the west location instance from the current location
+	 * @return a location instance
+	 */
+	public Location getWest(){ return map.at(x-1, y); }
+
+	/**
+	 * This method checks if the x coordinates and y coordinates for each direction is in the range of the gameMap area
+	 * @param x The x coordinate of the location
+	 * @param y The y coordinate of the location
+	 * @return A boolean value indicating whether the location is in the gamemap
+	 */
+	public boolean locationValid(int x, int y){
+		if((x >= 0) && (y >= 0) && (x <= map.getXRange().max()) && (y <= map.getYRange().max())){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	/**
+	 * Generates an array list of locations for each direction of the current location and add the valid location in
+	 * the array list.
+	 * @return An array list of location instances which are the valid adjacent locations
+	 */
+	public ArrayList<Location> validAdjacentLocations(){
+		ArrayList<Location> locations = new ArrayList();
+		if (locationValid(x, y - 1)){
+			locations.add(this.getNorth());
+		}
+		if (locationValid(x, y + 1)){
+			locations.add(this.getSouth());
+		}
+		if (locationValid(x + 1, y)){
+			locations.add(this.getEast());
+		}
+		if (locationValid(x - 1, y)){
+			locations.add(this.getWest());
+		}
+		return locations;
+	}
+
+
 	/**
 	 * Returns a list of items at this location.
 	 *

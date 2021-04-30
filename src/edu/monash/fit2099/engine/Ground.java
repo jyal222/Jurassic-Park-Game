@@ -1,6 +1,13 @@
 package edu.monash.fit2099.engine;
 
 import edu.monash.fit2099.interfaces.GroundInterface;
+import game.Bush;
+import game.Dirt;
+import game.Fruit;
+import game.Tree;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class representing terrain type
@@ -50,6 +57,68 @@ public abstract class Ground implements GroundInterface, Capable, Printable {
 	 * @param location The location of the Ground 
 	 */
 	public void tick(Location location) {
+		Bush bush = new Bush();
+		Dirt dirt = new Dirt();
+		int noAdjacentBush = 0;
+
+		// Get adjacent locations
+		ArrayList<Location> adjLocation = new ArrayList();
+
+		// Append adjacent locations
+		if (location.locationValid(location.x(), location.y()-1)){
+			adjLocation.add(location.getNorth());
+		}
+		if (location.locationValid(location.x(), location.y()+1)){
+			adjLocation.add(location.getSouth());
+		}
+		if (location.locationValid(location.x() + 1, location.y())){
+			adjLocation.add(location.getEast());
+		}
+		if (location.locationValid(location.x() - 1, location.y())){
+			adjLocation.add(location.getWest());
+		}
+
+		int noTree = 0;
+		Random random = new Random();
+		int number = random.nextInt(100) + 1;
+
+		if (location.getGround() instanceof Dirt) {
+			for (Location lct : adjLocation) {
+				if (lct.getGround() instanceof Bush) {
+					noAdjacentBush += 1;
+				} else if (lct.getGround() instanceof Tree) {
+				//	location.setGround(dirt);
+					noTree += 1;
+				}
+			}
+
+			// If no tree in adjacent location, 1% to grow bush
+			if (noTree == 0){
+				if (number <= 1){
+					location.setGround(bush);
+				}
+			}
+
+			// If at least 2 squares of bush in adjacent location, 10% to grow bush
+			if (noAdjacentBush >= 2) {
+				if (number <= 10){
+					location.setGround(bush);
+				}
+
+			}
+
+			// Drop fruit
+			if (location.getGround() instanceof Tree){
+				if (number <= 5){
+//					Fruit fruit = new Fruit();
+//					location.addItem(fruit);
+				}
+			}
+
+
+		}
+
+
 	}
 	
 	/**
