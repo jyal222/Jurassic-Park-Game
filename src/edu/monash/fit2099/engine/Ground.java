@@ -58,7 +58,6 @@ public abstract class Ground implements GroundInterface, Capable, Printable {
 	 */
 	public void tick(Location location) {
 		Bush bush = new Bush();
-		Dirt dirt = new Dirt();
 		int noAdjacentBush = 0;
 
 		// Get adjacent locations
@@ -117,14 +116,17 @@ public abstract class Ground implements GroundInterface, Capable, Printable {
 						location.addItem(ripeFruit);
 					}
 				}
+			}
 
+			// Bush has a 10% chance to produce fruit
+			// drop fruit from bush
+			if (location.getGround() instanceof Bush){
 				if (number <= 10) {
-					// bush can grow
+					Fruit ripeFruit = new Fruit();
+					location.addItem(ripeFruit);
+					}
 				}
 			}
-		}
-
-
 	}
 	
 	/**

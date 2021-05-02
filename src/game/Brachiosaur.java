@@ -15,6 +15,7 @@ public class Brachiosaur extends Dinosaur {
      */
     public Brachiosaur(String name) {
         super("brachiosaur", 'b', 100);
+        behaviour = new WanderBehaviour();
         // get the gender of brachiosaur
         super.setGender(this.randomiseGender());
         super.setFoodLevel(100);
@@ -60,7 +61,7 @@ public class Brachiosaur extends Dinosaur {
                     }
                 }
             }
-
+            /*
             // If Brachiosaur step on the Bush, 50% to kill bush
             if(l.getGround() instanceof Bush){
                 Random random = new Random();
@@ -69,6 +70,8 @@ public class Brachiosaur extends Dinosaur {
                     l.setGround(new Dirt());
                 }
             }
+
+             */
 
             // Potentially lay egg
             if (this.isPregnant()) {

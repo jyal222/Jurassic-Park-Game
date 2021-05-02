@@ -1,5 +1,8 @@
 package edu.monash.fit2099.engine;
 
+import game.Egg;
+import game.Fruit;
+
 import java.util.*;
 
 
@@ -58,6 +61,36 @@ public class Location implements Printable {
 	public int y() {
 		return y;
 	}
+
+	/**
+	 * Called once per turn, so that Locations can experience the passage time. If that's
+	 * important to them.
+	 */
+	public void tick() {
+		ground.tick(this);
+		for(Item item :  new ArrayList<>(items)) {
+			item.tick(this);
+
+			// Manage eggs
+			if (item instanceof Egg){
+				Egg e = (Egg) item;
+				e.eggsHatch(this, map); //Check for eggs to hatch, if yes, a baby dinosaur is born.
+			}
+
+			// Tick fruits
+			if (item instanceof Fruit){
+				int expiry = ((Fruit) item).getRotTurns();
+				expiry -= 1;
+
+				if(expiry == 0){
+					this.removeItem(item);
+				} else {
+					((Fruit) item).setRotTurns(expiry);
+				}
+			}
+		}
+	}
+
 
 	public Location getNorthEast(){ return map.at(x+1, y - 1); }
 	public Location getNorthWest(){ return map.at(x-1, y - 1); }
@@ -171,17 +204,6 @@ public class Location implements Printable {
 	 */
 	public void setGround(Ground ground) {
 		this.ground = ground;
-	}
-	
-	/**
-	 * Called once per turn, so that Locations can experience the passage time. If that's
-	 * important to them.
-	 */
-	public void tick() {
-		ground.tick(this);
-		for(Item item :  new ArrayList<>(items)) {
-			item.tick(this);
-		}
 	}
 
 	/**

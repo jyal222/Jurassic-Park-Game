@@ -1,9 +1,8 @@
 package edu.monash.fit2099.engine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import game.*;
+
+import java.util.*;
 
 /**
  * Class representing the game world, including the locations of all Actors, the
@@ -112,6 +111,53 @@ public class World {
 			actions.add(item.getAllowableActions());
 			// Game rule. If you're carrying it, you can drop it.
 			actions.add(item.getDropAction());
+		}
+
+		if (actor instanceof Player) {
+			// Player can pick fruit from a tree or bush if beside one
+			if (here.getGround() instanceof Tree || here.getGround() instanceof Bush) {
+				actions.add(new PickFruitAction());
+			}
+			ArrayList<Location> validLocations = actorLocations.locationOf(actor).validAdjacentLocations();
+			for (Location validLct : validLocations) {
+
+				// Vending machine action
+				if(validLct.getGround() instanceof VendingMachine){
+					VendingMachine vendingMachine = new VendingMachine();
+					ArrayList<Item> items = vendingMachine.getItems();
+					for(Item i : items){
+						BuyItemsAction buyItems = new BuyItemsAction(i);
+						actions.add(buyItems);
+					}
+				}
+
+				if(validLct.getActor() instanceof Dinosaur) {
+					// Feed dinosaur action
+					List<Item> items = actor.getInventory();
+					for (Item i : items) {
+						if (i instanceof Food) {
+							FeedDinosaurAction feedDinosaur = new FeedDinosaurAction((Food) i, (Dinosaur) validLct.getActor(), validLct);
+							if (i instanceof MealKit) {
+								if (validLct.getActor() instanceof Allosaur) {
+									actions.add(feedDinosaur);
+								} else if (((MealKit) i).getType().equals("vegetarian") && (validLct.getActor() instanceof Stegosaur || validLct.getActor() instanceof Brachiosaur)) {
+									actions.add(feedDinosaur);
+								}
+							}
+						}
+					}
+
+					// Laser stegosaur action - if there is a stegosaur and player has a laser gun in inventory
+					if((validLct.getActor() instanceof Stegosaur) && (actor.getWeapon() instanceof LaserGun)){
+						if(!((Stegosaur) validLct.getActor()).isDead()){
+							LaserGunAction laserGunAction = new LaserGunAction();
+							laserGunAction.setStegosaur((Stegosaur) validLct.getActor());
+							laserGunAction.setStegosaurMap(map);
+							actions.add(laserGunAction);
+						}
+					}
+				}
+			}
 		}
 
 		for (Exit exit : here.getExits()) {

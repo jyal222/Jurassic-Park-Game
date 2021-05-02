@@ -3,11 +3,7 @@ package game;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.FancyGroundFactory;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.World;
+import edu.monash.fit2099.engine.*;
 
 /**
  * The main class for the Jurassic World game.
@@ -18,7 +14,7 @@ public class Application {
 	public static void main(String[] args) {
 		World world = new World(new Display());
 
-		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Tree());
+		FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(), new Wall(), new Floor(), new Tree(), new Bush(), new VendingMachine());
 		
 		List<String> map = Arrays.asList(
 		"................................................................................",
@@ -51,12 +47,26 @@ public class Application {
 		
 		Actor player = new Player("Player", '@', 100);
 		world.addPlayer(player, gameMap.at(9, 4));
+		VendingMachine vM = new VendingMachine();
 		
 		// Place a pair of stegosaurs in the middle of the map
 		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur"));
 		gameMap.at(32, 12).addActor(new Stegosaur("Stegosaur"));
-		
-			
+		gameMap.at(33, 12).addActor(new Stegosaur("Stegosaur"));
+		gameMap.at(34, 12).addActor(new Stegosaur("Stegosaur"));
+		gameMap.at(35, 12).addActor(new Stegosaur("Stegosaur"));
+		gameMap.at(36, 12).addActor(new Stegosaur("Stegosaur"));
+
+		// Place a pair of brachiosaurs in the map
+		gameMap.at(50, 12).addActor(new Brachiosaur("Brachiosaur"));
+		gameMap.at(52, 12).addActor(new Brachiosaur("Brachiosaur"));
+
+		gameMap.at(15, 9).setGround(vM);
+
+		// grow bush at the beginning of the game (1% chance)
+		Bush bush = new Bush();
+		gameMap.growBush(bush.getDisplayChar(), gameMap.getXRange(), gameMap.getYRange());
+
 		world.run();
 	}
 }

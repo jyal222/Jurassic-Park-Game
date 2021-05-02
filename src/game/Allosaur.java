@@ -15,6 +15,7 @@ public class Allosaur extends Dinosaur {
      */
     public Allosaur(String name) {
         super("allosaur", 'a', 100);
+        behaviour = new WanderBehaviour();
         // get the gender of allosaur
         super.setGender(this.randomiseGender());
         super.setFoodLevel(50);

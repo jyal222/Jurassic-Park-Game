@@ -1,5 +1,12 @@
 package edu.monash.fit2099.engine;
 
+import game.Brachiosaur;
+import game.Bush;
+import game.Dirt;
+import game.Stegosaur;
+
+import java.util.Random;
+
 /**
  * An Action that moves the Actor.
  */
@@ -54,9 +61,24 @@ public class MoveActorAction extends Action {
 	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
-		map.moveActor(actor, moveToLocation);
+
+		if (actor instanceof Stegosaur == false){
+			map.moveActor(actor, moveToLocation);
+		} else if (((Stegosaur) actor).isUnconscious() == false){
+			map.moveActor(actor, moveToLocation);
+		}
+		// If Brachiosaur step on the Bush, 50% to kill bush
+		else if ((actor instanceof Brachiosaur) && (moveToLocation.getGround() instanceof Bush)) {
+			Random random = new Random();
+			int number = random.nextInt(100) + 1;
+			if (number <= 50) {
+				moveToLocation.setGround(new Dirt());
+			}
+		}
 		return menuDescription(actor);
 	}
+
+
 
 	/**
 	 * Returns a description of this movement suitable to display in the menu.

@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Class representing one map within the system.
@@ -320,4 +321,23 @@ public class GameMap {
 		}
 		return players;
 	}
+
+	/**
+	 * This method is to create bush at the beginning of the game.
+	 * @param bushChar a display char showing bush
+	 * @param xs range of x coordinates for the locations
+	 * @param ys range of y coordinates for the locations
+	 */
+	public void growBush(char bushChar, NumberRange xs, NumberRange ys) {
+		for (int x : xs) {
+			for (int y : ys) {
+				Random rand = new Random();
+				int num = rand.nextInt(10) + 1;
+				if(num <= 1){
+					at(x, y).setGround(groundFactory.newGround(bushChar));
+				}
+			}
+		}
+	}
+
 }
