@@ -28,6 +28,7 @@ public abstract class Actor implements ActorInterface, Capable, Printable {
 		this.hitPoints = hitPoints;
 	}
 
+
 	@Override
 	public char getDisplayChar() {
 		return displayChar;
