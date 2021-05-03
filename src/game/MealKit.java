@@ -11,12 +11,13 @@ public class MealKit extends Food {
      * @param type a string value of either "carnivore" or "vegetarian"
      */
     public MealKit(String type) {
-        super(9999, 100, 0, "Vegetarian Meal Kit", 'm', true);
+        super(40, 100, 0, "Vegetarian Meal Kit", 'm', true);
         if (type.equals("carnivore") || type.equals("vegetarian")){
             this.type = type;
             this.setPrice(100);
             if (this.type == "carnivore"){
                 this.setPrice(500);
+                this.setFoodLevel(60);
                 this.setName("Carnivore Meal Kit");
             }
         } else {

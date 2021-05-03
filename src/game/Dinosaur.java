@@ -234,27 +234,30 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * An abstract method to be override by children class.
+     *
      * @param l location of the dinosaur
      * @param g game map
      */
-    public abstract void tick(Location l, GameMap g);
+    public static void tick(Location l, GameMap g) {
+    }
 
     /**
      * To breed the dinosaur with another dinosaur with same type and opposite gender
      * @param d2 second dinosaur to be breed with the dinosaur
      * @return boolean indicating whether the dinosaur has breed
      */
-    public boolean breed(Dinosaur d2){
-        if(getFoodLevel() > 50 && d2.getFoodLevel() > 50 && (!getGender().equals(d2.getGender())) && (name.equals(d2.name)) && (!getStage().equals("baby")) && (!getStage().equals("baby"))){
-            if(getGender().equals("female")){
-                setPregnantTurns(getPregnantTurns() + 1);
-                setPregnant(true);
-            } else if (d2.getGender().equals("female")){
-                d2.setPregnantTurns(d2.getPregnantTurns() + 1);
-                d2.setPregnant(true);
+    public boolean breed(Dinosaur d1, Dinosaur d2){
+        if (d1.name == d2.name) {
+            if(d1.getFoodLevel() > 50 && d2.getFoodLevel() > 50 && (!d1.getGender().equals(d2.getGender())) && (d1.name.equals(d2.name)) && (!d1.getStage().equals("baby")) && (!d1.getStage().equals("baby"))){
+                if(d1.getGender().equals("female")){
+                    d1.setPregnant(true);
+                    System.out.println("A pair of " + name + " have just bred");
+                } else if (d2.getGender().equals("female")){
+                    d2.setPregnant(true);
+                    System.out.println("A pair of " + name + " have just bred");
+                }
+                return true;
             }
-            System.out.println("A pair of " + name + "have just bred");
-            return true;
         }
         return false;
     }

@@ -29,52 +29,68 @@ public class Allosaur extends Dinosaur {
      * @param l location of the dinosaur
      * @param g game map
      */
-    @Override
-    public void tick(Location l, GameMap g) {
-        this.setFoodLevel(this.getFoodLevel() - 1);
+    public static void dinosaurTick(Allosaur a, Location l, GameMap g) {
+        a.setFoodLevel(a.getFoodLevel() - 1);
         ArrayList<Location> adjacentLocations = l.validAdjacentLocations();
 
         // Baby dinosaurs grow up
-        if(this.getStage().equals("baby")){
-            babyDinosaurGrows();
+        if(a.getStage().equals("baby")){
+            a.babyDinosaurGrows();
         }
 
-        if (this.getFoodLevel() > 0) {
+        if (a.getFoodLevel() > 0) {
 
 
             // If dinosaur getting hungry
-            if (this.getFoodLevel() <=20) {
-                System.out.println(name + " at (" + l.x() + ", " + l.y() + ") is getting hungry!");
+            if (a.getFoodLevel() <=20) {
+                System.out.println(a.name + " at (" + l.x() + ", " + l.y() + ") is getting hungry!");
             }
 
             // If dinosaur can breed
-            if (this.getFoodLevel() > 50) {
+            if (a.getFoodLevel() > 50) {
                 // Check locations for breedable stegosaurs
                 for (Location adj : adjacentLocations) {
                     if (l.containsAnActor()) {
-                        Actor a = adj.getActor();
-                        if (a instanceof Allosaur) {
-                            if (breed((Dinosaur) a)) {
-                                break;
+                        Actor actor = adj.getActor();
+                        if (actor instanceof Allosaur) {
+                            if (!a.isPregnant() && !((Allosaur) actor).isPregnant()) {
+                                if (a.breed(a, (Dinosaur) actor)) {
+                                    break;
+                                }
+                            }
+                            if (a.isPregnant()) {
+                                a.setPregnantTurns(a.getPregnantTurns() + 1);
+                                a.layEgg(l);
+                            } else if (((Allosaur) actor).isPregnant()) {
+                                ((Allosaur) actor).setPregnantTurns(((Allosaur) actor).getPregnantTurns() + 1);
+                                ((Allosaur) actor).layEgg(l);
                             }
                         }
                     }
                 }
             }
 
+            /*
             // Potentially lay egg
-            if (this.isPregnant()) {
-                layEgg(l);
+            if (a.isPregnant()) {
+                a.layEgg(l);
             }
+
+             */
 
             // Eat an egg currently on the ground
             for (Item item : l.getItems()){
                 if (item instanceof Egg){
                     Egg e = (Egg) item;
                     if(e.isEdible()){
-                        this.setFoodLevel(this.getFoodLevel()+ e.getFoodLevel());
+                        a.setFoodLevel(a.getFoodLevel()+ e.getFoodLevel());
                         l.removeItem(e);
                     }
+                }
+                if (item instanceof Fruit) {
+                    Fruit f = (Fruit) item;
+                    a.setFoodLevel(a.getFoodLevel() + f.getFoodLevel());
+                    l.removeItem(f);
                 }
             }
 
@@ -93,21 +109,21 @@ public class Allosaur extends Dinosaur {
                         if (stegosaurAttacked instanceof Stegosaur) {
                             // dinosaur that hab been attacked cannot be attack for 20 turns
                             if (stegosaurAttacked.getAttackTurns() > 20){
-                                if (this.getStage().equals("adult")){
+                                if (a.getStage().equals("adult")){
                                     stegosaurAttacked.setFoodLevel(stegosaurAttacked.getFoodLevel() - 20);
-                                    this.setFoodLevel(this.getFoodLevel() + 20);
+                                    a.setFoodLevel(a.getFoodLevel() + 20);
                                     stegosaurAttacked.setAttacked(true);
 
                                     // baby dinosaur can only attack baby dinosaur
-                                }else if(this.getStage().equals("baby")){
+                                }else if(a.getStage().equals("baby")){
                                     if (stegosaurAttacked.getStage().equals("baby")){
                                         stegosaurAttacked.setFoodLevel(stegosaurAttacked.getFoodLevel() - 10);
-                                        this.setFoodLevel(this.getFoodLevel() + 10);
+                                        a.setFoodLevel(a.getFoodLevel() + 10);
                                         stegosaurAttacked.setAttacked(true);
                                     }
                                 }
                             }
-                            stegosaurAttacked.setAttackTurns(getAttackTurns()+1);
+                            stegosaurAttacked.setAttackTurns(a.getAttackTurns()+1);
                         }
                         hasAttackedOrKilled = true;
                         // Eat corpse if a dinosaur was killed during battle
@@ -124,15 +140,15 @@ public class Allosaur extends Dinosaur {
         }
         // For unconscious dinosaurs
         else {
-            this.setUnconscious(true);
-            this.setUnconsciousTurns(this.getUnconsciousTurns() + 1);
-            if (this.getUnconsciousTurns() >= 15){
-                this.setDead(true);
-                this.setDeadTurns(this.getDeadTurns() + 1);
+            a.setUnconscious(true);
+            a.setUnconsciousTurns(a.getUnconsciousTurns() + 1);
+            if (a.getUnconsciousTurns() >= 15){
+                a.setDead(true);
+                a.setDeadTurns(a.getDeadTurns() + 1);
 
                 // Corpse of dead dinosaur still remains for 20 turns
-                if(this.getDeadTurns() >= 20){
-                    g.removeActor(this);
+                if(a.getDeadTurns() >= 20){
+                    g.removeActor(a);
                     g.at(l.x(), l.y()).setGround(new Dirt());
                 }
             }
@@ -165,6 +181,7 @@ public class Allosaur extends Dinosaur {
      * @param l location of dinosaur
      */
     private void layEgg(Location l) {
+        //this.setPregnantTurns(this.getPregnantTurns() + 1);
         if (this.getPregnantTurns() >= 30) {
             Egg egg = new Egg(name);
             l.addItem(egg);

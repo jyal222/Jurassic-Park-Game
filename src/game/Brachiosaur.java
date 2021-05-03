@@ -29,67 +29,92 @@ public class Brachiosaur extends Dinosaur {
      * @param l location of the dinosaur
      * @param g game map
      */
-    @Override
-    public void tick(Location l, GameMap g) {
-        this.setFoodLevel(this.getFoodLevel() - 1);
+    //@Override
+    public static void dinosaurTick(Brachiosaur b, Location l, GameMap g) {
+        b.setFoodLevel(b.getFoodLevel() - 1);
         ArrayList<Location> adjacentLocations = l.validAdjacentLocations();
 
         // Baby dinosaurs grow up
-        if(this.getStage().equals("baby")){
-            babyDinosaurGrows();
+        if(b.getStage().equals("baby")){
+            b.babyDinosaurGrows();
         }
 
-        if (this.getFoodLevel() > 0) {
+        if (b.getFoodLevel() > 0) {
 
 
             // If dinosaur getting hungry
-            if (this.getFoodLevel() <=40) {
-                System.out.println(name + " at (" + l.x() + ", " + l.y() + ") is getting hungry!");
+            if (b.getFoodLevel() <= 140) {
+                System.out.println(b.name + " at (" + l.x() + ", " + l.y() + ") is getting hungry!");
+            }
+
+            // eat fruits from bush and ground
+            if (l.getGround() instanceof Tree) {
+                for (Item i : l.getItems()){
+                    if (i instanceof Fruit) {
+                        Fruit f = (Fruit) i;
+                        b.setFoodLevel(b.getFoodLevel() + 5);
+                        //l.removeItem(f);
+                        System.out.println(b.name + " at (" + l.x() + ", " + l.y() + ") eats " + f.getName());
+                    }
+                }
             }
 
             // If dinosaur can breed
-            if (this.getFoodLevel() > 70) {
+            if (b.getFoodLevel() > 70) {
                 // Check locations for breedable stegosaurs
                 for (Location adj : adjacentLocations) {
                     if (l.containsAnActor()) {
                         Actor a = adj.getActor();
                         if (a instanceof Brachiosaur) {
-                            if (breed((Dinosaur) a)) {
-                                break;
+                            if (!b.isPregnant() && !((Brachiosaur) a).isPregnant()) {
+                                if (b.breed(b, (Dinosaur) a)) {
+                                    break;
+                                }
+                            }
+                            if (b.isPregnant()) {
+                                b.setPregnantTurns(b.getPregnantTurns() + 1);
+                                b.layEgg(l);
+                            } else if (((Brachiosaur) a).isPregnant()) {
+                                ((Brachiosaur) a).setPregnantTurns(((Brachiosaur) a).getPregnantTurns() + 1);
+                                ((Brachiosaur) a).layEgg(l);
                             }
                         }
                     }
                 }
             }
-            /*
+
             // If Brachiosaur step on the Bush, 50% to kill bush
             if(l.getGround() instanceof Bush){
                 Random random = new Random();
                 int number = random.nextInt(100) + 1;
                 if (number <= 50){
                     l.setGround(new Dirt());
+                    System.out.println(b.name + " at (" + l.x() + ", " + l.y() + ") steps on bush");
                 }
+            }
+
+
+            /*
+
+            // Potentially lay egg
+            if (b.isPregnant()) {
+                b.layEgg(l);
             }
 
              */
 
-            // Potentially lay egg
-            if (this.isPregnant()) {
-                layEgg(l);
-            }
-
         }
         // For unconscious dinosaurs
         else {
-            this.setUnconscious(true);
-            this.setUnconsciousTurns(this.getUnconsciousTurns() + 1);
-            if (this.getUnconsciousTurns() >= 15){
-                this.setDead(true);
-                this.setDeadTurns(getDeadTurns() + 1);
+            b.setUnconscious(true);
+            b.setUnconsciousTurns(b.getUnconsciousTurns() + 1);
+            if (b.getUnconsciousTurns() >= 15){
+                b.setDead(true);
+                b.setDeadTurns(b.getDeadTurns() + 1);
 
                 // Carcass of dead dinosaur still remains for 40 turns
-                if(this.getDeadTurns() >= 40){
-                    g.removeActor(this);
+                if(b.getDeadTurns() >= 40){
+                    g.removeActor(b);
                     g.at(l.x(), l.y()).setGround(new Dirt());
                 }
             }
@@ -118,6 +143,7 @@ public class Brachiosaur extends Dinosaur {
      * @param l location of dinosaur
      */
     private void layEgg(Location l) {
+        //this.setPregnantTurns(this.getPregnantTurns() + 1);
         if (this.getPregnantTurns() >= 30) {
             Egg egg = new Egg(name);
             l.addItem(egg);

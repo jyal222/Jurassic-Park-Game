@@ -118,6 +118,7 @@ public class World {
 			if (here.getGround() instanceof Tree || here.getGround() instanceof Bush) {
 				actions.add(new PickFruitAction());
 			}
+
 			ArrayList<Location> validLocations = actorLocations.locationOf(actor).validAdjacentLocations();
 			for (Location validLct : validLocations) {
 
@@ -143,12 +144,14 @@ public class World {
 								} else if (((MealKit) i).getType().equals("vegetarian") && (validLct.getActor() instanceof Stegosaur || validLct.getActor() instanceof Brachiosaur)) {
 									actions.add(feedDinosaur);
 								}
+							} else if (i instanceof Fruit) {
+								actions.add(feedDinosaur);
 							}
 						}
 					}
 
 					// Laser stegosaur action - if there is a stegosaur and player has a laser gun in inventory
-					if((validLct.getActor() instanceof Stegosaur) && (actor.getWeapon() instanceof LaserGun)){
+					if((validLct.getActor() instanceof Stegosaur) && (actor.getInventory() instanceof LaserGun)){
 						if(!((Stegosaur) validLct.getActor()).isDead()){
 							LaserGunAction laserGunAction = new LaserGunAction();
 							laserGunAction.setStegosaur((Stegosaur) validLct.getActor());

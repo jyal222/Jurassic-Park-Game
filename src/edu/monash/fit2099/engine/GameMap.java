@@ -1,6 +1,6 @@
 package edu.monash.fit2099.engine;
 
-import game.Player;
+import game.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -215,6 +215,14 @@ public class GameMap {
 		return heights;
 	}
 
+	public ActorLocations getActorLocations() {
+		return actorLocations;
+	}
+
+	public void setActorLocations(ActorLocations actorLocations) {
+		this.actorLocations = actorLocations;
+	}
+
 	/**
 	 * Called once per turn, so that maps can experience the passage of time.
 	 */
@@ -225,6 +233,17 @@ public class GameMap {
 				for (Item item : new ArrayList<Item>(actor.getInventory())) { // Copy the list in case the item wants to leave
 					item.tick(actorLocations.locationOf(actor), actor);
 				}
+				// Tick Dinosaurs: Stegosaur, Brachiosaur and Allosaur
+				if (actor instanceof Stegosaur){
+					Stegosaur.dinosaurTick((Stegosaur) actor, locationOf(actor), this);
+				}
+				if (actor instanceof Brachiosaur){
+					Brachiosaur.dinosaurTick((Brachiosaur) actor, locationOf(actor), this);
+				}
+				if (actor instanceof Allosaur){
+					Allosaur.dinosaurTick((Allosaur) actor, locationOf(actor), this);
+				}
+
 			}
 		}
 
@@ -339,5 +358,7 @@ public class GameMap {
 			}
 		}
 	}
+
+
 
 }

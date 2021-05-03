@@ -67,14 +67,18 @@ public class MoveActorAction extends Action {
 		} else if (((Stegosaur) actor).isUnconscious() == false){
 			map.moveActor(actor, moveToLocation);
 		}
+		/*
 		// If Brachiosaur step on the Bush, 50% to kill bush
 		else if ((actor instanceof Brachiosaur) && (moveToLocation.getGround() instanceof Bush)) {
 			Random random = new Random();
 			int number = random.nextInt(100) + 1;
 			if (number <= 50) {
 				moveToLocation.setGround(new Dirt());
+				System.out.println("Brachiosaur steps on bush");
 			}
 		}
+
+		 */
 		return menuDescription(actor);
 	}
 

@@ -84,7 +84,6 @@ public class Egg extends Food {
          }
 
         if (this.getTurnsOnGround() > 15){
-            location.removeItem(this);
             Dinosaur baby = null;
             if (this.getType().equals("stegosaur")){
                 baby = new Stegosaur("Stegosaur");
@@ -117,10 +116,13 @@ public class Egg extends Food {
         for(Player p : players){
             if(e.getType().equals("stegosaur")){
                 p.setEcoPoints(p.getEcoPoints() + 100);
+                System.out.println(p.getEcoPoints());
             } else if (e.getType().equals("brachiosaur")){
                 p.setEcoPoints(p.getEcoPoints() + 1000);
+                System.out.println(p.getEcoPoints());
             } else if (e.getType().equals("allosaur")){
                 p.setEcoPoints(p.getEcoPoints() + 1000);
+                System.out.println(p.getEcoPoints());
             }
         }
     }

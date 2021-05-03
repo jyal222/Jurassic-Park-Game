@@ -32,8 +32,14 @@ public class FeedDinosaurAction extends Action{
     public String execute(Actor actor, GameMap map) {
         if (actor instanceof Player){
             actor.removeItemFromInventory(this.getFood());
-            int foodLevelPoints = this.getFood().pointsGained;
-            this.getDinosaur().setFoodLevel(this.getDinosaur().getFoodLevel() + foodLevelPoints);
+            if (this.getFood().name == "Fruit") {
+                this.getDinosaur().setFoodLevel(this.getDinosaur().getFoodLevel() + 20);
+                System.out.println("Food Level: " + this.getDinosaur().getFoodLevel());
+            } else {
+                int foodLevelPoints = this.getFood().foodLevel;
+                this.getDinosaur().setFoodLevel(this.getDinosaur().getFoodLevel() + foodLevelPoints);
+                System.out.println("Food Level: " + this.getDinosaur().getFoodLevel());
+            }
         } else {
             throw new IllegalArgumentException("Actor must be an instance of type player to perform this action");
         }

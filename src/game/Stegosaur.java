@@ -55,6 +55,7 @@ public class Stegosaur extends Dinosaur {
 	 * @param l location of dinosaur
 	 */
 	private void layEgg(Location l) {
+		this.setPregnantTurns(this.getPregnantTurns() + 1);
 		if (this.getPregnantTurns() >= 10) {
 			Egg egg = new Egg(name);
 			l.addItem(egg);
@@ -76,56 +77,79 @@ public class Stegosaur extends Dinosaur {
 	 * @param l location of the dinosaur
 	 * @param g game map
 	 */
-	@Override
-	public void tick(Location l, GameMap g) {
-		this.setFoodLevel(this.getFoodLevel() - 1);
+	//@Override
+	public static void dinosaurTick(Stegosaur s, Location l, GameMap g) {
+		s.setFoodLevel(s.getFoodLevel() - 1);
 		ArrayList<Location> adjacentLocations = l.validAdjacentLocations();
 
 		// Baby dinosaurs grow up
-		if(this.getStage().equals("baby")){
-			babyDinosaurGrows();
+		if(s.getStage().equals("baby")){
+			s.babyDinosaurGrows();
 		}
 
-		if (this.getFoodLevel() > 0) {
+		if (s.getFoodLevel() > 0) {
 
 
 			// If dinosaur getting hungry
-			if (this.getFoodLevel() <=20) {
-				System.out.println(name + " at (" + l.x() + ", " + l.y() + ") is getting hungry!");
+			if (s.getFoodLevel() <= 90) {
+				System.out.println(s.name + " at (" + l.x() + ", " + l.y() + ") is getting hungry!");
+			}
+
+			// eat fruits from bush and ground
+			if (l.getGround() instanceof Bush || l.getGround() instanceof Ground) {
+				for (Item i : l.getItems()){
+					if (i instanceof Fruit) {
+						Fruit f = (Fruit) i;
+						s.setFoodLevel(s.getFoodLevel() + 10);
+						System.out.println(s.name + " at (" + l.x() + ", " + l.y() + ") eats " + f.getName());
+					}
+				}
 			}
 
 			// If dinosaur can breed
-			if (this.getFoodLevel() > 50) {
+			if (s.getFoodLevel() > 50) {
 				// Check locations for breedable stegosaurs
 				for (Location adj : adjacentLocations) {
 					if (l.containsAnActor()) {
 						Actor a = adj.getActor();
 						if (a instanceof Stegosaur) {
-							if (breed((Dinosaur) a)) {
-								break;
+							if (!s.isPregnant() && !((Stegosaur) a).isPregnant()) {
+								if (s.breed(s, (Dinosaur) a)) {
+									break;
+								}
+							}
+							if (s.isPregnant()) {
+								//s.setPregnantTurns(s.getPregnantTurns() + 1);
+								s.layEgg(l);
+							} else if (((Stegosaur) a).isPregnant()) {
+								//((Stegosaur) a).setPregnantTurns(((Stegosaur) a).getPregnantTurns() + 1);
+								((Stegosaur) a).layEgg(l);
 							}
 						}
 					}
 				}
 			}
 
+			/*
 			// Potentially lay egg
-			if (this.isPregnant()) {
-				layEgg(l);
+			if (s.isPregnant()) {
+				s.layEgg(l);
 			}
+
+			 */
 
 		}
 		// For unconscious dinosaurs
 		else {
-			setUnconscious(true);
-			setUnconsciousTurns(getUnconsciousTurns() + 1);
-			if (getUnconsciousTurns() >= 20){
-				setDead(true);
-				setDeadTurns(getDeadTurns() + 1);
+			s.setUnconscious(true);
+			s.setUnconsciousTurns(s.getUnconsciousTurns() + 1);
+			if (s.getUnconsciousTurns() >= 20){
+				s.setDead(true);
+				s.setDeadTurns(s.getDeadTurns() + 1);
 
 				// Carcass of dead dinosaur still remains for 20 turns
-				if(getDeadTurns() >= 20){
-					g.removeActor(this);
+				if(s.getDeadTurns() >= 20){
+					g.removeActor(s);
 					g.at(l.x(), l.y()).setGround(new Dirt());
 				}
 			}

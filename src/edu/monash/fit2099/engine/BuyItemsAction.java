@@ -24,9 +24,11 @@ public class BuyItemsAction extends Action {
     public String execute(Actor actor, GameMap map) {
         if (actor instanceof Player) {
             Item item = this.getItem();
+            System.out.println("Eco Points: " + ((Player) actor).getEcoPoints());
             if (((Player) actor).getEcoPoints() >= item.getPrice()){
                 actor.addItemToInventory(item);
                 ((Player) actor).setEcoPoints(((Player) actor).getEcoPoints() - item.getPrice());
+                System.out.println("Eco Points: " + ((Player) actor).getEcoPoints());
             }
             else {
                 return ("Not enough eco points for " + item.getName());

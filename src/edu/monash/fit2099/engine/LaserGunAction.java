@@ -27,8 +27,7 @@ public class LaserGunAction extends Action {
                 this.getStegosaur().setDeadTurns(0);
                 this.getStegosaur().setUnconscious(true);
                 message = "Player has killed Stegosaur!";
-            }
-            else {
+            } else {
                 message = "Player has attacked Stegosaur, left " + this.getStegosaur().hitPoints + " health remaining";
             }
         } else {
