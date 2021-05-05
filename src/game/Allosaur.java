@@ -54,7 +54,7 @@ public class Allosaur extends Dinosaur {
                         Actor actor = adj.getActor();
                         if (actor instanceof Allosaur) {
                             if (!a.isPregnant() && !((Allosaur) actor).isPregnant()) {
-                                if (a.breed(a, (Dinosaur) actor)) {
+                                if (a.breed((Dinosaur) actor)) {
                                     break;
                                 }
                             }

@@ -1,6 +1,5 @@
 package game;
 
-import edu.monash.fit2099.engine.Food;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 

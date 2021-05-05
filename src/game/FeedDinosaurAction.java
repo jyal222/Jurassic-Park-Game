@@ -1,9 +1,14 @@
-package edu.monash.fit2099.engine;
+package game;
 
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Location;
 import game.Dinosaur;
+import game.Food;
 import game.Player;
 
-public class FeedDinosaurAction extends Action{
+public class FeedDinosaurAction extends Action {
 
     Food food;
     Dinosaur dinosaur;
@@ -32,7 +37,7 @@ public class FeedDinosaurAction extends Action{
     public String execute(Actor actor, GameMap map) {
         if (actor instanceof Player){
             actor.removeItemFromInventory(this.getFood());
-            if (this.getFood().name == "Fruit") {
+            if (this.getFood().getName() == "Fruit") {
                 this.getDinosaur().setFoodLevel(this.getDinosaur().getFoodLevel() + 20);
                 System.out.println("Food Level: " + this.getDinosaur().getFoodLevel());
             } else {

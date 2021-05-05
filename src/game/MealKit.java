@@ -1,7 +1,5 @@
 package game;
 
-import edu.monash.fit2099.engine.Food;
-
 public class MealKit extends Food {
 
     String type;

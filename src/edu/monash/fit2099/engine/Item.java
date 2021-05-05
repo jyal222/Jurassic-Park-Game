@@ -15,6 +15,7 @@ public abstract class Item implements ItemInterface, Printable, Capable {
 	protected char displayChar;
 	protected Actions allowableActions;
 	protected Capabilities capabilities = new Capabilities();
+	//TODO remove this
 	protected int price;
 
 	/***
@@ -132,9 +133,10 @@ public abstract class Item implements ItemInterface, Printable, Capable {
 		capabilities.removeCapability(capability);
 	}
 
-	public String getName() {
-		return name;
-	}
+
+
+	// TODO remove methods below
+
 
 	public void setName(String name) {
 		this.name = name;

@@ -39,6 +39,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get the food level of the dinosaur
+     *
      * @return integer food level
      */
     public int getFoodLevel() {
@@ -47,6 +48,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set the food level of the dinosaur
+     *
      * @param foodLevel food level of the dinosaur
      */
     public void setFoodLevel(int foodLevel) {
@@ -55,6 +57,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get the maximum food level of the dinosaur
+     *
      * @return max food level
      */
     public int getMaxFoodLevel() {
@@ -63,6 +66,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set the maximum food level of the dinosaur
+     *
      * @param maxFoodLevel maximum food level of the dinosaur
      */
     public void setMaxFoodLevel(int maxFoodLevel) {
@@ -71,6 +75,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get the number of unconscious turns of the dinosaur
+     *
      * @return integer unconscious Turns
      */
     public int getUnconsciousTurns() {
@@ -79,6 +84,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set the number of unconscious turns of the dinosaur
+     *
      * @param unconsciousTurns
      */
     public void setUnconsciousTurns(int unconsciousTurns) {
@@ -87,6 +93,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To indicate whether a dinosaur is unconscious
+     *
      * @return boolean
      */
     public boolean isUnconscious() {
@@ -95,6 +102,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set the dinosaur's unconsciousness
+     *
      * @param unconscious a boolean indicating whether dinosaur is unconscious
      */
     public void setUnconscious(boolean unconscious) {
@@ -103,6 +111,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get number of dead turns of dinosaur
+     *
      * @return integer number of dead turns of dinosaur
      */
     public int getDeadTurns() {
@@ -111,6 +120,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set number of dead turns of dinosaur
+     *
      * @param deadTurns
      */
     public void setDeadTurns(int deadTurns) {
@@ -119,6 +129,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To indicate where a dinosaur is dead
+     *
      * @return boolean
      */
     public boolean isDead() {
@@ -130,6 +141,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set a dinosaur to be dead
+     *
      * @param dead
      */
     public void setDead(boolean dead) {
@@ -145,15 +157,13 @@ public abstract class Dinosaur extends Actor {
     public String randomiseGender() {
         Random rand = new Random();
         int number = rand.nextInt(2) + 1;
-        if (number == 1) {
-            return "male";
-        } else {
-            return "female";
-        }
+        return number == 1 ? "male" : "female";
+
     }
 
     /**
      * To set the gender of the dinosaur
+     *
      * @return string gender
      */
     public String getGender() {
@@ -162,6 +172,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get the gender of the dinosaur
+     *
      * @param gender
      */
     public void setGender(String gender) {
@@ -170,6 +181,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get stage of the dinosaur (baby, adult)
+     *
      * @return string stage
      */
     public String getStage() {
@@ -178,6 +190,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set stage of the dinosaur
+     *
      * @param stage
      */
     public void setStage(String stage) {
@@ -186,6 +199,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get number of turns of baby dinosaur alive, to decide when it will be grown as an adult
+     *
      * @return integer
      */
     public int getNumTurnsAlive() {
@@ -194,6 +208,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set number of turns of baby dinosaur alive, to decide when it will be grown as an adult
+     *
      * @param numTurnsAlive
      */
     public void setNumTurnsAlive(int numTurnsAlive) {
@@ -202,6 +217,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get number of turns of a dinosaur since pregnant
+     *
      * @return integer
      */
     public int getPregnantTurns() {
@@ -210,6 +226,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set number of turns of a dinosaur since pregnant
+     *
      * @param pregnantTurns
      */
     public void setPregnantTurns(int pregnantTurns) {
@@ -218,6 +235,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To indicate whether a dinosaur is pregnant
+     *
      * @return boolean
      */
     public boolean isPregnant() {
@@ -226,6 +244,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set a dinosaur to be pregnant
+     *
      * @param pregnant
      */
     public void setPregnant(boolean pregnant) {
@@ -241,18 +260,22 @@ public abstract class Dinosaur extends Actor {
     public static void tick(Location l, GameMap g) {
     }
 
+    public abstract EatAction getEatAction();
+
+
     /**
      * To breed the dinosaur with another dinosaur with same type and opposite gender
+     *
      * @param d2 second dinosaur to be breed with the dinosaur
      * @return boolean indicating whether the dinosaur has breed
      */
-    public boolean breed(Dinosaur d1, Dinosaur d2){
-        if (d1.name == d2.name) {
-            if(d1.getFoodLevel() > 50 && d2.getFoodLevel() > 50 && (!d1.getGender().equals(d2.getGender())) && (d1.name.equals(d2.name)) && (!d1.getStage().equals("baby")) && (!d1.getStage().equals("baby"))){
-                if(d1.getGender().equals("female")){
-                    d1.setPregnant(true);
+    public boolean breed(Dinosaur d2) {
+        if (this.name == d2.name) {
+            if (this.getFoodLevel() > 50 && d2.getFoodLevel() > 50 && (!this.getGender().equals(d2.getGender())) && (!this.getStage().equals("baby")) && (!this.getStage().equals("baby"))) {
+                if (this.getGender().equals("female")) {
+                    this.setPregnant(true);
                     System.out.println("A pair of " + name + " have just bred");
-                } else if (d2.getGender().equals("female")){
+                } else if (d2.getGender().equals("female")) {
                     d2.setPregnant(true);
                     System.out.println("A pair of " + name + " have just bred");
                 }
@@ -264,6 +287,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get number of turns after dinosaur being attacked
+     *
      * @return integer
      */
     public int getAttackTurns() {
@@ -272,6 +296,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set number of turns after dinosaur being attacked
+     *
      * @param attackTurns
      */
     public void setAttackTurns(int attackTurns) {
@@ -280,6 +305,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To decide whether a dinosaur is being attacked
+     *
      * @return boolean
      */
     public boolean isAttacked() {
@@ -288,6 +314,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To indicate whether a dinosaur is being attacked
+     *
      * @param attacked
      */
     public void setAttacked(boolean attacked) {

@@ -113,6 +113,7 @@ public class World {
 			actions.add(item.getDropAction());
 		}
 
+		// TODO remove this
 		if (actor instanceof Player) {
 			// Player can pick fruit from a tree or bush if beside one
 			if (here.getGround() instanceof Tree || here.getGround() instanceof Bush) {

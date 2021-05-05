@@ -67,7 +67,7 @@ public class Brachiosaur extends Dinosaur {
                         Actor a = adj.getActor();
                         if (a instanceof Brachiosaur) {
                             if (!b.isPregnant() && !((Brachiosaur) a).isPregnant()) {
-                                if (b.breed(b, (Dinosaur) a)) {
+                                if (b.breed((Dinosaur) a)) {
                                     break;
                                 }
                             }

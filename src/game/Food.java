@@ -1,4 +1,6 @@
-package edu.monash.fit2099.engine;
+package game;
+
+import edu.monash.fit2099.engine.Item;
 
 public abstract class Food extends Item {
     int foodLevel;
@@ -22,6 +24,8 @@ public abstract class Food extends Item {
         this.pointsGained = pointsGained;
     }
 
+
+
     /**
      * To get the food level of each food child instance
      * @return foodLevel integer
@@ -36,5 +40,10 @@ public abstract class Food extends Item {
      */
     public void setFoodLevel(int foodLevel) {
         this.foodLevel = foodLevel;
+    }
+
+    @Override
+    public String toString() {
+        return super.name;
     }
 }

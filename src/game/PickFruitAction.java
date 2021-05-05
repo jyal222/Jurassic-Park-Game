@@ -1,5 +1,8 @@
-package edu.monash.fit2099.engine;
+package game;
 
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
 import game.Fruit;
 import game.Player;
 

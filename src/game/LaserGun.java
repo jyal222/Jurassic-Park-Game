@@ -1,4 +1,6 @@
-package edu.monash.fit2099.engine;
+package game;
+
+import edu.monash.fit2099.engine.WeaponItem;
 
 /**
  * A type of weapon that players can own and zap stegosaurs with

@@ -215,13 +215,6 @@ public class GameMap {
 		return heights;
 	}
 
-	public ActorLocations getActorLocations() {
-		return actorLocations;
-	}
-
-	public void setActorLocations(ActorLocations actorLocations) {
-		this.actorLocations = actorLocations;
-	}
 
 	/**
 	 * Called once per turn, so that maps can experience the passage of time.
@@ -233,7 +226,7 @@ public class GameMap {
 				for (Item item : new ArrayList<Item>(actor.getInventory())) { // Copy the list in case the item wants to leave
 					item.tick(actorLocations.locationOf(actor), actor);
 				}
-				// Tick Dinosaurs: Stegosaur, Brachiosaur and Allosaur
+				// TODO Tick Dinosaurs: Stegosaur, Brachiosaur and Allosaur
 				if (actor instanceof Stegosaur){
 					Stegosaur.dinosaurTick((Stegosaur) actor, locationOf(actor), this);
 				}
@@ -328,9 +321,11 @@ public class GameMap {
 	}
 
 	/**
+	 *
 	 * This method returns an array list of all the players existing in the game map
 	 * @return an array list of current players
 	 */
+	// TODO remove this method
 	public ArrayList<Player> getPlayers(){
 		ArrayList<Player> players = new ArrayList();
 		for(Actor actor : actorLocations){
@@ -341,23 +336,6 @@ public class GameMap {
 		return players;
 	}
 
-	/**
-	 * This method is to create bush at the beginning of the game.
-	 * @param bushChar a display char showing bush
-	 * @param xs range of x coordinates for the locations
-	 * @param ys range of y coordinates for the locations
-	 */
-	public void growBush(char bushChar, NumberRange xs, NumberRange ys) {
-		for (int x : xs) {
-			for (int y : ys) {
-				Random rand = new Random();
-				int num = rand.nextInt(10) + 1;
-				if(num <= 1){
-					at(x, y).setGround(groundFactory.newGround(bushChar));
-				}
-			}
-		}
-	}
 
 
 

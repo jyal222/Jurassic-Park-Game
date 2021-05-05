@@ -4,6 +4,7 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A herbivorous dinosaur.
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class Stegosaur extends Dinosaur {
 	// Will need to change this to a collection if Stegosaur gets additional Behaviours.
 	private Behaviour behaviour;
+	private List<Behaviour> behaviours;
 
 	/** 
 	 * Constructor.
@@ -20,14 +22,17 @@ public class Stegosaur extends Dinosaur {
 	 */
 	public Stegosaur(String name) {
 		super("stegosaur", 's', 100);
-		behaviour = new WanderBehaviour();
+		//behaviour = new WanderBehaviour();
 		super.setGender(this.randomiseGender());
 		super.setFoodLevel(50);
 		super.setMaxFoodLevel(100);
 		super.setUnconsciousTurns(20);
 		super.setPregnantTurns(10);
+		behaviours.add(new WanderBehaviour());
+		behaviours.add(new EatBehaviour());
 	}
 
+	//TODO add feed dinosaur action
 	@Override
 	public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
 		return new Actions(new AttackAction(this));
@@ -43,6 +48,9 @@ public class Stegosaur extends Dinosaur {
 	 */
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+		for (Behaviour behaviour: behaviours){
+			//TODO choose behaviour
+		}
 		Action wander = behaviour.getAction(this, map);
 		if (wander != null)
 			return wander;
@@ -114,7 +122,7 @@ public class Stegosaur extends Dinosaur {
 						Actor a = adj.getActor();
 						if (a instanceof Stegosaur) {
 							if (!s.isPregnant() && !((Stegosaur) a).isPregnant()) {
-								if (s.breed(s, (Dinosaur) a)) {
+								if (s.breed((Dinosaur) a)) {
 									break;
 								}
 							}
@@ -144,10 +152,10 @@ public class Stegosaur extends Dinosaur {
 			s.setUnconscious(true);
 			s.setUnconsciousTurns(s.getUnconsciousTurns() + 1);
 			if (s.getUnconsciousTurns() >= 20){
-				s.setDead(true);
 				s.setDeadTurns(s.getDeadTurns() + 1);
+				s.setDead(true);
 
-				// Carcass of dead dinosaur still remains for 20 turns
+				// Corpse of dead stegosaur still remains for 20 turns
 				if(s.getDeadTurns() >= 20){
 					g.removeActor(s);
 					g.at(l.x(), l.y()).setGround(new Dirt());
@@ -155,5 +163,10 @@ public class Stegosaur extends Dinosaur {
 			}
 		}
 
+	}
+
+	@Override
+	public EatAction getEatAction() {
+		return new EatAction(10);
 	}
 }

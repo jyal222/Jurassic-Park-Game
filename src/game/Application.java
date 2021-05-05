@@ -69,9 +69,8 @@ public class Application {
 
 		gameMap.at(15, 9).setGround(vM);
 
-		// grow bush at the beginning of the game (1% chance)
-		Bush bush = new Bush();
-		gameMap.growBush(bush.getDisplayChar(), gameMap.getXRange(), gameMap.getYRange());
+		//TODO grow bush at the beginning of the game (1% chance)
+		gameMap.tick();
 
 		world.run();
 	}

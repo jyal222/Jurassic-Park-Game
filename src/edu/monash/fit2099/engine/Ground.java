@@ -1,13 +1,7 @@
 package edu.monash.fit2099.engine;
 
 import edu.monash.fit2099.interfaces.GroundInterface;
-import game.Bush;
-import game.Dirt;
-import game.Fruit;
-import game.Tree;
 
-import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class representing terrain type
@@ -57,76 +51,6 @@ public abstract class Ground implements GroundInterface, Capable, Printable {
 	 * @param location The location of the Ground 
 	 */
 	public void tick(Location location) {
-		Bush bush = new Bush();
-		int noAdjacentBush = 0;
-
-		// Get adjacent locations
-		ArrayList<Location> adjLocation = new ArrayList();
-
-		// Append adjacent locations
-		if (location.locationValid(location.x(), location.y()-1)){
-			adjLocation.add(location.getNorth());
-		}
-		if (location.locationValid(location.x(), location.y()+1)){
-			adjLocation.add(location.getSouth());
-		}
-		if (location.locationValid(location.x() + 1, location.y())){
-			adjLocation.add(location.getEast());
-		}
-		if (location.locationValid(location.x() - 1, location.y())){
-			adjLocation.add(location.getWest());
-		}
-
-		int noTree = 0;
-		Random random = new Random();
-		int number = random.nextInt(100) + 1;
-
-		if (location.getGround() instanceof Dirt) {
-			for (Location lct : adjLocation) {
-				if (lct.getGround() instanceof Bush) {
-					noAdjacentBush += 1;
-				} else if (lct.getGround() instanceof Tree) {
-				//	location.setGround(dirt);
-					noTree += 1;
-				}
-			}
-
-			// If no tree in adjacent location, 1% to grow bush
-			if (noTree == 0){
-				if (number <= 1){
-					location.setGround(bush);
-				}
-			}
-
-			// If at least 2 squares of bush in adjacent location, 10% to grow bush
-			if (noAdjacentBush >= 2) {
-				if (number <= 10){
-					location.setGround(bush);
-				}
-
-			}
-
-			/** A tree has 50% chance to produce ripe fruit and a 10% bush
-			 *  A ripe fruit on the tree has 5% chance to fall
-			 */
-			if (location.getGround() instanceof Tree){
-				if (number <= 50) {
-					Fruit ripeFruit = new Fruit();
-					if (number <= 5) {
-						location.addItem(ripeFruit);
-					}
-				}
-			}
-
-			// Bush has a 10% chance to produce fruit
-			// drop fruit from bush
-			if (location.getGround() instanceof Bush){
-				if (number <= 10) {
-					Fruit ripeFruit = new Fruit();
-					location.addItem(ripeFruit);
-					}
-				}
-			}
 	}
 	
 	/**

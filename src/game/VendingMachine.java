@@ -3,7 +3,6 @@ package game;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Item;
-import edu.monash.fit2099.engine.LaserGun;
 
 import java.util.ArrayList;
 
