@@ -50,3 +50,4 @@ public class Player extends Actor {
 		this.ecoPoints = ecoPoints;
 	}
 }
+

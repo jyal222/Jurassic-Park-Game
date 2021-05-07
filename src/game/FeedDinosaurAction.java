@@ -4,9 +4,6 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
-import game.Dinosaur;
-import game.Food;
-import game.Player;
 
 public class FeedDinosaurAction extends Action {
 

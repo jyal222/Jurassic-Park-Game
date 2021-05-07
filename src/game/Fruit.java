@@ -3,14 +3,14 @@ package game;
 import edu.monash.fit2099.engine.Location;
 
 public class Fruit extends Food {
-    int rotTurn;
 
+    int rotTurn;
 
     /**
      *
      */
-    public Fruit() {
-        super(20, 30, 10, "Fruit", 'f', true);
+    public Fruit(int foodLevel) {
+        super(foodLevel, 30, 10, "Fruit", 'f', true);
         this.rotTurn = 15;
         this.setPrice(30);
     }
@@ -18,11 +18,7 @@ public class Fruit extends Food {
     @Override
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
-
-
-
         rotTurn--;
-
         if (rotTurn == 0) {
             currentLocation.removeItem(this);
         }

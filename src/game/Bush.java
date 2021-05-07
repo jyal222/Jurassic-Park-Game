@@ -22,8 +22,7 @@ public class Bush extends Ground {
         Random random = new Random();
 
         if (random.nextInt(100) + 1 <= 10) {
-            Fruit ripeFruit = new Fruit();
-            location.addItem(ripeFruit);
+            location.addItem(new Fruit(10));
         }
     }
 

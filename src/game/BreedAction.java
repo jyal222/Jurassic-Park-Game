@@ -6,28 +6,25 @@ import edu.monash.fit2099.engine.GameMap;
 
 public class BreedAction extends Action {
 
-    public BreedAction() {
+    private Dinosaur me;
+
+    public BreedAction(Dinosaur dinosaur) {
+        this.me = dinosaur;
     }
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (this.name == d2.name) {
-            if (this.getFoodLevel() > 50 && d2.getFoodLevel() > 50 && (!this.getGender().equals(d2.getGender())) && (!this.getStage().equals("baby")) && (!this.getStage().equals("baby"))) {
-                if (this.getGender().equals("female")) {
-                    this.setPregnant(true);
-                    System.out.println("A pair of " + name + " have just bred");
-                } else if (d2.getGender().equals("female")) {
-                    d2.setPregnant(true);
-                    System.out.println("A pair of " + name + " have just bred");
-                }
-                return true;
-            }
+        Dinosaur act = (Dinosaur) actor;
+        if (me.getGender().equals("female")) {
+            me.setPregnant(true);
+        } else if (act.getGender().equals("female")) {
+            act.setPregnant(true);
         }
-        return false;
+        return menuDescription(actor);
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        return null;
+        return "A pair of " + actor.getClass() + " have just bred";
     }
 }

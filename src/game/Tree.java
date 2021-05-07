@@ -24,26 +24,28 @@ public class Tree extends Ground {
 		Random random = new Random();
 
 		if (random.nextInt(100) + 1 <= 50) {
-			fruits.add(new Fruit());
+			fruits.add(new Fruit(5));
 		}
 
 		List<Fruit> fruitsToDrop = new ArrayList<>();
-		for (Fruit fruit: fruits){
+		for (Fruit fruit : fruits) {
 			if (random.nextInt(100) + 1 <= 5) {
+				fruit.setFoodLevel(10);
 				location.addItem(fruit);
 				fruitsToDrop.add(fruit);
 			}
 		}
-		fruits.remove(fruitsToDrop);
+		fruits.removeAll(fruitsToDrop);
 
 		age++;
 		if (age == 10)
 			displayChar = 't';
 		if (age == 20)
 			displayChar = 'T';
-
-
 	}
 
+	public List<Fruit> getFruits() {
+		return fruits;
+	}
 
 }

@@ -1,30 +1,43 @@
 package game;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
-public abstract class Dinosaur extends Actor {
+import static game.Capability.breed;
+import static game.Dinosaur.Stage.adult;
+
+public abstract class Dinosaur extends Actor implements Eatable {
 
     private Behaviour behaviour;
     private GameMap map;
-    private int foodLevel;
-    private int babyFoodLevel;
-    private int maxFoodLevel;
-    private String stage = "adult"; // default
-    private int numTurnsAlive = 0;
-    private int unconsciousTurns;
-    private boolean isUnconscious = false;
-    private int deadTurns = 0;
-    private boolean isDead = false;
-    private boolean isAttacked = false;
-    private String gender;
-    private int pregnantTurns = 0;
-    private int attackTurns = 0;
-    private boolean isPregnant = false;
+    protected Map<Behaviour.Type, Behaviour> behaviourMap = new HashMap<>();
+    protected int foodLevel;
+    protected int maxFoodLevel;
+    protected Stage stage = adult; // default
+    protected int numTurnsAlive = 0;
+    protected int unconsciousTurns;
+    protected boolean isUnconscious = false;
+    protected int deadTurns = 0;
+    protected boolean isDead = false;
+    protected boolean isAttacked = false;
+    protected String gender;
+    protected int pregnantTurns = 0;
+    protected int attackTurns = 0;
+    protected boolean isPregnant = false;
+    protected int pregnantThreshold;
+    protected int babyThreshold;
+
+    protected final int hungryThreshold;
+    protected final int deadThreshold;
+    protected final int breedThreshold;
+
+    public enum Stage {
+        baby, adult
+    }
 
     /**
      * Constructor of Dinosaur class
@@ -33,8 +46,11 @@ public abstract class Dinosaur extends Actor {
      * @param displayChar the character that will represent the Actor in the display
      * @param hitPoints   the Actor's starting hit points
      */
-    public Dinosaur(String name, char displayChar, int hitPoints) {
+    public Dinosaur(String name, char displayChar, int hitPoints, int hungryThreshold, int breedThreshold, int deadThreshold) {
         super(name, displayChar, hitPoints);
+        this.hungryThreshold = hungryThreshold;
+        this.breedThreshold = breedThreshold;
+        this.deadThreshold = deadThreshold;
     }
 
     /**
@@ -182,9 +198,9 @@ public abstract class Dinosaur extends Actor {
     /**
      * To get stage of the dinosaur (baby, adult)
      *
-     * @return string stage
+     * @return Stage stage
      */
-    public String getStage() {
+    public Stage getStage() {
         return stage;
     }
 
@@ -193,7 +209,7 @@ public abstract class Dinosaur extends Actor {
      *
      * @param stage
      */
-    public void setStage(String stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
@@ -260,8 +276,13 @@ public abstract class Dinosaur extends Actor {
     public static void tick(Location l, GameMap g) {
     }
 
-    public abstract EatAction getEatAction();
+    public abstract EatAction getEatAction(Location location);
 
+    public abstract boolean canEat(Eatable food);
+
+    public void eat(Eatable food) {
+        foodLevel += food.getFoodLevel();
+    }
 
     /**
      * To breed the dinosaur with another dinosaur with same type and opposite gender
@@ -269,20 +290,8 @@ public abstract class Dinosaur extends Actor {
      * @param d2 second dinosaur to be breed with the dinosaur
      * @return boolean indicating whether the dinosaur has breed
      */
-    public boolean breed(Dinosaur d2) {
-        if (this.name == d2.name) {
-            if (this.getFoodLevel() > 50 && d2.getFoodLevel() > 50 && (!this.getGender().equals(d2.getGender())) && (!this.getStage().equals("baby")) && (!this.getStage().equals("baby"))) {
-                if (this.getGender().equals("female")) {
-                    this.setPregnant(true);
-                    System.out.println("A pair of " + name + " have just bred");
-                } else if (d2.getGender().equals("female")) {
-                    d2.setPregnant(true);
-                    System.out.println("A pair of " + name + " have just bred");
-                }
-                return true;
-            }
-        }
-        return false;
+    public BreedAction getBreedAction() {
+        return new BreedAction(this);
     }
 
     /**
@@ -319,5 +328,105 @@ public abstract class Dinosaur extends Actor {
      */
     public void setAttacked(boolean attacked) {
         isAttacked = attacked;
+    }
+
+    public boolean canBreed(Dinosaur dinosaur) {
+        // TODO check food level and pregnant and not baby
+        return this.getClass() == dinosaur.getClass() && this.getGender() != dinosaur.getGender() && this.hasCapability(breed) && dinosaur.hasCapability(breed);
+    }
+
+    public int getPregnantThreshold() {
+        return pregnantThreshold;
+    }
+
+    public void setPregnantThreshold(int pregnantThreshold) {
+        this.pregnantThreshold = pregnantThreshold;
+    }
+
+    public int getBabyThreshold() {
+        return babyThreshold;
+    }
+
+    public void setBabyThreshold(int babyThreshold) {
+        this.babyThreshold = babyThreshold;
+    }
+
+    /**
+     * To let the pregnant dinosaur lay egg if passed the pregnant turns
+     *
+     * @param l location of dinosaur
+     */
+    protected void layEgg(Location l) {
+        pregnantTurns++;
+        if (pregnantTurns >= pregnantThreshold) {
+            l.addItem(new Egg(this.getClass().getSimpleName()));
+        }
+    }
+
+    /**
+     * To set a baby dinosaur to adult after number of turns alive of a baby dinosaur is sufficient
+     */
+    protected void babyDinosaurGrows() {
+        numTurnsAlive++;
+        if (numTurnsAlive >= babyThreshold) {
+            this.setStage(Stage.adult);
+        }
+    }
+
+    @Override
+    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        if (foodLevel <= 0) {
+            setUnconscious(true);
+            unconsciousTurns++;
+            if (unconsciousTurns >= 20) {
+                deadTurns++;
+                setDead(true);
+
+                // Corpse of dead stegosaur still remains for 20 turns
+                if (deadTurns >= deadThreshold) {
+                    map.removeActor(this);
+                }
+            }
+            return new DoNothingAction();
+        }
+
+        // minus 1 food level
+        foodLevel--;
+
+        // baby grow
+        if (stage == Stage.baby) {
+            babyDinosaurGrows();
+        }
+
+        // lay eggs
+        if (isPregnant) {
+            layEgg(map.locationOf(this));
+        }
+
+        // TODO update capabilities
+        if (foodLevel > breedThreshold && !isPregnant && stage == Stage.adult && !isUnconscious) {
+            addCapability(breed);
+        } else {
+            removeCapability(breed);
+        }
+
+        Action action = null;
+        if (getFoodLevel() <= hungryThreshold) {
+            System.out.println(name + " at (" + map.locationOf(this).x() + ", " + map.locationOf(this).y() + ") is getting hungry!");
+            action = behaviourMap.get(Behaviour.Type.EatBehaviour).getAction(this, map);
+        }
+
+        if (action == null) {
+            action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
+        }
+
+        if (action == null) {
+            action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
+        }
+
+        if (action != null)
+            return action;
+
+        return new DoNothingAction();
     }
 }

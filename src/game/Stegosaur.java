@@ -4,32 +4,45 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static game.Capability.breed;
+import static game.Dinosaur.Stage;
 
 /**
  * A herbivorous dinosaur.
- *
  */
 public class Stegosaur extends Dinosaur {
+
+	public static final String NAME = Stegosaur.class.getSimpleName();
+
 	// Will need to change this to a collection if Stegosaur gets additional Behaviours.
 	private Behaviour behaviour;
-	private List<Behaviour> behaviours;
 
-	/** 
+	/**
 	 * Constructor.
 	 * All Stegosaurs are represented by a 's' and have 100 hit points.
-	 * @param name
+	 *
+	 * @param foodLevel
 	 */
-	public Stegosaur(String name) {
-		super("stegosaur", 's', 100);
-		//behaviour = new WanderBehaviour();
-		super.setGender(this.randomiseGender());
-		super.setFoodLevel(50);
+	public Stegosaur(int foodLevel) {
+		super("stegosaur", 's', 100, 90, 50, 20);
+		super.setGender(super.randomiseGender());
+		super.setFoodLevel(foodLevel);
 		super.setMaxFoodLevel(100);
 		super.setUnconsciousTurns(20);
-		super.setPregnantTurns(10);
-		behaviours.add(new WanderBehaviour());
-		behaviours.add(new EatBehaviour());
+		super.setPregnantThreshold(10);
+		super.setBabyThreshold(30);
+
+		behaviourMap.put(Behaviour.Type.WanderBehaviour, new WanderBehaviour());
+		behaviourMap.put(Behaviour.Type.EatBehaviour, new EatBehaviour());
+		behaviourMap.put(Behaviour.Type.BreedBehaviour, new BreedBehaviour());
+	}
+
+	public Stegosaur() {
+		this(50);
 	}
 
 	//TODO add feed dinosaur action
@@ -40,133 +53,59 @@ public class Stegosaur extends Dinosaur {
 
 	/**
 	 * Figure out what to do next.
-	 * 
+	 * <p>
 	 * FIXME: Stegosaur wanders around at random, or if no suitable MoveActions are available, it
 	 * just stands there.  That's boring.
-	 * 
+	 *
 	 * @see edu.monash.fit2099.engine.Actor#playTurn(Actions, Action, GameMap, Display)
 	 */
+//    @Override
+//    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+//        Action action = null;
+//
+//        if (getFoodLevel() <= hungryThreshold) {
+//            System.out.println(name + " at (" + map.locationOf(this).x() + ", " + map.locationOf(this).y() + ") is getting hungry!");
+//            action = behaviourMap.get(Behaviour.Type.EatBehaviour).getAction(this, map);
+//        }
+//
+//        if (hasCapability(breed)) {
+//            action = behaviourMap.get(Behaviour.Type.BreedBehaviour).getAction(this, map);
+//        }
+//
+//        if (action == null) {
+//            action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
+//        }
+//
+//        if (action != null)
+//            return action;
+//
+//        return new DoNothingAction();
+//    }
+
 	@Override
-	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-		for (Behaviour behaviour: behaviours){
-			//TODO choose behaviour
-		}
-		Action wander = behaviour.getAction(this, map);
-		if (wander != null)
-			return wander;
-		
-		return new DoNothingAction();
-	}
-
-	/**
-	 * To let the pregnant dinosaur lay egg if passed the pregnant turns
-	 * @param l location of dinosaur
-	 */
-	private void layEgg(Location l) {
-		this.setPregnantTurns(this.getPregnantTurns() + 1);
-		if (this.getPregnantTurns() >= 10) {
-			Egg egg = new Egg(name);
-			l.addItem(egg);
-		}
-	}
-
-	/**
-	 * To set a baby dinosaur to adult after number of turns alive of a baby dinosaur is sufficient
-	 */
-	private void babyDinosaurGrows(){
-		this.setNumTurnsAlive(this.getNumTurnsAlive() + 1);
-		if(this.getNumTurnsAlive() >= 30){
-			this.setStage("adult");
-		}
-	}
-
-	/**
-	 * This method ticks all the brachiosaur across the gamemap.
-	 * @param l location of the dinosaur
-	 * @param g game map
-	 */
-	//@Override
-	public static void dinosaurTick(Stegosaur s, Location l, GameMap g) {
-		s.setFoodLevel(s.getFoodLevel() - 1);
-		ArrayList<Location> adjacentLocations = l.validAdjacentLocations();
-
-		// Baby dinosaurs grow up
-		if(s.getStage().equals("baby")){
-			s.babyDinosaurGrows();
-		}
-
-		if (s.getFoodLevel() > 0) {
-
-
-			// If dinosaur getting hungry
-			if (s.getFoodLevel() <= 90) {
-				System.out.println(s.name + " at (" + l.x() + ", " + l.y() + ") is getting hungry!");
-			}
-
-			// eat fruits from bush and ground
-			if (l.getGround() instanceof Bush || l.getGround() instanceof Ground) {
-				for (Item i : l.getItems()){
-					if (i instanceof Fruit) {
-						Fruit f = (Fruit) i;
-						s.setFoodLevel(s.getFoodLevel() + 10);
-						System.out.println(s.name + " at (" + l.x() + ", " + l.y() + ") eats " + f.getName());
-					}
-				}
-			}
-
-			// If dinosaur can breed
-			if (s.getFoodLevel() > 50) {
-				// Check locations for breedable stegosaurs
-				for (Location adj : adjacentLocations) {
-					if (l.containsAnActor()) {
-						Actor a = adj.getActor();
-						if (a instanceof Stegosaur) {
-							if (!s.isPregnant() && !((Stegosaur) a).isPregnant()) {
-								if (s.breed((Dinosaur) a)) {
-									break;
-								}
-							}
-							if (s.isPregnant()) {
-								//s.setPregnantTurns(s.getPregnantTurns() + 1);
-								s.layEgg(l);
-							} else if (((Stegosaur) a).isPregnant()) {
-								//((Stegosaur) a).setPregnantTurns(((Stegosaur) a).getPregnantTurns() + 1);
-								((Stegosaur) a).layEgg(l);
-							}
-						}
-					}
-				}
-			}
-
-			/*
-			// Potentially lay egg
-			if (s.isPregnant()) {
-				s.layEgg(l);
-			}
-
-			 */
-
-		}
-		// For unconscious dinosaurs
-		else {
-			s.setUnconscious(true);
-			s.setUnconsciousTurns(s.getUnconsciousTurns() + 1);
-			if (s.getUnconsciousTurns() >= 20){
-				s.setDeadTurns(s.getDeadTurns() + 1);
-				s.setDead(true);
-
-				// Corpse of dead stegosaur still remains for 20 turns
-				if(s.getDeadTurns() >= 20){
-					g.removeActor(s);
-					g.at(l.x(), l.y()).setGround(new Dirt());
+	public EatAction getEatAction(Location location) {
+		Ground ground = location.getGround();
+		if (ground instanceof Bush || ground instanceof Tree) {
+			for (Item item : location.getItems()) {
+				if (item instanceof Eatable && canEat((Eatable) item)) {
+					List<Eatable> foodList = new ArrayList<>();
+					foodList.add((Food) item);
+					location.removeItem(item);
+					return new EatAction(foodList);
 				}
 			}
 		}
-
+		return null;
 	}
 
 	@Override
-	public EatAction getEatAction() {
-		return new EatAction(10);
+	public boolean canEat(Eatable food) {
+		return (food instanceof Fruit || food instanceof MealKit);
+	}
+
+	@Override
+	public int getFoodLevel() {
+		return 50;
 	}
 }
+

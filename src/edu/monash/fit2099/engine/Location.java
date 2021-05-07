@@ -66,74 +66,6 @@ public class Location implements Printable {
 
 
 	/**
-	 * This method returns the north location instance from the current location
-	 * @return a location instance
-	 */
-	// TODO remove method
-	public Location getNorth(){ return map.at(x, y - 1); }
-
-	/**
-	 * This method returns the south location instance from the current location
-	 * @return a location instance
-	 */
-	// TODO remove method
-	public Location getSouth(){ return map.at(x, y+1); }
-
-	/**
-	 * This method returns the east location instance from the current location
-	 * @return a location instance
-	 */
-	// TODO remove method
-	public Location getEast(){ return map.at(x+1, y); }
-
-	/**
-	 * This method returns the west location instance from the current location
-	 * @return a location instance
-	 */
-	// TODO remove method
-	public Location getWest(){ return map.at(x-1, y); }
-
-	/**
-	 * This method checks if the x coordinates and y coordinates for each direction is in the range of the gameMap area
-	 * @param x The x coordinate of the location
-	 * @param y The y coordinate of the location
-	 * @return A boolean value indicating whether the location is in the gamemap
-	 */
-	// TODO remove method
-	public boolean locationValid(int x, int y){
-		if((x >= 0) && (y >= 0) && (x <= map.getXRange().max()) && (y <= map.getYRange().max())){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	/**
-	 * Generates an array list of locations for each direction of the current location and add the valid location in
-	 * the array list.
-	 * @return An array list of location instances which are the valid adjacent locations
-	 */
-	// TODO remove this method
-	public ArrayList<Location> validAdjacentLocations(){
-		ArrayList<Location> locations = new ArrayList();
-		if (locationValid(x, y - 1)){
-			locations.add(this.map.at(x, y - 1));
-		}
-		if (locationValid(x, y + 1)){
-			locations.add(this.map.at(x, y+1));
-		}
-		if (locationValid(x + 1, y)){
-			locations.add(this.map.at(x+1, y));
-		}
-		if (locationValid(x - 1, y)){
-			locations.add(this.map.at(x-1, y));
-		}
-		return locations;
-	}
-
-
-	/**
 	 * Returns a list of items at this location.
 	 *
 	 * This list uses Collections.unmodifiableList() to prevent privacy leaks.
@@ -189,13 +121,6 @@ public class Location implements Printable {
 		ground.tick(this);
 		for(Item item :  new ArrayList<>(items)) {
 			item.tick(this);
-
-			// TODO remove this Manage eggs
-			if (item instanceof Egg){
-				Egg e = (Egg) item;
-				e.eggsHatch(this, map); //Check for eggs to hatch, if yes, a baby dinosaur is born.
-			}
-
 
 		}
 	}

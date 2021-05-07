@@ -1,13 +1,8 @@
 package game;
 
-import edu.monash.fit2099.engine.Exit;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Ground;
-import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+
 import java.util.Random;
 
 /**
@@ -23,39 +18,16 @@ public class Dirt extends Ground {
     public void tick(Location location) {
         super.tick(location);
 
-        ArrayList<Exit> adjLocation = new ArrayList<>();
-        
-        /*
-        // Get adjacent locations
-        adjLocation = new ArrayList();
-
-        // Append adjacent locations
-        if (location.locationValid(location.x(), location.y() - 1)) {
-            adjLocation.add(location.getNorth());
-        }
-        if (location.locationValid(location.x(), location.y() + 1)) {
-            adjLocation.add(location.getSouth());
-        }
-        if (location.locationValid(location.x() + 1, location.y())) {
-            adjLocation.add(location.getEast());
-        }
-        if (location.locationValid(location.x() - 1, location.y())) {
-            adjLocation.add(location.getWest());
-        }
-
-         */
 
         int noAdjacentBush = 0;
         int noAdjacentTree = 0;
 
-        for (Exit lct : adjLocation) {
-            if (lct.getDestination(map, location.x(), location.y())) {
 
-                noAdjacentBush += 1;
-            } else if (lct.getGround() instanceof Tree) {
-                noAdjacentTree += 1;
-            }
+        for (Exit ext: location.getExits()) {
+            if ( ext.getDestination().getGround() instanceof Bush) noAdjacentBush++;
+            if ( ext.getDestination().getGround() instanceof Tree) noAdjacentTree++;
         }
+
 
         Random random = new Random();
 
