@@ -1,9 +1,12 @@
 package game;
 
+import edu.monash.fit2099.engine.Exit;
+import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -19,14 +22,12 @@ public class Dirt extends Ground {
     @Override
     public void tick(Location location) {
         super.tick(location);
-        ArrayList<Location> adjLocation = location.getExits();
 
-        for (){
-
-        }
-
+        ArrayList<Exit> adjLocation = new ArrayList<>();
+        
+        /*
         // Get adjacent locations
-        ArrayList<Location> adjLocation = new ArrayList();
+        adjLocation = new ArrayList();
 
         // Append adjacent locations
         if (location.locationValid(location.x(), location.y() - 1)) {
@@ -42,11 +43,14 @@ public class Dirt extends Ground {
             adjLocation.add(location.getWest());
         }
 
+         */
+
         int noAdjacentBush = 0;
         int noAdjacentTree = 0;
 
-        for (Location lct : adjLocation) {
-            if (lct.getGround() instanceof Bush) {
+        for (Exit lct : adjLocation) {
+            if (lct.getDestination(map, location.x(), location.y())) {
+
                 noAdjacentBush += 1;
             } else if (lct.getGround() instanceof Tree) {
                 noAdjacentTree += 1;

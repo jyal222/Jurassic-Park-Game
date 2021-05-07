@@ -198,4 +198,8 @@ public class Allosaur extends Dinosaur {
         }
     }
 
+    @Override
+    public EatAction getEatAction() {
+        return new EatAction(5);
+    }
 }
