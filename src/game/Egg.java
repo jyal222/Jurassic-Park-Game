@@ -3,6 +3,9 @@ package game;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 
+/**
+ * An egg class that inherited from Food class.
+ */
 public class Egg extends Food {
 
     private String type;
@@ -89,24 +92,28 @@ public class Egg extends Food {
         }
     }
 
-    /**
-     * This method is only applicable to allosaur eggs
-     *
-     * @return a boolean indicating whether the egg can be eaten
-     */
-    public boolean isEdible() {
-        return isEdible;
-    }
+//    /**
+//     * This method is only applicable to allosaur eggs
+//     *
+//     * @return a boolean indicating whether the egg can be eaten
+//     */
+//    public boolean isEdible() {
+//        return isEdible;
+//    }
+//
+//    /**
+//     * To set to the allosaur egg to be not edible, avoid allosaur from eating their child
+//     *
+//     * @param isEdible a boolean indicating whether the egg can be eaten
+//     */
+//    public void setEdible(boolean isEdible) {
+//        this.isEdible = isEdible;
+//    }
 
     /**
-     * To set to the allosaur egg to be not edible, avoid allosaur from eating their child
-     *
-     * @param isEdible a boolean indicating whether the egg can be eaten
+     * This method is to tick all the egge action in the game map.
+     * @param currentLocation The location of the ground on which we lie.
      */
-    public void setEdible(boolean isEdible) {
-        this.isEdible = isEdible;
-    }
-
     @Override
     public void tick(Location currentLocation) {
         super.tick(currentLocation);

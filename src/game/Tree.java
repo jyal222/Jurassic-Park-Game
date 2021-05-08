@@ -12,10 +12,17 @@ public class Tree extends Ground {
 	private List<Fruit> fruits = new ArrayList<>();
 
 
+	/**
+	 * Constructor.
+	 */
 	public Tree() {
 		super('+');
 	}
 
+	/**
+	 * This method is to tick all the tree in the game map.
+	 * @param location The location of the Ground
+	 */
 	@Override
 	public void tick(Location location) {
 
@@ -44,6 +51,10 @@ public class Tree extends Ground {
 			displayChar = 'T';
 	}
 
+	/**
+	 * To get a list of fruits in a tree.
+	 * @return a list of fruit in the tree.
+	 */
 	public List<Fruit> getFruits() {
 		return fruits;
 	}

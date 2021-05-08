@@ -14,6 +14,10 @@ public class Dirt extends Ground {
         super('.');
     }
 
+    /**
+     * This method is to tick all the dirts in the map.
+     * @param location The location of the Ground
+     */
     @Override
     public void tick(Location location) {
         super.tick(location);

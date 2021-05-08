@@ -12,7 +12,7 @@ import static game.Capability.breed;
 import static game.Dinosaur.Stage;
 
 /**
- * A herbivorous dinosaur.
+ * A children class that inherited from Dinosaur class, which is a herbivore dinosaur.
  */
 public class Stegosaur extends Dinosaur {
 
@@ -23,7 +23,7 @@ public class Stegosaur extends Dinosaur {
 
 	/**
 	 * Constructor.
-	 * All Stegosaurs are represented by a 's' and have 100 hit points.
+	 * All Stegosaurs are represented by a 's' and have 100 hit points,hungry threshold of 90, breed threshold of 50 and dead threshold of 20.
 	 *
 	 * @param foodLevel
 	 */
@@ -41,6 +41,9 @@ public class Stegosaur extends Dinosaur {
 		behaviourMap.put(Behaviour.Type.BreedBehaviour, new BreedBehaviour());
 	}
 
+	/**
+	 * A constructor to set initial food level of stegosaur
+	 */
 	public Stegosaur() {
 		this(50);
 	}
@@ -82,6 +85,11 @@ public class Stegosaur extends Dinosaur {
 //        return new DoNothingAction();
 //    }
 
+	/**
+	 * This method is to create a new eat action when the food in the location is eatable for stegosaur.
+	 * @param location of the stegosaur
+	 * @return a new EatAction(foodList) if condition is met, null if location not valid or food is not eatable.
+	 */
 	@Override
 	public EatAction getEatAction(Location location) {
 		Ground ground = location.getGround();
@@ -98,11 +106,20 @@ public class Stegosaur extends Dinosaur {
 		return null;
 	}
 
+	/**
+	 * This method is to check whether the food is eatable for stegosaur. In this case, only fruit and mealkit are eatable.
+	 * @param food to be checked
+	 * @return boolean depends on whether the food is eatable
+	 */
 	@Override
 	public boolean canEat(Eatable food) {
 		return (food instanceof Fruit || food instanceof MealKit);
 	}
 
+	/**
+	 * To get food level of stegosaur.
+	 * @return
+	 */
 	@Override
 	public int getFoodLevel() {
 		return 50;

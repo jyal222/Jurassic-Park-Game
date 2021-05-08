@@ -15,6 +15,10 @@ public class Bush extends Ground {
         super('^');
     }
 
+    /**
+     * This method is to produce fruit from bush based of the probability.
+     * @param location The location of the Ground
+     */
     @Override
     public void tick(Location location) {
         super.tick(location);

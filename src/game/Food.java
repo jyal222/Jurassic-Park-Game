@@ -2,6 +2,9 @@ package game;
 
 import edu.monash.fit2099.engine.Item;
 
+/**
+ * An abstract class that extends item and implement Eatable.
+ */
 public abstract class Food extends Item implements Eatable {
 
     int foodLevel;

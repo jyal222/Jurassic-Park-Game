@@ -5,6 +5,9 @@ import edu.monash.fit2099.engine.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A children class that inherited from Dinosaur class, which is a carnivore dinosaur.
+ */
 public class Allosaur extends Dinosaur {
 
     public static final String NAME = Allosaur.class.getSimpleName();
@@ -14,7 +17,7 @@ public class Allosaur extends Dinosaur {
 
     /**
      * Constructor of Allosaur class
-     * All Allosaur are represented by an 'a' and have 100 hit points.
+     * All Allosaurs are represented by an 'a' and have 100 hit points, hungry threshold of 90, breed threshold of 50 and dead threshold of 20.
      *
      * @param foodLevel initial food level of dinosaur
      */
@@ -35,23 +38,15 @@ public class Allosaur extends Dinosaur {
         this(50);
     }
 
+
     /**
      * This method ticks all the allosaurs across the gamemap.
-     *
-     * @param l location of the dinosaur
-     * @param g game map
-     */
-    public static void dinosaurTick(Allosaur a, Location l, GameMap g) {
-
-    }
-
-    /**
-     * Figure out what to do next.
-     * <p>
-     * FIXME: Allosaur wanders around at random, or if no suitable MoveActions are available, it
-     * just stands there.  That's boring.
-     *
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
      * @see edu.monash.fit2099.engine.Actor#playTurn(Actions, Action, GameMap, Display)
+     * @return action to be performed.
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
@@ -62,6 +57,11 @@ public class Allosaur extends Dinosaur {
         return super.playTurn(actions, lastAction, map, display);
     }
 
+    /**
+     * This method is to create a new eat action when the food in the location is eatable for allosaur.
+     * @param location of the allosaur
+     * @return a new EatAction(foodList) if condition is met, null if location not valid or food is not eatable.
+     */
     @Override
     public EatAction getEatAction(Location location) {
         for (Exit exit : location.getExits()) {
@@ -86,6 +86,11 @@ public class Allosaur extends Dinosaur {
         return null;
     }
 
+    /**
+     * This method is to check whether the food is eatable for allosaur. In this case, only egg, corpse and mealkit are eatable.
+     * @param food to be checked
+     * @return boolean depends on whether the food is eatable
+     */
     @Override
     public boolean canEat(Eatable food) {
         boolean canEatEgg = true;
@@ -96,15 +101,28 @@ public class Allosaur extends Dinosaur {
         return (food instanceof MealKit || (food instanceof Egg && canEatEgg) || food instanceof Dinosaur);
     }
 
+    /**
+     * To get food level of allosaur.
+     * @return food level
+     */
     @Override
     public int getFoodLevel() {
         return 50;
     }
 
+    /**
+     * This method will return a list of dinosaur that is attacked by the allosaur
+     * @return list
+     */
     public List<Dinosaur> getDinosaursAttackedList() {
         return dinosaursAttackedList;
     }
 
+    /**
+     * This method is to create a new dinosaur attack action.
+     * @param dinosaur dinosaur to be attacked
+     * @return a new DinosaurAttackAction(dinosaur)
+     */
     public Action getAttackAction(Dinosaur dinosaur) {
         return new DinosaurAttackAction(dinosaur);
     }

@@ -32,6 +32,12 @@ public class AttackAction extends Action {
 		this.target = target;
 	}
 
+	/**
+	 * This method is to attack dinosaur with weapon in invertory of player.
+	 * @param actor The actor performing the action.
+	 * @param map The map the actor is on.
+	 * @return a line showing if the player has successfully attacked the dinosaur.
+	 */
 	@Override
 	public String execute(Actor actor, GameMap map) {
 
@@ -62,6 +68,11 @@ public class AttackAction extends Action {
 		return result;
 	}
 
+	/**
+	 * This method will return a string showing which actor successfully attack which dinosaur.
+	 * @param actor The actor performing the action.
+	 * @return a string line
+	 */
 	@Override
 	public String menuDescription(Actor actor) {
 		return actor + " attacks " + target;

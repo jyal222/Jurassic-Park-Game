@@ -5,8 +5,17 @@ import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 
+/**
+ * This class is one of the behaviour of the dinosaur.
+ */
 public class AttackBehaviour extends DinosaurBehaviour {
 
+    /**
+     * This method is for the allosaur to attack conscious stegosaur.
+     * @param dinosaur the dinosaur acting
+     * @param map the GameMap containing the Dinosaur
+     * @return null if condition does not fulfilled
+     */
     @Override
     public Action getAction(Dinosaur dinosaur, GameMap map) {
         if (dinosaur instanceof Allosaur) {

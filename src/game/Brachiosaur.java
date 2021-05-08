@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 import static game.Capability.breed;
-
+/**
+ * A children class that inherited from Dinosaur class, which is a herbivore dinosaur.
+ */
 public class Brachiosaur extends Dinosaur {
 
     public static final String NAME = Brachiosaur.class.getSimpleName();
@@ -15,7 +17,7 @@ public class Brachiosaur extends Dinosaur {
 
     /**
      * Constructor of Brachiosaur class
-     * All Brachiosaur are represented by a 'b' and have 100 hit points.
+     * All Brachiosaurs are represented by a 'b' and have 100 hit points, hungry threshold of 140, breed threshold of 70 and dead threshold of 40.
      *
      * @param foodLevel
      */
@@ -57,6 +59,11 @@ public class Brachiosaur extends Dinosaur {
         return super.playTurn(actions, lastAction, map, display);
     }
 
+    /**
+     * This method is to create a new eat action when the food in the location is eatable for brachiosaur.
+     * @param location of the brachiosaur
+     * @return a new EatAction(foodList) if condition is met, null if location not valid or food is not eatable.
+     */
     @Override
     public EatAction getEatAction(Location location) {
         Ground ground = location.getGround();
@@ -72,11 +79,20 @@ public class Brachiosaur extends Dinosaur {
         return null;
     }
 
+    /**
+     * This method is to check whether the food is eatable for brachiosaur. In this case, only fruit and mealkit are eatable.
+     * @param food to be checked
+     * @return boolean depends on whether the food is eatable
+     */
     @Override
     public boolean canEat(Eatable food) {
         return (food instanceof Fruit || food instanceof MealKit);
     }
 
+    /**
+     * To get food level of brachiosaur.
+     * @return food level
+     */
     @Override
     public int getFoodLevel() {
         return 50;

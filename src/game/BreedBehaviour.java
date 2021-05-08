@@ -4,18 +4,26 @@ import edu.monash.fit2099.engine.*;
 
 import static game.Capability.breed;
 
+/**
+ * A behaviour of Dinosaur.
+ */
 public class BreedBehaviour implements Behaviour {
 
-
+    /**
+     * This method is to get location of nearest dinosaur to breed.
+     * @param actor the Actor acting
+     * @param map the GameMap containing the Actor
+     * @return getBreedAction if breedable dinosaur is in adjacent location, findDirectoin method if no breedable dinosaur in adjacent location,
+     * null if no breedable dinosaur in the whole map.
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Dinosaur me = (Dinosaur) actor;
 
-        // TODO check adjacent location for dinosaur
+        // check adjacent location for dinosaur
         for (Exit exit : map.locationOf(actor).getExits()) {
             if (exit.getDestination().getActor() instanceof Dinosaur) {
                 Dinosaur act = (Dinosaur) exit.getDestination().getActor();
-                //TODO add and remove capability for breed in Dinosaur class
                 if (me.canBreed(act)) {
                     return me.getBreedAction();
                 }
@@ -54,6 +62,15 @@ public class BreedBehaviour implements Behaviour {
         return null;
     }
 
+    /**
+     * This method is to find direction for dinosaur to walk.
+     * @param currentLct current location of dinosaur
+     * @param nearestLct current location of breedable dinosaur
+     * @param map game map
+     * @param actor actor acting
+     * @param preferY boolean
+     * @return move action
+     */
     public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
 
         int x2 = nearestLct.x();
@@ -63,6 +80,7 @@ public class BreedBehaviour implements Behaviour {
         int dx = x2 - x1;
         int dy = y2 - y1;
 
+        //TODO change direction
         if (dy >= dx && dy != 0 && preferY) {
             if (dy > 0) {
                 MoveActorAction action = map.at(x1, y1 + 1).getMoveAction(actor, "north", "a");

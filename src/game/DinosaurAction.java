@@ -4,6 +4,9 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 
+/**
+ * TODO A dinosaur action.
+ */
 public abstract class DinosaurAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
@@ -13,5 +16,11 @@ public abstract class DinosaurAction extends Action {
         return null;
     }
 
+    /**
+     * TODO
+     * @param dinosaur
+     * @param map
+     * @return
+     */
     public abstract String execute(Dinosaur dinosaur, GameMap map);
 }

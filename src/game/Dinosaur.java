@@ -285,10 +285,8 @@ public abstract class Dinosaur extends Actor implements Eatable {
     }
 
     /**
-     * To breed the dinosaur with another dinosaur with same type and opposite gender
      *
-     * @param d2 second dinosaur to be breed with the dinosaur
-     * @return boolean indicating whether the dinosaur has breed
+     * @return
      */
     public BreedAction getBreedAction() {
         return new BreedAction(this);
@@ -373,6 +371,14 @@ public abstract class Dinosaur extends Actor implements Eatable {
         }
     }
 
+    /**
+     * This method is to check which behaviour should be performed by dinosaur at current play turn.
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return each action based on the behaviour
+     */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         if (foodLevel <= 0) {

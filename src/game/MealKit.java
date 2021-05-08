@@ -1,5 +1,8 @@
 package game;
 
+/**
+ * A class that inherited from Food.
+ */
 public class MealKit extends Food {
 
     String type;

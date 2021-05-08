@@ -29,6 +29,10 @@ public interface Behaviour {
 	 */
 	Action getAction(Actor actor, GameMap map);
 
+	/**
+	 * This is the enum type of behaviours.
+	 * TODO
+	 */
 	enum Type {
 		BreedBehaviour, EatBehaviour, WanderBehaviour, AttackBehaviour
 	}
