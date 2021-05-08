@@ -29,9 +29,9 @@ public class BuyItemsAction extends Action {
         if (actor instanceof Player) {
             Player player = (Player) actor;
             String message = "Eco Points: " + player.getEcoPoints();
-            if (item.getPrice() <= player.getEcoPoints()) {
+            if (player.canSpend(item.getPrice())) {
                 player.addItemToInventory(item);
-                player.setEcoPoints(player.getEcoPoints() - item.getPrice());
+                player.spend(item.getPrice());
                 message += System.lineSeparator() + "Eco Points after purchasing: " + player.getEcoPoints();
             } else {
                 message += System.lineSeparator() + "Not enough eco points for " + item;

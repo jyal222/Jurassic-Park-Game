@@ -45,8 +45,21 @@ public class Player extends Actor {
 	 *
 	 * @param ecoPoints the amount of starting ecopoints of a player.
 	 */
-	public void setEcoPoints(int ecoPoints) {
-		this.ecoPoints = ecoPoints;
+//    public void setEcoPoints(int ecoPoints) {
+//        this.ecoPoints = ecoPoints;
+//    }
+	public boolean canSpend(int ecoPoints) {
+		return ecoPoints <= this.ecoPoints;
+	}
+
+	public void earn(int ecoPoints) {
+		this.ecoPoints += ecoPoints;
+	}
+
+	public void spend(int ecoPoints) {
+		if (canSpend(ecoPoints)) {
+			this.ecoPoints -= ecoPoints;
+		}
 	}
 }
 

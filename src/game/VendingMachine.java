@@ -21,9 +21,9 @@ public class VendingMachine extends Ground {
         this.items.add(new Fruit(20));
         this.items.add(new VegetarianMealKit());
         this.items.add(new CarnivoreMealKit());
-        this.items.add(new Egg(Stegosaur.STEGOSAUR));
-        this.items.add(new Egg(Brachiosaur.BRACHIOSAUR));
-        this.items.add(new Egg(Allosaur.ALLOSAUR));
+        this.items.add(new Egg(new Stegosaur()));
+        this.items.add(new Egg(new Brachiosaur()));
+        this.items.add(new Egg(new Allosaur()));
         this.items.add(new LaserGun());
     }
 
@@ -51,7 +51,7 @@ public class VendingMachine extends Ground {
         if (actor instanceof Player) {
             Player player = (Player) actor;
             for (Item item : items) {
-                if (item.getPrice() <= player.getEcoPoints()) {
+                if (player.canSpend(item.getPrice())) {
                     actions.add(new BuyItemsAction(item));
                 }
             }

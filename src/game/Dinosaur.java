@@ -16,6 +16,9 @@ public abstract class Dinosaur extends Actor {
 
     // use hitPoints from Actor class to represent food level
 
+    public static final String MALE = "male";
+    public static final String FEMALE = "female";
+
     protected Map<Behaviour.Type, Behaviour> behaviourMap = new HashMap<>();
     protected Stage stage = adult; // default
     protected String gender;
@@ -27,13 +30,15 @@ public abstract class Dinosaur extends Actor {
     protected int pregnantTurns = 0;
     protected int attackTurns = 0;
 
-    protected int unconsciousThreshold;
-    protected int pregnantThreshold;
-    protected int babyThreshold;
-    protected int hungryThreshold;
-    protected int deadThreshold;
-    protected int breedThreshold;
-    protected int corpseFoodLevel;
+    protected int pregnantThreshold; // max turns of pregnant before laying eggs
+    protected int eggHatchThreshold; // max turns of egg before hatching into baby dinosaur
+    protected int babyThreshold; // max turns of baby before turning into adult
+    protected int unconsciousThreshold; // max turns of unconscious before die
+    protected int deadThreshold; // max turns of death before disappearing from location
+    protected int hungryThreshold; // hit point to become hungry
+    protected int breedThreshold; // enough hit point to breed
+    protected int corpseFoodLevel; // food level of the corpse when this dinosaur dies
+    protected int eggEcoPoints; // eco points of this dinosaur's egg
 
     /**
      * A dinosaur stage can only be baby or adult.
@@ -79,25 +84,11 @@ public abstract class Dinosaur extends Actor {
     }
 
     /**
-     * To set a dinosaur to be dead
-     */
-    public void die(GameMap map) {
-        // Set 'X' to represents dead dinosaur
-        this.displayChar = 'X';
-        this.hitPoints = 0;
-        Item corpse = new Corpse(this);
-        map.locationOf(this).addItem(corpse);
-        map.removeActor(this);
-    }
-
-    /**
      * @return a string shows male or female
      */
     public String randomiseGender() {
         Random rand = new Random();
-        int number = rand.nextInt(2) + 1;
-        return number == 1 ? "male" : "female";
-
+        return rand.nextBoolean() ? MALE : FEMALE;
     }
 
     /**
@@ -137,15 +128,6 @@ public abstract class Dinosaur extends Actor {
     }
 
     /**
-     * To indicate whether a dinosaur is pregnant
-     *
-     * @return boolean
-     */
-    public boolean isPregnant() {
-        return isPregnant;
-    }
-
-    /**
      * To set a dinosaur to be pregnant
      *
      * @param pregnant
@@ -180,8 +162,24 @@ public abstract class Dinosaur extends Actor {
         return corpseFoodLevel;
     }
 
+    public int getEggEcoPoints() {
+        return eggEcoPoints;
+    }
+
     public boolean isHungry() {
         return hitPoints <= hungryThreshold;
+    }
+
+    /**
+     * To set a dinosaur to be dead
+     */
+    public void die(GameMap map) {
+        // Set 'X' to represents dead dinosaur
+        this.displayChar = 'X';
+        this.hitPoints = 0;
+        Item corpse = new Corpse(this);
+        map.locationOf(this).addItem(corpse);
+        map.removeActor(this);
     }
 
     /**
@@ -190,7 +188,7 @@ public abstract class Dinosaur extends Actor {
      * @param dinosaur to be checked
      * @return boolean
      */
-    public boolean canBreed(Dinosaur dinosaur) {
+    public boolean canBreedWith(Dinosaur dinosaur) {
         // check food level and pregnant and not baby
         return this.getClass() == dinosaur.getClass() && this.getGender() != dinosaur.getGender() && this.hasCapability(breed) && dinosaur.hasCapability(breed);
     }
@@ -203,7 +201,7 @@ public abstract class Dinosaur extends Actor {
     protected void layEgg(Location l) {
         pregnantTurns++;
         if (pregnantTurns >= pregnantThreshold) {
-            l.addItem(new Egg(name));
+            l.addItem(new Egg(this));
             pregnantTurns = 0;
             isPregnant = false;
         }
@@ -242,7 +240,7 @@ public abstract class Dinosaur extends Actor {
      * @param location current location
      * @return EatAction
      */
-    public abstract EatAction getEatAction(Location location);
+    public abstract DinosaurAction getEatAction(Location location);
 
 
     /**

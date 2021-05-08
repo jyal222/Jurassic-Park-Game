@@ -22,13 +22,15 @@ public class Stegosaur extends Dinosaur {
 	 */
 	public Stegosaur(int hitPoints) {
 		super(STEGOSAUR, 's', hitPoints, 100);
-		super.unconsciousThreshold = 20;
 		super.pregnantThreshold = 10;
+		super.eggHatchThreshold = 15;
 		super.babyThreshold = 30;
+		super.unconsciousThreshold = 20;
+		super.deadThreshold = 20;
 		super.hungryThreshold = 90;
 		super.breedThreshold = 50;
-		super.deadThreshold = 20;
 		super.corpseFoodLevel = 50;
+		super.eggEcoPoints = 100;
 	}
 
 	/**
@@ -40,6 +42,7 @@ public class Stegosaur extends Dinosaur {
 
 	/**
 	 * Returns a collection of the Actions that the otherActor can do to the current Actor.
+	 *
 	 * @param otherActor the Actor that might be performing attack
 	 * @param direction  String representing the direction of the other Actor
 	 * @param map        current GameMap
@@ -62,26 +65,20 @@ public class Stegosaur extends Dinosaur {
 	 * @return a new EatAction(foodList) if condition is met, null if location not valid or food is not eatable.
 	 */
 	@Override
-	public EatAction getEatAction(Location location) {
+	public DinosaurAction getEatAction(Location location) {
 		Ground ground = location.getGround();
 		if (ground instanceof Bush) {
 			Bush bush = (Bush) ground;
-			for (Eatable fruit : bush.getFruits()) {
-				if (canEat(fruit)) {
-					List<Eatable> foodList = new ArrayList<>();
-					foodList.add(fruit);
-					bush.getFruits().remove(fruit);
-					return new EatAction(foodList);
+			for (Food food : bush.getFruits()) {
+				if (canEat(food)) {
+					return new EatAction(food, bush);
 				}
 			}
 		}
 		if (ground instanceof Tree) {
 			for (Item item : location.getItems()) {
 				if (item instanceof Eatable && canEat((Eatable) item)) {
-					List<Eatable> foodList = new ArrayList<>();
-					foodList.add((Food) item);
-					location.removeItem(item);
-					return new EatAction(foodList);
+					return new EatAction((Food) item);
 				}
 			}
 		}

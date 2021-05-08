@@ -26,9 +26,9 @@ public class BreedAction extends DinosaurAction {
      */
     @Override
     public String execute(Dinosaur dinosaur, GameMap map) {
-        if (anotherDinosaur.getGender().equals("female")) {
+        if (anotherDinosaur.getGender().equals(Dinosaur.FEMALE)) {
             anotherDinosaur.setPregnant(true);
-        } else if (dinosaur.getGender().equals("female")) {
+        } else if (dinosaur.getGender().equals(Dinosaur.FEMALE)) {
             dinosaur.setPregnant(true);
         }
         return menuDescription(dinosaur);

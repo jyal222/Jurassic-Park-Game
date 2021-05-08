@@ -18,15 +18,14 @@ public class BreedBehaviour extends DinosaurBehaviour {
         // check adjacent location for dinosaur
         for (Exit exit : map.locationOf(dinosaur).getExits()) {
             if (exit.getDestination().getActor() instanceof Dinosaur) {
-                Dinosaur act = (Dinosaur) exit.getDestination().getActor();
-                if (dinosaur.canBreed(act)) {
+                Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
+                if (dinosaur.canBreedWith(otherDinosaur)) {
                     System.out.println(dinosaur + " found a mate.");
-                    return dinosaur.getBreedAction(act);
+                    return dinosaur.getBreedAction(otherDinosaur);
                 }
             }
         }
 
-        System.out.println(dinosaur + " moves to find mate.");
         // if adjacent location no dinosaur, find the nearest dinosaur from the whole map
         NumberRange xRange = map.getXRange();
         NumberRange yRange = map.getYRange();
@@ -39,9 +38,9 @@ public class BreedBehaviour extends DinosaurBehaviour {
         for (Integer x : xRange) {
             for (Integer y : yRange) {
                 Location lct = map.at(x, y);
-                if (map.isAnActorAt(lct) && map.getActorAt(lct) instanceof Dinosaur) {
-                    Dinosaur act = (Dinosaur) map.getActorAt(lct);
-                    if (dinosaur.canBreed(act)) {
+                if (lct.containsAnActor() && lct.getActor() instanceof Dinosaur) {
+                    Dinosaur otherDinosaur = (Dinosaur) lct.getActor();
+                    if (dinosaur.canBreedWith(otherDinosaur)) {
                         double distance = Math.sqrt(Math.pow((x - x1), 2) + Math.pow((y - y1), 2));
                         if (distance < shortestDistance) {
                             shortestDistance = distance;
@@ -53,7 +52,6 @@ public class BreedBehaviour extends DinosaurBehaviour {
         }
         if (nearestLct != null) {
             return findDirection(curLocation, nearestLct, map, dinosaur, true);
-
         }
         return null;
     }

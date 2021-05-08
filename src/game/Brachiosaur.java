@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static game.Capability.breed;
+
 /**
  * A children class that inherited from Dinosaur class, which is a herbivore dinosaur.
  */
@@ -22,17 +24,20 @@ public class Brachiosaur extends Dinosaur {
      */
     public Brachiosaur(int hitPoints) {
         super(BRACHIOSAUR, 'b', hitPoints, 160);
-        super.unconsciousThreshold = 15;
         super.pregnantThreshold = 3; // todo 30
+        super.eggHatchThreshold = 15;
         super.babyThreshold = 50;
+        super.unconsciousThreshold = 15;
+        super.deadThreshold = 40;
         super.hungryThreshold = 140;
         super.breedThreshold = 70;
-        super.deadThreshold = 40;
         super.corpseFoodLevel = 100;
+        super.eggEcoPoints = 1000;
     }
 
     public Brachiosaur() {
         this(100);
+        addCapability(breed);
     }
 
     /**
@@ -45,7 +50,7 @@ public class Brachiosaur extends Dinosaur {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        // If Brachiosaur step on the Bush, 50% to kill bush
+        // If Brachiosaur stepped on the Bush, 50% to kill bush
         Location location = map.locationOf(this);
         if (location.getGround() instanceof Bush) {
             Random random = new Random();
@@ -65,16 +70,11 @@ public class Brachiosaur extends Dinosaur {
      * @return a new EatAction(foodList) if condition is met, null if location not valid or food is not eatable.
      */
     @Override
-    public EatAction getEatAction(Location location) {
+    public DinosaurAction getEatAction(Location location) {
         Ground ground = location.getGround();
         if (ground instanceof Tree) {
             Tree tree = (Tree) ground;
-            List<Eatable> foodList = new ArrayList<>();
-            for (Eatable fruit : tree.getFruits()) {
-                foodList.add(fruit);
-            }
-            tree.getFruits().removeAll(foodList);
-            return new EatAction(foodList);
+            return new EatManyAction(tree);
         }
         return null;
     }

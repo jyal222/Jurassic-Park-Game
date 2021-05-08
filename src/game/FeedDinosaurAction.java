@@ -35,7 +35,9 @@ public class FeedDinosaurAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
         if (actor instanceof Player) {
-            actor.removeItemFromInventory(food);
+            Player player = (Player) actor;
+            player.removeItemFromInventory(food);
+            player.earn(10);
             dinosaur.eat(food);
             return menuDescription(actor);
         } else {

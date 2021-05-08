@@ -9,4 +9,6 @@ public interface Producible {
     List<Food> getFruits();
 
     boolean removeFruit(Food fruitToRemove);
+
+    boolean removeFruits(List<Food> fruitsToRemove);
 }

@@ -72,6 +72,11 @@ public class Bush extends Ground implements Producible {
     }
 
     @Override
+    public boolean removeFruits(List<Food> fruitsToRemove) {
+        return fruits.removeAll(fruitsToRemove);
+    }
+
+    @Override
     public String toString() {
         return "Bush";
     }

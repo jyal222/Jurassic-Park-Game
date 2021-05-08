@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Tree extends Ground implements Producible {
+
 	private int age = 0;
 	private List<Food> fruits = new ArrayList<>();
-
 
 	/**
 	 * Constructor.
@@ -18,8 +18,28 @@ public class Tree extends Ground implements Producible {
 		super('+');
 	}
 
+	public void incrementPlayersEcoPoints(GameMap map) {
+		// Get all players on map
+		NumberRange xRange = map.getXRange();
+		NumberRange yRange = map.getYRange();
+		List<Player> players = new ArrayList<>();
+		for (Integer x : xRange) {
+			for (Integer y : yRange) {
+				Location loc = map.at(x, y);
+				if (loc.containsAnActor() && loc.getActor() instanceof Player) {
+					players.add((Player) loc.getActor());
+				}
+			}
+		}
+		// Iterate through every player and increment eco points
+		for (Player p : players) {
+			p.earn(1);
+		}
+	}
+
 	/**
 	 * This method is to tick all the tree in the game map.
+	 *
 	 * @param location The location of the Ground
 	 */
 	@Override
@@ -31,6 +51,7 @@ public class Tree extends Ground implements Producible {
 
 		if (random.nextInt(100) + 1 <= 50) {
 			fruits.add(new Fruit(5));
+			incrementPlayersEcoPoints(location.map());
 		}
 
 		List<Food> fruitsToDrop = new ArrayList<>();
@@ -52,8 +73,9 @@ public class Tree extends Ground implements Producible {
 
 	/**
 	 * Returns an Action list.
-	 * @param actor the Actor acting
-	 * @param location the current Location
+	 *
+	 * @param actor     the Actor acting
+	 * @param location  the current Location
 	 * @param direction the direction of the Ground from the Actor
 	 * @return
 	 */
@@ -68,6 +90,7 @@ public class Tree extends Ground implements Producible {
 
 	/**
 	 * To get a list of fruits in a tree.
+	 *
 	 * @return a list of fruit in the tree.
 	 */
 	@Override
@@ -77,12 +100,18 @@ public class Tree extends Ground implements Producible {
 
 	/**
 	 * To remove fruit from list.
+	 *
 	 * @param fruitToRemove fruit to remove
 	 * @return boolean
 	 */
 	@Override
 	public boolean removeFruit(Food fruitToRemove) {
 		return fruits.remove(fruitToRemove);
+	}
+
+	@Override
+	public boolean removeFruits(List<Food> fruitsToRemove) {
+		return fruits.removeAll(fruitsToRemove);
 	}
 
 	@Override

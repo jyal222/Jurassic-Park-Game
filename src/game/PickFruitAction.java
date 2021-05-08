@@ -23,11 +23,13 @@ public class PickFruitAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
         if (actor instanceof Player) {
+            Player player = (Player) actor;
             Random random = new Random();
             int number = random.nextInt(10) + 1;
             if (number > 6 && !source.getFruits().isEmpty()) {
                 Food fruit = source.getFruits().get(0);
-                actor.addItemToInventory(fruit);
+                player.earn(10);
+                player.addItemToInventory(fruit);
                 source.removeFruit(fruit);
                 return actor + " successfully picked fruit from " + source;
             } else {

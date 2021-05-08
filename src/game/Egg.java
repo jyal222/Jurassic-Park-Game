@@ -2,23 +2,28 @@ package game;
 
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
+import edu.monash.fit2099.engine.NumberRange;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An egg class that inherited from Food class.
  */
 public class Egg extends Food {
 
-    private String type;
+    private Dinosaur dinosaur;
     private int turnsOnGround;
 
     /**
      * Constructor of Egg class
      *
-     * @param type type of dinosaur
+     * @param dinosaur the dinosaur
      */
-    public Egg(String type) {
+    public Egg(Dinosaur dinosaur) {
         super(10, 200, 0, "Egg", 'e', true);
-        this.type = type;
+        this.dinosaur = dinosaur;
+        String type = dinosaur.toString();
         if (type.equals(Stegosaur.STEGOSAUR)) {
             super.name = "Stegosaur Egg";
             super.price = 200;
@@ -31,40 +36,8 @@ public class Egg extends Food {
         }
     }
 
-    /**
-     * Returns whether the type of egg
-     *
-     * @return a string indicating the type of egg
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * To set the type of egg depending on the type of the parent dinosaur
-     *
-     * @param type string type which will is the type of the parent dinosaur
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * To get the number of turns of egg being laid on the ground
-     *
-     * @return integer
-     */
-    public int getTurnsOnGround() {
-        return turnsOnGround;
-    }
-
-    /**
-     * To set the number of turns of egg being laid on the ground
-     *
-     * @param turnsOnGround the new number of turns the egg has been on the ground
-     */
-    public void setTurnsOnGround(int turnsOnGround) {
-        this.turnsOnGround = turnsOnGround;
+    public Dinosaur getDinosaur() {
+        return dinosaur;
     }
 
     /**
@@ -72,18 +45,22 @@ public class Egg extends Food {
      *
      * @param map the game map of the game
      */
-    private void eggsHatchRewards(GameMap map) {
-        for (Player p : map.getPlayers()) {
-            if (type.equals("stegosaur")) {
-                p.setEcoPoints(p.getEcoPoints() + 100);
-                System.out.println(p.getEcoPoints());
-            } else if (type.equals("brachiosaur")) {
-                p.setEcoPoints(p.getEcoPoints() + 1000);
-                System.out.println(p.getEcoPoints());
-            } else if (type.equals("allosaur")) {
-                p.setEcoPoints(p.getEcoPoints() + 1000);
-                System.out.println(p.getEcoPoints());
+    public void incrementPlayersEcoPoints(GameMap map) {
+        // Get all players on map
+        NumberRange xRange = map.getXRange();
+        NumberRange yRange = map.getYRange();
+        List<Player> players = new ArrayList<>();
+        for (Integer x : xRange) {
+            for (Integer y : yRange) {
+                Location loc = map.at(x, y);
+                if (loc.containsAnActor() && loc.getActor() instanceof Player) {
+                    players.add((Player) loc.getActor());
+                }
             }
+        }
+        // Iterate through every player and increment eco points
+        for (Player p : players) {
+            p.earn(1);
         }
     }
 
@@ -99,6 +76,7 @@ public class Egg extends Food {
         // TODO different dinosaur turn
         if (turnsOnGround > 15 && !currentLocation.containsAnActor()) {
             Dinosaur baby = null;
+            String type = dinosaur.toString();
             if (type.equals(Stegosaur.STEGOSAUR)) {
                 baby = new Stegosaur(Stegosaur.BABY_FOOD_LEVEL);
             } else if (type.equals(Brachiosaur.BRACHIOSAUR)) {
@@ -111,7 +89,7 @@ public class Egg extends Food {
             currentLocation.addActor(baby);
             // remove egg that has hatched (eggshell)
             currentLocation.removeItem(this);
-            eggsHatchRewards(currentLocation.map());
+            incrementPlayersEcoPoints(currentLocation.map());
         }
     }
 }

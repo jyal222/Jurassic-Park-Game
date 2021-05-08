@@ -5,7 +5,7 @@ import edu.monash.fit2099.engine.WeaponItem;
 /**
  * A type of weapon that players can own and zap stegosaurs with
  */
-public class LaserGun extends WeaponItem implements Purchasable {
+public class LaserGun extends WeaponItem {
 
     private int price;
 
