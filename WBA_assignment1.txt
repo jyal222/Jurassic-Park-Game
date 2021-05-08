@@ -30,6 +30,6 @@ Both are responsible for doing the followings:
 - Classes that are newly implemented
 - Docs commenting
 
-I accept this WBA. - Lim Shir Yin
+I accept this WBA.
 
 
