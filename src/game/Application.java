@@ -49,38 +49,17 @@ public class Application {
 		world.addPlayer(player, gameMap.at(9, 4));
 
 		// Place a pair of stegosaurs in the middle of the map
-//		gameMap.at(30, 12).addActor(new Stegosaur());
-//		gameMap.at(32, 12).addActor(new Stegosaur());
-//		gameMap.at(33, 12).addActor(new Stegosaur());
-//		gameMap.at(34, 12).addActor(new Stegosaur());
-//		gameMap.at(35, 12).addActor(new Stegosaur());
-//		gameMap.at(36, 12).addActor(new Stegosaur());
-//		gameMap.at(37, 12).addActor(new Stegosaur());
-//		gameMap.at(38, 12).addActor(new Stegosaur());
-		Dinosaur smale = new Stegosaur();
-		smale.setGender("male");
-		Dinosaur sfemale = new Stegosaur();
-		sfemale.setGender("female");
+
 		gameMap.at(32, 12).addActor(new Stegosaur());
 		gameMap.at(33, 12).addActor(new Stegosaur());
 
-		// Place a pair of brachiosaurs in the map
-		Dinosaur bmale = new Brachiosaur();
-		bmale.setGender("male");
-		Dinosaur bfemale = new Brachiosaur();
-		bfemale.setGender("female");
-		gameMap.at(52, 12).addActor(bmale);
-		gameMap.at(53, 12).addActor(bfemale);
-//		gameMap.at(50, 12).addActor(new Brachiosaur());
-//		gameMap.at(52, 12).addActor(new Brachiosaur());
-//		gameMap.at(53, 12).addActor(new Brachiosaur());
-//		gameMap.at(54, 12).addActor(new Brachiosaur());
-//		gameMap.at(55, 12).addActor(new Brachiosaur());
-//		gameMap.at(56, 12).addActor(new Brachiosaur());
+		gameMap.at(50, 12).addActor(new Brachiosaur());
+		gameMap.at(52, 12).addActor(new Brachiosaur());
+
 
 		gameMap.at(15, 9).setGround(new VendingMachine());
 
-		//TODO grow bush at the beginning of the game (1% chance)
+		// grow bush at the beginning of the game (1% chance)
 		gameMap.tick();
 
 		world.run();

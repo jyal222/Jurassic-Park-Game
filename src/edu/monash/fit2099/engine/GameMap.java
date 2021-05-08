@@ -310,22 +310,6 @@ public class GameMap {
 		return actorLocations.contains(actor) && actorLocations.locationOf(actor).map() == this;
 	}
 
-	/**
-	 *
-	 * This method returns an array list of all the players existing in the game map
-	 * @return an array list of current players
-	 */
-	// TODO remove this method
-	public ArrayList<Player> getPlayers(){
-		ArrayList<Player> players = new ArrayList();
-		for(Actor actor : actorLocations){
-			if(actor instanceof Player){
-				players.add((Player) actor);
-			}
-		}
-		return players;
-	}
-
 
 
 

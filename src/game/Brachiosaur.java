@@ -24,7 +24,7 @@ public class Brachiosaur extends Dinosaur {
      */
     public Brachiosaur(int hitPoints) {
         super(BRACHIOSAUR, 'b', hitPoints, 160);
-        super.pregnantThreshold = 3; // todo 30
+        super.pregnantThreshold = 30;
         super.eggHatchThreshold = 15;
         super.babyThreshold = 50;
         super.unconsciousThreshold = 15;
