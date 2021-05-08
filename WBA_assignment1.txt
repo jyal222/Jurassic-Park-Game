@@ -15,3 +15,18 @@ I accept this WBA.
 I accept this WBA.
 
 
+
+-------------------------------------------------------------------------------------
+FIT2099 Assignment 3: Work Breakdown Agreements 2021
+
+Lim Shir Yin is responsible for doing the followings:
+- Dinosaur Actions
+
+Tan Jie Yen is responsible for doing the followings:
+- Player Actions
+
+Both are responsible for doing the followings:
+- Update diagrams and design rationale documents
+- Classes that are newly implemented
+
+
