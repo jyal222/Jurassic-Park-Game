@@ -3,39 +3,48 @@ package game;
 import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
-import game.Fruit;
-import game.Player;
 
 import java.util.Random;
 
 public class PickFruitAction extends Action {
 
+    Producible source;
+
+    public PickFruitAction(Producible source) {
+        this.source = source;
+    }
+
     /**
-     *
+     * To pick fruit if available.
      * @param actor The actor performing the action.
-     * @param map The map the actor is on.
-     * @return
+     * @param map   The map the actor is on.
+     * @return string
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        String message;
-        if(actor instanceof Player){
+        if (actor instanceof Player) {
             Random random = new Random();
-            int number = random.nextInt(10) + 1; //either 1 or 2
-            if (number > 6) {
-                actor.addItemToInventory(new Fruit());
-                message = "You successfully picked fruit from the tree or the bush.";
+            int number = random.nextInt(10) + 1;
+            if (number > 6 && !source.getFruits().isEmpty()) {
+                Food fruit = source.getFruits().get(0);
+                actor.addItemToInventory(fruit);
+                source.removeFruit(fruit);
+                return actor + " successfully picked fruit from " + source;
             } else {
-                message = "You search the tree or bush for fruit, but you can't find any ripe ones.";
+                return actor + " searched the tree or bush for fruit, but can't find any ripe ones.";
             }
         } else {
             throw new IllegalArgumentException("Actor must be an instance of type player to perform this action");
         }
-        return message;
     }
 
+    /**
+     * To return a string swhoing action
+     * @param actor The actor performing the action.
+     * @return
+     */
     @Override
     public String menuDescription(Actor actor) {
-        return "Pick fruit from the tree or the bush";
+        return actor + " tries to pick fruit from " + source;
     }
 }

@@ -31,7 +31,6 @@ public interface Behaviour {
 
 	/**
 	 * This is the enum type of behaviours.
-	 * TODO
 	 */
 	enum Type {
 		BreedBehaviour, EatBehaviour, WanderBehaviour, AttackBehaviour

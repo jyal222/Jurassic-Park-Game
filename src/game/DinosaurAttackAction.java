@@ -1,41 +1,54 @@
 package game;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.*;
 
 /**
  * A dinosaur action to attack other dinosaur.
  */
 public class DinosaurAttackAction extends DinosaurAction {
 
-    private Dinosaur dinosaur;
+    private Dinosaur target;
 
     /**
      * Constructor
-     * @param dinosaur to be attacked
+     * @param target to be attacked
      */
-    public DinosaurAttackAction(Dinosaur dinosaur) {
-        this.dinosaur = dinosaur;
+    public DinosaurAttackAction(Dinosaur target) {
+        this.target = target;
     }
 
     /**
      *
-     * @param dinosaur to be attacked
+     * @param dinosaur attacking
      * @param map game map
      * @return string showing which dinosaur attack which dinosaur
      */
     @Override
     public String execute(Dinosaur dinosaur, GameMap map) {
-        if (dinosaur instanceof Allosaur) { //TODO stegosaur is passed in as argument
+        if (dinosaur instanceof Allosaur) {
             Allosaur allosaur = (Allosaur) dinosaur;
             if (allosaur.getStage() == Dinosaur.Stage.adult) {
-                allosaur.setFoodLevel(allosaur.getFoodLevel() + 20);
+                allosaur.heal(20);
             } else {
-                allosaur.setFoodLevel(allosaur.getFoodLevel() + 10);
+                allosaur.heal(10);
             }
-            dinosaur.setFoodLevel(dinosaur.getFoodLevel() - 20);
-            dinosaur.setAttackTurns(0);
-            return menuDescription(dinosaur);
+            String result = dinosaur + " attacked " + target;
+            target.hurt(20);
+            target.setAttackTurns(0);
+            if (!target.isConscious()) {
+                target.die(map);
+                allosaur.getAttackedDinosaursList().remove(target);
+
+                Actions dropActions = new Actions();
+                for (Item item : target.getInventory())
+                    dropActions.add(item.getDropAction());
+                for (Action drop : dropActions)
+                    drop.execute(target, map);
+
+                result += System.lineSeparator() + target + " is dead.";
+            }
+
+            return result;
         }
         return null;
     }
@@ -47,7 +60,7 @@ public class DinosaurAttackAction extends DinosaurAction {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " attacked " + dinosaur;
+        return actor + " attacked " + target;
     }
 
 }

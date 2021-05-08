@@ -7,87 +7,52 @@ import edu.monash.fit2099.engine.Location;
 
 public class FeedDinosaurAction extends Action {
 
-    Food food;
-    Dinosaur dinosaur;
-    Location location;
+    private Food food;
+    private Dinosaur dinosaur;
+    private Location locationOfDinosaur;
 
     /**
      * Feed Dinosaur Food Action Constructor
-     * @param food food to feed dinosaur
+     *
+     * @param food     food to feed dinosaur
      * @param dinosaur dinosaur to be fed
      * @param location location of dinosaur to be fed
      */
     public FeedDinosaurAction(Food food, Dinosaur dinosaur, Location location) {
         this.food = food;
         this.dinosaur = dinosaur;
-        this.location = location;
+        this.locationOfDinosaur = location;
     }
 
     /**
      * Food item will be removed from inventory if player chooses to feed dinosaur
+     *
      * @param actor The actor performing the action.
-     * @param map The map the actor is on.
-     * @throws IllegalArgumentException if the actor parameter is not of type Player
+     * @param map   The map the actor is on.
      * @return string showing the chosen dinosaur to feed and its location
+     * @throws IllegalArgumentException if the actor parameter is not of type Player
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (actor instanceof Player){
-            actor.removeItemFromInventory(this.getFood());
-            if (this.getFood().getName() == "Fruit") {
-                this.getDinosaur().setFoodLevel(this.getDinosaur().getFoodLevel() + 20);
-                System.out.println("Food Level: " + this.getDinosaur().getFoodLevel());
-            } else {
-                int foodLevelPoints = this.getFood().foodLevel;
-                this.getDinosaur().setFoodLevel(this.getDinosaur().getFoodLevel() + foodLevelPoints);
-                System.out.println("Food Level: " + this.getDinosaur().getFoodLevel());
-            }
+        if (actor instanceof Player) {
+            actor.removeItemFromInventory(food);
+            dinosaur.eat(food);
+            return menuDescription(actor);
         } else {
             throw new IllegalArgumentException("Actor must be an instance of type player to perform this action");
         }
-        return menuDescription(actor);
     }
 
     /**
      * Returns a string showing the food item to be fed to the dinosaur at the location
+     *
      * @param actor The actor performing the action.
      * @return
      */
     @Override
     public String menuDescription(Actor actor) {
-        String message = "Feed " + food.getName() + " to " + this.getDinosaur().name + " at (" + this.location.x() + ", " + this.location.y() + ")";
+        String message = actor + " feed " + food + " to " + dinosaur + " at (" + locationOfDinosaur.x() + ", " + locationOfDinosaur.y() + ")";
         return message;
     }
 
-    /**
-     * To get the Food type attribute
-     * @return a Food child instance
-     */
-    public Food getFood() {
-        return food;
-    }
-
-    /**
-     * To set the Food type attribute
-     * @param food an instance of type food eg. Fruit, Egg, MealKit
-     */
-    public void setFood(Food food) {
-        this.food = food;
-    }
-
-    /**
-     * The dinosaur to be fed
-     * @return A dinosaur instance based on the type of dinosaur
-     */
-    public Dinosaur getDinosaur() {
-        return dinosaur;
-    }
-
-    /**
-     * Sets the dinosaur instance to be fed.
-     * @param dinosaur A dinosaur instance
-     */
-    public void setDinosaur(Dinosaur dinosaur) {
-        this.dinosaur = dinosaur;
-    }
 }

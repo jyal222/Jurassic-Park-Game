@@ -46,8 +46,4 @@ public abstract class Food extends Item implements Eatable {
         this.foodLevel = foodLevel;
     }
 
-    @Override
-    public String toString() {
-        return super.name;
-    }
 }

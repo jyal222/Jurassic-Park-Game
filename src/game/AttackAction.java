@@ -17,7 +17,7 @@ public class AttackAction extends Action {
 	/**
 	 * The Actor that is to be attacked
 	 */
-	protected Actor target;
+	protected Dinosaur target;
 	/**
 	 * Random number generator
 	 */
@@ -25,17 +25,18 @@ public class AttackAction extends Action {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param target the Actor to attack
 	 */
-	public AttackAction(Actor target) {
+	public AttackAction(Dinosaur target) {
 		this.target = target;
 	}
 
 	/**
 	 * This method is to attack dinosaur with weapon in invertory of player.
+	 *
 	 * @param actor The actor performing the action.
-	 * @param map The map the actor is on.
+	 * @param map   The map the actor is on.
 	 * @return a line showing if the player has successfully attacked the dinosaur.
 	 */
 	@Override
@@ -52,16 +53,13 @@ public class AttackAction extends Action {
 
 		target.hurt(damage);
 		if (!target.isConscious()) {
-			Item corpse = new PortableItem("dead " + target, '%');
-			map.locationOf(target).addItem(corpse);
-			
+			target.die(map);
 			Actions dropActions = new Actions();
 			for (Item item : target.getInventory())
 				dropActions.add(item.getDropAction());
-			for (Action drop : dropActions)		
+			for (Action drop : dropActions)
 				drop.execute(target, map);
-			map.removeActor(target);	
-			
+
 			result += System.lineSeparator() + target + " is killed.";
 		}
 
@@ -70,6 +68,7 @@ public class AttackAction extends Action {
 
 	/**
 	 * This method will return a string showing which actor successfully attack which dinosaur.
+	 *
 	 * @param actor The actor performing the action.
 	 * @return a string line
 	 */

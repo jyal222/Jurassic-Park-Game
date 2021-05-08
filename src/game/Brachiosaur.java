@@ -6,30 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static game.Capability.breed;
 /**
  * A children class that inherited from Dinosaur class, which is a herbivore dinosaur.
  */
 public class Brachiosaur extends Dinosaur {
 
-    public static final String NAME = Brachiosaur.class.getSimpleName();
+    public static final String BRACHIOSAUR = "brachiosaur";
+    public static final int BABY_FOOD_LEVEL = 10;
+
     private Behaviour behaviour;
 
     /**
      * Constructor of Brachiosaur class
      * All Brachiosaurs are represented by a 'b' and have 100 hit points, hungry threshold of 140, breed threshold of 70 and dead threshold of 40.
      *
-     * @param foodLevel
+     * @param hitPoints starting hit points of Brachiosaur
      */
-    public Brachiosaur(int foodLevel) {
-        super("brachiosaur", 'b', 100, 140, 70, 40);
-        // get the gender of brachiosaur
-        super.setGender(this.randomiseGender());
-        super.setFoodLevel(foodLevel);
-        super.setMaxFoodLevel(160);
-        super.setUnconsciousTurns(15);
-        super.setPregnantThreshold(30);
-        super.setBabyThreshold(50);
+    public Brachiosaur(int hitPoints) {
+        super(BRACHIOSAUR, 'b', hitPoints, 160);
+        super.unconsciousThreshold = 15;
+        super.pregnantThreshold = 3; // todo 30
+        super.babyThreshold = 50;
+        super.hungryThreshold = 140;
+        super.breedThreshold = 70;
+        super.deadThreshold = 40;
+        super.corpseFoodLevel = 100;
     }
 
     public Brachiosaur() {
@@ -61,6 +62,7 @@ public class Brachiosaur extends Dinosaur {
 
     /**
      * This method is to create a new eat action when the food in the location is eatable for brachiosaur.
+     *
      * @param location of the brachiosaur
      * @return a new EatAction(foodList) if condition is met, null if location not valid or food is not eatable.
      */
@@ -70,7 +72,7 @@ public class Brachiosaur extends Dinosaur {
         if (ground instanceof Tree) {
             Tree tree = (Tree) ground;
             List<Eatable> foodList = new ArrayList<>();
-            for (Fruit fruit : tree.getFruits()) {
+            for (Eatable fruit : tree.getFruits()) {
                 foodList.add(fruit);
             }
             tree.getFruits().removeAll(foodList);
@@ -81,21 +83,14 @@ public class Brachiosaur extends Dinosaur {
 
     /**
      * This method is to check whether the food is eatable for brachiosaur. In this case, only fruit and mealkit are eatable.
+     *
      * @param food to be checked
      * @return boolean depends on whether the food is eatable
      */
     @Override
     public boolean canEat(Eatable food) {
-        return (food instanceof Fruit || food instanceof MealKit);
+        return (food instanceof Fruit || food instanceof VegetarianMealKit);
     }
 
-    /**
-     * To get food level of brachiosaur.
-     * @return food level
-     */
-    @Override
-    public int getFoodLevel() {
-        return 50;
-    }
 }
 

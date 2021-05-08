@@ -11,6 +11,7 @@ public class Fruit extends Food {
 
     /**
      * Constructor
+     * @param foodLevel food level
      */
     public Fruit(int foodLevel) {
         super(foodLevel, 30, 10, "Fruit", 'f', true);
@@ -20,6 +21,7 @@ public class Fruit extends Food {
 
     /**
      * This method is to tick all the fruits in the game map.
+     *
      * @param currentLocation The location of the ground on which we lie.
      */
     @Override
@@ -29,25 +31,6 @@ public class Fruit extends Food {
         if (rotTurn == 0) {
             currentLocation.removeItem(this);
         }
-    }
-
-    /**
-     * Returns the number of turns until the fruit expires.
-     * Fruits on the ground for more than 15 turns will rot and disappear
-     *
-     * @return integer indicating how many turns it takes for the fruit to expire
-     */
-    public int getRotTurns() {
-        return rotTurn;
-    }
-
-    /**
-     * Increases by 1 every term and sets the number of times the fruit has stayed on the ground.
-     *
-     * @param rotTurn the new updated expiry turns for a current fruit
-     */
-    public void setRotTurns(int rotTurn) {
-        this.rotTurn = rotTurn;
     }
 
 }

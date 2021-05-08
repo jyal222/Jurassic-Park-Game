@@ -45,7 +45,6 @@ public class Dirt extends Ground {
                 if (random.nextInt(100) + 1 <= 10) {
                     location.setGround(new Bush());
                 }
-
             }
         }
 

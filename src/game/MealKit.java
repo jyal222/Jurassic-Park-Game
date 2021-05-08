@@ -3,34 +3,17 @@ package game;
 /**
  * A class that inherited from Food.
  */
-public class MealKit extends Food {
+public abstract class MealKit extends Food {
 
-    String type;
+//    protected String type;
 
     /**
      * Instantiates a MealKit constructor
-     * @param type a string value of either "carnivore" or "vegetarian"
+     * @param name name of mealkit
+     * @param foodPrice price of mealkit
      */
-    public MealKit(String type) {
-        super(40, 100, 0, "Vegetarian Meal Kit", 'm', true);
-        if (type.equals("carnivore") || type.equals("vegetarian")){
-            this.type = type;
-            this.setPrice(100);
-            if (this.type == "carnivore"){
-                this.setPrice(500);
-                this.setFoodLevel(60);
-                this.setName("Carnivore Meal Kit");
-            }
-        } else {
-            throw new IllegalArgumentException("Type must be either carnivore or vegetarian");
-        }
+    public MealKit(String name, int foodPrice) {
+        super(1000, foodPrice, 0, name, 'm', true);
     }
 
-    /**
-     * Get the type of mealkit
-     * @return a string of either "carnivore" or "vegetarian"
-     */
-    public String getType() {
-        return type;
-    }
 }

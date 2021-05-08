@@ -9,10 +9,11 @@ import edu.monash.fit2099.engine.GameMap;
  */
 public abstract class DinosaurBehaviour implements Behaviour {
     /**
-     * TODO description
+     * This method is to returns a Dinosaur Action for the dinosaur.
+     * If no action to do, return null
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
-     * @return TODO
+     * @return get action of dinosaur
      */
     @Override
     public Action getAction(Actor actor, GameMap map) {
@@ -23,10 +24,10 @@ public abstract class DinosaurBehaviour implements Behaviour {
     }
 
     /**
-     *
+     * To be overridden by other dinosaur's behaviour.
      * @param dinosaur the dinosaur acting
      * @param map the GameMap containing the Dinosaur
-     * @return TODO
+     * @return action
      */
     public abstract Action getAction(Dinosaur dinosaur, GameMap map);
 }

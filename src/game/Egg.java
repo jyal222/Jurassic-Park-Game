@@ -20,19 +20,15 @@ public class Egg extends Food {
     public Egg(String type) {
         super(10, 200, 0, "Egg", 'e', true);
         this.type = type;
-        switch (type) {
-            case "stegosaur":
-                this.setName("Stegosaur Egg");
-                this.setPrice(200);
-                break;
-            case "brachiosaur":
-                this.setName("Brachiosaur Egg");
-                this.setPrice(500);
-                break;
-            case "allosaur":
-                this.setName("Allosaur Egg");
-                this.setPrice(1000);
-                break;
+        if (type.equals(Stegosaur.STEGOSAUR)) {
+            this.setName("Stegosaur Egg");
+            this.setPrice(200);
+        } else if (type.equals(Brachiosaur.BRACHIOSAUR)) {
+            this.setName("Brachiosaur Egg");
+            this.setPrice(500);
+        } else if (type.equals(Allosaur.ALLOSAUR)) {
+            this.setName("Allosaur Egg");
+            this.setPrice(1000);
         }
     }
 
@@ -92,26 +88,9 @@ public class Egg extends Food {
         }
     }
 
-//    /**
-//     * This method is only applicable to allosaur eggs
-//     *
-//     * @return a boolean indicating whether the egg can be eaten
-//     */
-//    public boolean isEdible() {
-//        return isEdible;
-//    }
-//
-//    /**
-//     * To set to the allosaur egg to be not edible, avoid allosaur from eating their child
-//     *
-//     * @param isEdible a boolean indicating whether the egg can be eaten
-//     */
-//    public void setEdible(boolean isEdible) {
-//        this.isEdible = isEdible;
-//    }
-
     /**
-     * This method is to tick all the egge action in the game map.
+     * This method is to tick all the eggs action in the game map.
+     *
      * @param currentLocation The location of the ground on which we lie.
      */
     @Override
@@ -119,22 +98,14 @@ public class Egg extends Food {
         super.tick(currentLocation);
         turnsOnGround++;
 
-//        // prevent allosaur from eating their own children
-//        if (this.getType().equals("allosaur")) {
-//            this.setEdible(false);
-//
-//        } else if (this.getType().equals("stegosaur") || this.getType().equals("brachiosaur")) {
-//            this.setEdible(true);
-//        }
-
         if (turnsOnGround > 15) {
             Dinosaur baby = null;
-            if (type.equals("stegosaur")) {
-                baby = new Stegosaur(10);
-            } else if (type.equals("brachiosaur")) {
-                baby = new Brachiosaur(10);
-            } else if (type.equals("allosaur")) {
-                baby = new Allosaur(20);
+            if (type.equals(Stegosaur.STEGOSAUR)) {
+                baby = new Stegosaur(Stegosaur.BABY_FOOD_LEVEL);
+            } else if (type.equals(Brachiosaur.BRACHIOSAUR)) {
+                baby = new Brachiosaur(Brachiosaur.BABY_FOOD_LEVEL);
+            } else if (type.equals(Allosaur.ALLOSAUR)) {
+                baby = new Allosaur(Allosaur.BABY_FOOD_LEVEL);
             }
             baby.setStage(Dinosaur.Stage.baby);
             currentLocation.addActor(baby);

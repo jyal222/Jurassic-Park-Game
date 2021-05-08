@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.*;
 
 import java.util.List;
 
+// TODO: use Producable interface
 public class EatAction extends Action {
 
     private List<Eatable> foodList;
@@ -28,13 +29,11 @@ public class EatAction extends Action {
         Dinosaur dinosaur = (Dinosaur) actor;
         // eat fruits from bush and ground
         l = map.locationOf(actor);
-        //TODO need to remove food from list after eating
         for (Eatable food: foodList) {
             dinosaur.eat(food);
         }
         return menuDescription(actor);
     }
-    // TODO: remember to set foodlevel when creating a food
 
 
     /**

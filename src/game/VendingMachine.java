@@ -1,13 +1,16 @@
 package game;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Ground;
-import edu.monash.fit2099.engine.Item;
+import edu.monash.fit2099.engine.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * A vending machine class.
+ */
 public class VendingMachine extends Ground {
-    ArrayList<Item> items;
+
+    List<Item> items = new ArrayList<>();
 
     /**
      * A VendingMachine constructor
@@ -15,18 +18,18 @@ public class VendingMachine extends Ground {
      */
     public VendingMachine() {
         super('V');
-        this.items = new ArrayList<Item>();
-        this.items.add(new Fruit());
-        this.items.add(new MealKit("vegetarian"));
-        this.items.add(new MealKit("carnivore"));
-        this.items.add(new Egg("stegosaur"));
-        this.items.add(new Egg("brachiosaur"));
-        this.items.add(new Egg("allosaur"));
+        this.items.add(new Fruit(20));
+        this.items.add(new VegetarianMealKit());
+        this.items.add(new CarnivoreMealKit());
+        this.items.add(new Egg(Stegosaur.STEGOSAUR));
+        this.items.add(new Egg(Brachiosaur.BRACHIOSAUR));
+        this.items.add(new Egg(Allosaur.ALLOSAUR));
         this.items.add(new LaserGun());
     }
 
     /**
      * To check if an actor can enter this specific location
+     *
      * @param actor Only players can enter a vending machine
      * @return boolean
      */
@@ -36,18 +39,24 @@ public class VendingMachine extends Ground {
     }
 
     /**
-     * To get the arraylist of items that are available at a vending machine
-     * @return all of the items that are available for player at a vending machine
+     * Returns an Action list.
+     * @param actor the Actor acting
+     * @param location the current Location
+     * @param direction the direction of the Ground from the Actor
+     * @return
      */
-    public ArrayList<Item> getItems() {
-        return items;
+    @Override
+    public Actions allowableActions(Actor actor, Location location, String direction) {
+        Actions actions = new Actions();
+        if (actor instanceof Player) {
+            Player player = (Player) actor;
+            for (Item item : items) {
+                if (item.getPrice() <= player.getEcoPoints()) {
+                    actions.add(new BuyItemsAction(item));
+                }
+            }
+        }
+        return actions;
     }
 
-    /**
-     * Sets the arraylist of items that will be sold at a vending machine
-     * @param items an array list of Items to be sold
-     */
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-    }
 }

@@ -12,8 +12,9 @@ public class AttackBehaviour extends DinosaurBehaviour {
 
     /**
      * This method is for the allosaur to attack conscious stegosaur.
+     *
      * @param dinosaur the dinosaur acting
-     * @param map the GameMap containing the Dinosaur
+     * @param map      the GameMap containing the Dinosaur
      * @return null if condition does not fulfilled
      */
     @Override
@@ -23,22 +24,17 @@ public class AttackBehaviour extends DinosaurBehaviour {
             // Allosaur attacks other types of dinosaur
             for (Exit exit : map.locationOf(allosaur).getExits()) {
                 Location loc = exit.getDestination();
-                if (loc.getActor() instanceof Stegosaur) {
+                if (loc.getActor() instanceof Stegosaur && loc.getActor().isConscious()) {
                     Dinosaur stegosaur = (Dinosaur) loc.getActor();
-                    if (!stegosaur.isUnconscious && !stegosaur.isDead) {
-                        // cannot attack the same dinosaur for 20 turns
-                        if (allosaur.getDinosaursAttackedList().contains(stegosaur)) {
-                            stegosaur.setAttackTurns(stegosaur.getAttackTurns() + 1);
-                            if (stegosaur.getAttackTurns() > 20) {
-                                return allosaur.getAttackAction(stegosaur);
-                            }
-                        } else {
-                            allosaur.getDinosaursAttackedList().add(stegosaur);
+                    // cannot attack the same dinosaur for 20 turns
+                    if (allosaur.getAttackedDinosaursList().contains(stegosaur)) {
+                        stegosaur.setAttackTurns(stegosaur.getAttackTurns() + 1);
+                        if (stegosaur.getAttackTurns() > 20) {
                             return allosaur.getAttackAction(stegosaur);
                         }
-                    }
-                    if (stegosaur.isDead) {
-                        allosaur.getDinosaursAttackedList().remove(stegosaur);
+                    } else {
+                        allosaur.getAttackedDinosaursList().add(stegosaur);
+                        return allosaur.getAttackAction(stegosaur);
                     }
                 }
             }

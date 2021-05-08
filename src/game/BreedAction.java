@@ -1,39 +1,37 @@
 package game;
 
-import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 
 /**
  * An action that is for dinosaur's breeding.
  */
-public class BreedAction extends Action {
+public class BreedAction extends DinosaurAction {
 
-    private Dinosaur me;
+    private Dinosaur anotherDinosaur;
 
     /**
      * Constructor
      * @param dinosaur dinosaur currently acting.
      */
     public BreedAction(Dinosaur dinosaur) {
-        this.me = dinosaur;
+        this.anotherDinosaur = dinosaur;
     }
 
     /**
      * This method is to set pregnant of the pregnant dinosaur.
-     * @param actor The actor performing the action.
+     * @param dinosaur The actor performing the action.
      * @param map The map the actor is on.
      * @return a string showing which dinosaur has pregnant.
      */
     @Override
-    public String execute(Actor actor, GameMap map) {
-        Dinosaur act = (Dinosaur) actor;
-        if (me.getGender().equals("female")) {
-            me.setPregnant(true);
-        } else if (act.getGender().equals("female")) {
-            act.setPregnant(true);
+    public String execute(Dinosaur dinosaur, GameMap map) {
+        if (anotherDinosaur.getGender().equals("female")) {
+            anotherDinosaur.setPregnant(true);
+        } else if (dinosaur.getGender().equals("female")) {
+            dinosaur.setPregnant(true);
         }
-        return menuDescription(actor);
+        return menuDescription(dinosaur);
     }
 
     /**
@@ -43,6 +41,6 @@ public class BreedAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return "A pair of " + actor.getClass() + " have just bred";
+        return "A pair of " + actor + " have just bred";
     }
 }
