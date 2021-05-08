@@ -20,7 +20,7 @@ public class BreedBehaviour extends DinosaurBehaviour {
             if (exit.getDestination().getActor() instanceof Dinosaur) {
                 Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
                 if (dinosaur.canBreedWith(otherDinosaur)) {
-                    System.out.println(dinosaur + " found a mate.");
+                    System.out.println(dinosaur.gender + " " + dinosaur + " found a mate.");
                     return dinosaur.getBreedAction(otherDinosaur);
                 }
             }

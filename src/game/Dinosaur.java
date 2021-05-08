@@ -40,6 +40,7 @@ public abstract class Dinosaur extends Actor {
     protected int corpseFoodLevel; // food level of the corpse when this dinosaur dies
     protected int eggEcoPoints; // eco points of this dinosaur's egg
 
+
     /**
      * A dinosaur stage can only be baby or adult.
      */
@@ -164,6 +165,10 @@ public abstract class Dinosaur extends Actor {
 
     public int getEggEcoPoints() {
         return eggEcoPoints;
+    }
+
+    public int getEggHatchThreshold() {
+        return eggHatchThreshold;
     }
 
     public boolean isHungry() {
@@ -293,8 +298,7 @@ public abstract class Dinosaur extends Actor {
         Action action;
         action = behaviourMap.get(Behaviour.Type.BreedBehaviour).getAction(this, map);
 
-        if (action == null && isHungry()) {
-            System.out.println(name + " at (" + map.locationOf(this).x() + ", " + map.locationOf(this).y() + ") is getting hungry!");
+        if (action == null) {
             action = behaviourMap.get(Behaviour.Type.EatBehaviour).getAction(this, map);
         }
 
@@ -310,6 +314,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * Returns a collection of the Actions that the otherActor can do to the current Actor.
+     *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
      * @param map        current GameMap
@@ -330,6 +335,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get name of dinosaur
+     *
      * @return string
      */
     @Override

@@ -60,7 +60,7 @@ public class Egg extends Food {
         }
         // Iterate through every player and increment eco points
         for (Player p : players) {
-            p.earn(1);
+            p.earn(dinosaur.getEggEcoPoints());
         }
     }
 
@@ -74,7 +74,7 @@ public class Egg extends Food {
         super.tick(currentLocation);
         turnsOnGround++;
         // TODO different dinosaur turn
-        if (turnsOnGround > 15 && !currentLocation.containsAnActor()) {
+        if (turnsOnGround > dinosaur.getEggHatchThreshold() && !currentLocation.containsAnActor()) {
             Dinosaur baby = null;
             String type = dinosaur.toString();
             if (type.equals(Stegosaur.STEGOSAUR)) {

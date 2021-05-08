@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.*;
 
 import java.util.List;
 
-// TODO: use Producable interface
 public class EatAction extends DinosaurAction {
 
     private Food food;

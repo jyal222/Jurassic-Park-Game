@@ -14,8 +14,7 @@ public class EatManyAction extends DinosaurAction {
 
     /**
      * A constructor that has a list of food as its parameter.
-     * // TODO change comment
-     * @param source a list of food that found in the location and is eatable
+     * @param source a producible source of food
      */
     public EatManyAction(Producible source) {
         this.source = source;

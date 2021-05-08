@@ -3,9 +3,6 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A children class that inherited from Dinosaur class, which is a herbivore dinosaur.
  */

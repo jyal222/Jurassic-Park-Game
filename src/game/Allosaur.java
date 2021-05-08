@@ -23,7 +23,7 @@ public class Allosaur extends Dinosaur {
      */
     public Allosaur(int hitPoints) {
         super(ALLOSAUR, 'a', hitPoints, 100);
-        super.pregnantThreshold = 2; // todo 20
+        super.pregnantThreshold = 20; // todo 20
         super.eggHatchThreshold = 50;
         super.babyThreshold = 50;
         super.unconsciousThreshold = 20;
