@@ -16,8 +16,6 @@ public abstract class Dinosaur extends Actor {
 
     // use hitPoints from Actor class to represent food level
 
-    private Behaviour behaviour;
-    private GameMap map;
     protected Map<Behaviour.Type, Behaviour> behaviourMap = new HashMap<>();
     protected Stage stage = adult; // default
     protected String gender;
@@ -205,8 +203,9 @@ public abstract class Dinosaur extends Actor {
     protected void layEgg(Location l) {
         pregnantTurns++;
         if (pregnantTurns >= pregnantThreshold) {
-            l.addItem(new Egg(this.getClass().getSimpleName()));
+            l.addItem(new Egg(name));
             pregnantTurns = 0;
+            isPregnant = false;
         }
     }
 

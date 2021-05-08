@@ -10,4 +10,9 @@ public class PortableItem extends Item {
 	public PortableItem(String name, char displayChar) {
 		super(name, displayChar, true);
 	}
+
+	@Override
+	public int getPrice() {
+		return 0;
+	}
 }

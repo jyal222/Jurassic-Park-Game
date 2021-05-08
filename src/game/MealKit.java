@@ -5,15 +5,13 @@ package game;
  */
 public abstract class MealKit extends Food {
 
-//    protected String type;
-
     /**
      * Instantiates a MealKit constructor
      * @param name name of mealkit
-     * @param foodPrice price of mealkit
+     * @param price price of mealkit
      */
-    public MealKit(String name, int foodPrice) {
-        super(1000, foodPrice, 0, name, 'm', true);
+    public MealKit(String name, int price) {
+        super(1000, price, 0, name, 'm', true);
     }
 
 }

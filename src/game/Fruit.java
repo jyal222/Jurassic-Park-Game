@@ -11,12 +11,12 @@ public class Fruit extends Food {
 
     /**
      * Constructor
+     *
      * @param foodLevel food level
      */
     public Fruit(int foodLevel) {
         super(foodLevel, 30, 10, "Fruit", 'f', true);
         this.rotTurn = 15;
-        this.setPrice(30);
     }
 
     /**
@@ -26,10 +26,11 @@ public class Fruit extends Food {
      */
     @Override
     public void tick(Location currentLocation) {
-        super.tick(currentLocation);
-        rotTurn--;
-        if (rotTurn == 0) {
-            currentLocation.removeItem(this);
+        if (currentLocation.getItems().contains(this)) {
+            rotTurn--;
+            if (rotTurn == 0) {
+                currentLocation.removeItem(this);
+            }
         }
     }
 

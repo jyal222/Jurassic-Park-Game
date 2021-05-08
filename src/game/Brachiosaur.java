@@ -14,8 +14,6 @@ public class Brachiosaur extends Dinosaur {
     public static final String BRACHIOSAUR = "brachiosaur";
     public static final int BABY_FOOD_LEVEL = 10;
 
-    private Behaviour behaviour;
-
     /**
      * Constructor of Brachiosaur class
      * All Brachiosaurs are represented by a 'b' and have 100 hit points, hungry threshold of 140, breed threshold of 70 and dead threshold of 40.

@@ -1,11 +1,6 @@
 package game;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Menu;
+import edu.monash.fit2099.engine.*;
 
 /**
  * Class representing the Player.
@@ -28,6 +23,8 @@ public class Player extends Actor {
 
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+		Ground currentGround = map.locationOf(this).getGround();
+		actions.add(currentGround.allowableActions(this, map.locationOf(this), "same"));
 		// Handle multi-turn Actions
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
@@ -36,6 +33,7 @@ public class Player extends Actor {
 
 	/**
 	 * To get the number of EcoPoints that the player currently having
+	 *
 	 * @return ecoPoints
 	 */
 	public int getEcoPoints() {
@@ -44,6 +42,7 @@ public class Player extends Actor {
 
 	/**
 	 * To set the number of EcoPoints of the player
+	 *
 	 * @param ecoPoints the amount of starting ecopoints of a player.
 	 */
 	public void setEcoPoints(int ecoPoints) {

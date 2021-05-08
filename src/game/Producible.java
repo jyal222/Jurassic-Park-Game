@@ -9,6 +9,4 @@ public interface Producible {
     List<Food> getFruits();
 
     boolean removeFruit(Food fruitToRemove);
-
-    String toString();
 }

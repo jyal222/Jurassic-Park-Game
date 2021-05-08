@@ -39,4 +39,9 @@ public class Corpse extends Item implements Eatable {
     public int getFoodLevel() {
         return dinosaur.getCorpseFoodLevel();
     }
+
+    @Override
+    public int getPrice() {
+        return 0;
+    }
 }

@@ -10,7 +10,6 @@ public class Egg extends Food {
 
     private String type;
     private int turnsOnGround;
-    private boolean isEdible = true;
 
     /**
      * Constructor of Egg class
@@ -21,14 +20,14 @@ public class Egg extends Food {
         super(10, 200, 0, "Egg", 'e', true);
         this.type = type;
         if (type.equals(Stegosaur.STEGOSAUR)) {
-            this.setName("Stegosaur Egg");
-            this.setPrice(200);
+            super.name = "Stegosaur Egg";
+            super.price = 200;
         } else if (type.equals(Brachiosaur.BRACHIOSAUR)) {
-            this.setName("Brachiosaur Egg");
-            this.setPrice(500);
+            super.name = "Brachiosaur Egg";
+            super.price = 500;
         } else if (type.equals(Allosaur.ALLOSAUR)) {
-            this.setName("Allosaur Egg");
-            this.setPrice(1000);
+            super.name = "Allosaur Egg";
+            super.price = 1000;
         }
     }
 
@@ -97,8 +96,8 @@ public class Egg extends Food {
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         turnsOnGround++;
-
-        if (turnsOnGround > 15) {
+        // TODO different dinosaur turn
+        if (turnsOnGround > 15 && !currentLocation.containsAnActor()) {
             Dinosaur baby = null;
             if (type.equals(Stegosaur.STEGOSAUR)) {
                 baby = new Stegosaur(Stegosaur.BABY_FOOD_LEVEL);
@@ -107,6 +106,7 @@ public class Egg extends Food {
             } else if (type.equals(Allosaur.ALLOSAUR)) {
                 baby = new Allosaur(Allosaur.BABY_FOOD_LEVEL);
             }
+            if (baby == null) return;
             baby.setStage(Dinosaur.Stage.baby);
             currentLocation.addActor(baby);
             // remove egg that has hatched (eggshell)

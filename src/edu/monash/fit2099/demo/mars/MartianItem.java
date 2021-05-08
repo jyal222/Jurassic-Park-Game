@@ -8,8 +8,13 @@ public class MartianItem extends Item{
 	public MartianItem(String name, char displayChar, boolean portable) {
 		super(name, displayChar, portable);
 	}
-	
+
 	public void addAction(Action action) {
 		this.allowableActions.add(action);
+	}
+
+	@Override
+	public int getPrice() {
+		return 0;
 	}
 }

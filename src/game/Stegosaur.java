@@ -55,8 +55,6 @@ public class Stegosaur extends Dinosaur {
 		return actions;
 	}
 
-
-
 	/**
 	 * This method is to create a new eat action when the food in the location is eatable for stegosaur.
 	 *

@@ -39,7 +39,7 @@ public class PickFruitAction extends Action {
     }
 
     /**
-     * To return a string swhoing action
+     * To return a string showing action
      * @param actor The actor performing the action.
      * @return
      */

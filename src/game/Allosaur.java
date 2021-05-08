@@ -12,7 +12,7 @@ public class Allosaur extends Dinosaur {
 
     public static final String ALLOSAUR = "allosaur";
     public static final int BABY_FOOD_LEVEL = 20;
-    private Behaviour behaviour;
+
     private List<Dinosaur> attackedDinosaursList = new ArrayList<>();
 
     /**

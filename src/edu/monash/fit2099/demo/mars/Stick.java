@@ -8,4 +8,8 @@ public class Stick extends WeaponItem {
 		super("stick", '/', 10, "pokes");
 	}
 
+	@Override
+	public int getPrice() {
+		return 0;
+	}
 }

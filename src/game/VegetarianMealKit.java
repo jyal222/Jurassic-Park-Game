@@ -10,4 +10,5 @@ public class VegetarianMealKit extends MealKit {
     public VegetarianMealKit() {
         super("Vegetarian Meal Kit", 100);
     }
+
 }
