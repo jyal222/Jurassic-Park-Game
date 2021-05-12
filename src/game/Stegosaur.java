@@ -12,7 +12,6 @@ public class Stegosaur extends Dinosaur {
 	public static final int MAX_FOOD_LEVEL = 100;
 	public static final int BABY_FOOD_LEVEL = 20;
 
-
 	/**
 	 * Constructor.
 	 * All Stegosaurs are represented by a 's' and have 100 hit points,hungry threshold of 90, breed threshold of 50 and dead threshold of 20.
@@ -93,6 +92,7 @@ public class Stegosaur extends Dinosaur {
 	 */
 	@Override
 	public boolean canEat(Eatable food) {
+
 		return (food instanceof Fruit || food instanceof VegetarianMealKit);
 	}
 

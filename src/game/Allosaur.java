@@ -94,6 +94,7 @@ public class Allosaur extends Dinosaur {
         return (food instanceof CarnivoreMealKit || (food instanceof Egg && canEatEgg) || food instanceof Corpse);
     }
 
+
     /**
      * This method will return a list of dinosaur that is attacked by the allosaur
      *

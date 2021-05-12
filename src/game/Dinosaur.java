@@ -26,7 +26,6 @@ public abstract class Dinosaur extends Actor {
     protected Stage stage = adult; // default
     protected String gender;
     protected boolean isPregnant = false;
-    protected boolean isThirsty = false;
 
     protected int babyAge = 0;
     protected int deadTurns = 0;
@@ -45,6 +44,8 @@ public abstract class Dinosaur extends Actor {
     protected int eggEcoPoints; // eco points of this dinosaur's egg
 
     protected int waterLevel; // water level of the dinosaur
+    protected int thirstyThreshold; // max turns to become thirsty
+    protected int waterLevelConsumed;
 
 
     /**
@@ -78,10 +79,6 @@ public abstract class Dinosaur extends Actor {
 
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
-    }
-
-    public void setThirsty(boolean thirsty) {
-        isThirsty = thirsty;
     }
 
     /**
@@ -193,6 +190,10 @@ public abstract class Dinosaur extends Actor {
         return hitPoints <= hungryThreshold;
     }
 
+    public boolean isThirsty() {
+        return waterLevel <= thirstyThreshold;
+    }
+
     /**
      * To set a dinosaur to be dead
      */
@@ -263,7 +264,8 @@ public abstract class Dinosaur extends Actor {
      * @param water
      */
     public void drink(Water water) {
-        setWaterLevel(getWaterLevel() + 30);
+
+        setWaterLevel(getWaterLevel() + waterLevelConsumed);
     }
 
     /**
@@ -274,6 +276,23 @@ public abstract class Dinosaur extends Actor {
      */
     public abstract DinosaurAction getEatAction(Location location);
 
+    /**
+     * Returns a DrinkAction that will allow dinosaur to drink.
+     *
+     * @param location current location
+     * @return DrinkAction
+     */
+    public DinosaurAction getDrinkAction(Location location, GameMap map) {
+
+        // check adjacent location for dinosaur for water
+        // todo dk need pass water or not
+        for (Exit exit : map.locationOf(this).getExits()) {
+            if (exit.getDestination().getGround() instanceof Lake) {
+                return new DrinkWaterAction();
+            }
+        }
+        return null;
+    }
 
     /**
      * Returns a BreedAction that will allow dinosaur to breed.
@@ -330,11 +349,16 @@ public abstract class Dinosaur extends Actor {
         }
 
         if (action == null) {
+            action = behaviourMap.get(Behaviour.Type.EatBehaviour).getAction(this, map);
+        }
+
+        if (action == null) {
             action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
         }
 
         if (action != null)
             return action;
+
 
         return new DoNothingAction();
     }
