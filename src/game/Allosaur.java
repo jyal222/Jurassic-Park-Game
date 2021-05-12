@@ -12,6 +12,7 @@ public class Allosaur extends Dinosaur {
 
     public static final String ALLOSAUR = "allosaur";
     public static final int BABY_FOOD_LEVEL = 20;
+    public static final int MAX_FOOD_LEVEL = 100;
 
     private List<Dinosaur> attackedDinosaursList = new ArrayList<>();
 
@@ -23,7 +24,7 @@ public class Allosaur extends Dinosaur {
      */
     public Allosaur(int hitPoints) {
         super(ALLOSAUR, 'a', hitPoints, 100);
-        super.pregnantThreshold = 20; // todo 20
+        super.pregnantThreshold = 20;
         super.eggHatchThreshold = 50;
         super.babyThreshold = 50;
         super.unconsciousThreshold = 20;

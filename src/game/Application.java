@@ -55,6 +55,12 @@ public class Application {
 
 		gameMap.at(50, 12).addActor(new Brachiosaur());
 		gameMap.at(52, 12).addActor(new Brachiosaur());
+		gameMap.at(53, 12).addActor(new Brachiosaur());
+		gameMap.at(54, 12).addActor(new Brachiosaur());
+		gameMap.at(55, 12).addActor(new Brachiosaur());
+		gameMap.at(56, 12).addActor(new Brachiosaur());
+		gameMap.at(57, 12).addActor(new Brachiosaur());
+		gameMap.at(58, 12).addActor(new Brachiosaur());
 
 
 		gameMap.at(15, 9).setGround(new VendingMachine());

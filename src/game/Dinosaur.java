@@ -19,10 +19,14 @@ public abstract class Dinosaur extends Actor {
     public static final String MALE = "male";
     public static final String FEMALE = "female";
 
+    public static final int MAX_WATER_LEVEL = 100;
+    public static final int INIT_WATER_LEVEL = 60;
+
     protected Map<Behaviour.Type, Behaviour> behaviourMap = new HashMap<>();
     protected Stage stage = adult; // default
     protected String gender;
     protected boolean isPregnant = false;
+    protected boolean isThirsty = false;
 
     protected int babyAge = 0;
     protected int deadTurns = 0;
@@ -39,6 +43,8 @@ public abstract class Dinosaur extends Actor {
     protected int breedThreshold; // enough hit point to breed
     protected int corpseFoodLevel; // food level of the corpse when this dinosaur dies
     protected int eggEcoPoints; // eco points of this dinosaur's egg
+
+    protected int waterLevel; // water level of the dinosaur
 
 
     /**
@@ -64,6 +70,18 @@ public abstract class Dinosaur extends Actor {
         behaviourMap.put(Behaviour.Type.WanderBehaviour, new WanderBehaviour());
         behaviourMap.put(Behaviour.Type.EatBehaviour, new EatBehaviour());
         behaviourMap.put(Behaviour.Type.BreedBehaviour, new BreedBehaviour());
+    }
+
+    public int getWaterLevel() {
+        return waterLevel;
+    }
+
+    public void setWaterLevel(int waterLevel) {
+        this.waterLevel = waterLevel;
+    }
+
+    public void setThirsty(boolean thirsty) {
+        isThirsty = thirsty;
     }
 
     /**
@@ -219,6 +237,7 @@ public abstract class Dinosaur extends Actor {
         babyAge++;
         if (babyAge >= babyThreshold) {
             this.setStage(Stage.adult);
+
         }
     }
 
@@ -237,6 +256,14 @@ public abstract class Dinosaur extends Actor {
      */
     public void eat(Eatable food) {
         heal(food.getFoodLevel());
+    }
+
+    /**
+     *
+     * @param water
+     */
+    public void drink(Water water) {
+        setWaterLevel(getWaterLevel() + 30);
     }
 
     /**

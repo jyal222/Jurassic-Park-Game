@@ -9,7 +9,9 @@ import edu.monash.fit2099.engine.*;
 public class Stegosaur extends Dinosaur {
 
 	public static final String STEGOSAUR = "stegosaur";
-	public static final int BABY_FOOD_LEVEL = 10;
+	public static final int MAX_FOOD_LEVEL = 100;
+	public static final int BABY_FOOD_LEVEL = 20;
+
 
 	/**
 	 * Constructor.
@@ -28,6 +30,7 @@ public class Stegosaur extends Dinosaur {
 		super.breedThreshold = 50;
 		super.corpseFoodLevel = 50;
 		super.eggEcoPoints = 100;
+		super.waterLevel =  60;
 	}
 
 	/**

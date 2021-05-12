@@ -15,6 +15,7 @@ public class Brachiosaur extends Dinosaur {
 
     public static final String BRACHIOSAUR = "brachiosaur";
     public static final int BABY_FOOD_LEVEL = 10;
+    public static final int MAX_FOOD_LEVEL = 160;
 
     /**
      * Constructor of Brachiosaur class
