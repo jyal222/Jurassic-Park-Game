@@ -7,47 +7,50 @@ import java.util.ArrayList;
 public class CrossMapAction extends Action {
 
     World world;
-    ArrayList<GameMap> worldMaps;
+    ArrayList<GameMap> gameMaps;
     protected ActorLocations actorLocations = new ActorLocations();
     GameMap playersMap;
 
+    public CrossMapAction(GameMap playersMap) {
+        this.playersMap = playersMap;
+    }
+
     @Override
     public String execute(Actor actor, GameMap map) {
-        GameMap firstMap = this.getWorldMaps().get(0);
-        GameMap secondMap = this.getWorldMaps().get(1);
+
+        GameMap firstMap = this.getGameMaps().get(0);
+        GameMap secondMap = this.getGameMaps().get(1);
         Location current = actorLocations.locationOf(actor);
         Location newLocation;
-        // If player at northern border of map 1
-        if(actorLocations.locationOf(actor).map().equals(firstMap) && actorLocations.locationOf(actor).y() == 0){
-            // Remove actor from map1
-            firstMap.removeActor(actor);
+        boolean canCrossMaps = false;
 
-            // Same x at southern border of map2
-            newLocation = secondMap.at(current.x(), secondMap.getYRange().max());
-            if(newLocation.canActorEnter(actor)){
-                firstMap.removeActor(actor);
-                secondMap.addActor(actor, newLocation);
-                actorLocations = secondMap.actorsL;
-                playersMap = actorLocations.locationOf(actor).map();
+        if(this.gameMaps.size() == 2){
+            Player player = (Player) actor;
+            // If player at northern border of map 1
+            if(actorLocations.locationOf(player).map().equals(firstMap) && actorLocations.locationOf(player).y() == 0) {
+                canCrossMaps = true;
+                // Same x at southern border of map2
+                newLocation = secondMap.at(current.x(), secondMap.getYRange().max());
+                if(newLocation.canActorEnter(player)){
+                    firstMap.removeActor(player);
+                    secondMap.addActor(player, newLocation);
+                    world.addPlayer(player, newLocation);
+                    playersMap = actorLocations.locationOf(player).map();
+                }
+            } // If player at southern border of map2
+            else if (actorLocations.locationOf(player).map().equals(secondMap) && actorLocations.locationOf(player).y() == 24){
+                // Same x at northern border of map1
+                newLocation = firstMap.at(current.x(), secondMap.getYRange().min());
+                if (newLocation.canActorEnter(player)){
+                    secondMap.removeActor(player);
+                    firstMap.addActor(player, newLocation);
+                    world.addPlayer(player, newLocation);
+                    playersMap = actorLocations.locationOf(player).map();
+                }
             }
 
-            // If player at southern border of map2
-        } else if (actorLocations.locationOf(actor).map().equals(secondMap) && actorLocations.locationOf(actor).y() == 24){
-
-            // Remove actor from map2
-            secondMap.removeActor(actor);
-
-            // Same x at northern border of map1
-            newLocation = firstMap.at(current.x(), secondMap.getYRange().min());
-            if (newLocation.canActorEnter(actor)){
-                secondMap.removeActor(actor);
-                firstMap.addActor(actor, newLocation);
-                actorLocations = firstMap.actorLocations;
-                playersMap = actorLocations.locationOf(actor).map();
-            }
         }
         return menuDescription(actor);
-        return null;
     }
 
     @Override
@@ -63,11 +66,11 @@ public class CrossMapAction extends Action {
         this.world = world;
     }
 
-    public ArrayList<GameMap> getWorldMaps() {
-        return worldMaps;
+    public ArrayList<GameMap> getGameMaps() {
+        return gameMaps;
     }
 
-    public void setWorldMaps(ArrayList<GameMap> worldMaps) {
-        this.worldMaps = worldMaps;
+    public void setGameMaps(ArrayList<GameMap> gameMaps) {
+        this.gameMaps = gameMaps;
     }
 }

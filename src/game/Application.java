@@ -70,15 +70,15 @@ public class Application {
 				"..........................................................................++....",
 				"................................................................................");
 
-		GameMap gameMap = new GameMap(groundFactory, map );
+		GameMap gameMap = new GameMap(groundFactory, map);
 		world.addGameMap(gameMap);
 
 		// second game map added
-		GameMap secondGameMap = new GameMap(groundFactory, map );
+		GameMap secondGameMap = new GameMap(groundFactory, secondMap);
 		world.addGameMap(secondGameMap);
 
 		Actor player = new Player("Player", '@', 100);
-		world.addPlayer(player, gameMap.at(9, 4));
+		world.addPlayer(player, gameMap.at(0, 0));
 
 		// Place a pair of stegosaurs in the middle of the map
 

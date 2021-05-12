@@ -2,6 +2,8 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+import java.util.ArrayList;
+
 /**
  * Class representing the Player.
  */
@@ -9,6 +11,9 @@ public class Player extends Actor {
 
 	private Menu menu = new Menu();
 	int ecoPoints = 1000;
+	protected ActorLocations actorLocations = new ActorLocations();
+	ArrayList<GameMap> gameMaps;
+	GameMap playersMap;
 
 	/**
 	 * Constructor.
@@ -60,6 +65,35 @@ public class Player extends Actor {
 		if (canSpend(ecoPoints)) {
 			this.ecoPoints -= ecoPoints;
 		}
+	}
+
+	/**
+	 * Returns a collection of the Actions that the otherActor can do to the current Actor.
+	 *
+	 * @param actor the Actor that might be performing attack
+	 * @param direction  String representing the direction of the other Actor
+	 * @param map        current GameMap
+	 * @return
+	 */
+	@Override
+	public Actions getAllowableActions(Actor actor, String direction, GameMap map) {
+		Actions actions = new Actions();
+		GameMap firstMap = this.gameMaps.get(0);
+		GameMap secondMap = this.gameMaps.get(1);
+		playersMap = actorLocations.locationOf(actor).map();
+		if (this.gameMaps.size() == 2) {
+			if (actor instanceof Player) {
+
+					if (actorLocations.locationOf(actor).map().equals(firstMap) && actorLocations.locationOf(actor).y() == 0) {
+						actions.add(new CrossMapAction(map));
+					} else if (actorLocations.locationOf(actor).map().equals(secondMap) && actorLocations.locationOf(actor).y() == 24) {
+						actions.add(new CrossMapAction(map));
+					}
+				}
+			}
+
+		actions.add(super.getAllowableActions(actor, direction, map));
+		return actions;
 	}
 }
 
