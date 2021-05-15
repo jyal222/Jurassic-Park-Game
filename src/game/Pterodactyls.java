@@ -28,6 +28,8 @@ public class Pterodactyls extends Dinosaur{
         super.breedThreshold = 50;
         super.corpseFoodLevel = 30;
         super.eggEcoPoints = 100;
+        super.waterLevel =  60;
+        super.thirstyThreshold = 80;
 
     }
 

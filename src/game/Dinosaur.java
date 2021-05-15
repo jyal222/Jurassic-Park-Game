@@ -47,6 +47,8 @@ public abstract class Dinosaur extends Actor {
     protected int thirstyThreshold; // max turns to become thirsty
     protected int waterLevelConsumed;
 
+    private Rain rain = Rain.getInstance();
+
 
     /**
      * A dinosaur stage can only be baby or adult.
@@ -194,6 +196,18 @@ public abstract class Dinosaur extends Actor {
         return waterLevel <= thirstyThreshold;
     }
 
+    public boolean isUnConsciousDueToThirsty() {
+        return waterLevel == 0;
+    }
+
+//    @Override
+//    public boolean isConscious() {
+//        if (waterLevel == 0){
+//            // add a return for water level == 0 or need to have is unconscious due to water level
+//        }
+//        return super.isConscious();
+//    }
+
     /**
      * To set a dinosaur to be dead
      */
@@ -282,10 +296,11 @@ public abstract class Dinosaur extends Actor {
      * @param location current location
      * @return DrinkAction
      */
+
     public DinosaurAction getDrinkAction(Location location, GameMap map) {
 
         // check adjacent location for dinosaur for water
-        // todo dk need pass water or not
+        // todo dk need pass water or not and dk can do here ot not
         for (Exit exit : map.locationOf(this).getExits()) {
             if (exit.getDestination().getGround() instanceof Lake) {
                 return new DrinkWaterAction();
@@ -314,16 +329,32 @@ public abstract class Dinosaur extends Actor {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        // minus 1 food level
+        hitPoints--;
+        // minus 1 water level
+        waterLevel--;
+
+        // TODO done raining action???
+        if (isUnConsciousDueToThirsty()){
+
+            if(rain.isRaining() && waterLevel <= 0){
+                waterLevel = 10;
+                unconsciousTurns = 0;
+            }
+            unconsciousTurns++;
+        }
+
         if (!isConscious()) {
+
             unconsciousTurns++;
             if (unconsciousTurns >= unconsciousThreshold) {
                 die(map);
             }
+
             return new DoNothingAction();
         }
 
-        // minus 1 food level
-        hitPoints--;
+
 
         // baby grow
         if (stage == Stage.baby) {
@@ -349,12 +380,14 @@ public abstract class Dinosaur extends Actor {
         }
 
         if (action == null) {
-            action = behaviourMap.get(Behaviour.Type.EatBehaviour).getAction(this, map);
+            action = behaviourMap.get(Behaviour.Type.DrinkBehaviour).getAction(this, map);
         }
 
         if (action == null) {
             action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
         }
+
+
 
         if (action != null)
             return action;

@@ -70,11 +70,11 @@ public class Application {
 				"..........................................................................++....",
 				"................................................................................");
 
-		GameMap gameMap = new GameMap(groundFactory, map);
+		GameMap gameMap = new GameMapSub(groundFactory, map);
 		world.addGameMap(gameMap);
 
 		// second game map added
-		GameMap secondGameMap = new GameMap(groundFactory, secondMap);
+		GameMap secondGameMap = new GameMapSub(groundFactory, secondMap);
 		world.addGameMap(secondGameMap);
 
 		Actor player = new Player("Player", '@', 100);

@@ -33,6 +33,8 @@ public class Allosaur extends Dinosaur {
         super.breedThreshold = 50;
         super.corpseFoodLevel = 50;
         super.eggEcoPoints = 1000;
+        super.waterLevel =  60;
+        super.thirstyThreshold = 80;
 
         behaviourMap.put(Behaviour.Type.AttackBehaviour, new AttackBehaviour());
     }

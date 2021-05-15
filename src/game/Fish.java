@@ -7,6 +7,6 @@ public class Fish extends Food {
      * @param foodLevel    The amount of food level for each dinosaur to increase when they consumed a food
      */
     public Fish(int foodLevel) {
-        super(foodLevel, 20, 10, "Fish", '>', true);
+        super(foodLevel, 20, 5, "Fish", '>', true);
     }
 }

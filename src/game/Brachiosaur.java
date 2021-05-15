@@ -34,6 +34,8 @@ public class Brachiosaur extends Dinosaur {
         super.breedThreshold = 70;
         super.corpseFoodLevel = 100;
         super.eggEcoPoints = 1000;
+        super.waterLevel =  100;
+        super.thirstyThreshold = 150;
     }
 
     public Brachiosaur() {

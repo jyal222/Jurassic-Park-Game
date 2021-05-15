@@ -13,7 +13,7 @@ public class Lake extends Ground {
 
     private int waterSips = 25;
     private List<Food> fishes = new ArrayList<>(5);
-    private int rainInterval = 0;
+    private Rain rain = Rain.getInstance();
 
     /**
      *
@@ -41,7 +41,6 @@ public class Lake extends Ground {
     }
 
     /**
-     *
      * @param actor the Actor to check
      * @return
      */
@@ -51,7 +50,6 @@ public class Lake extends Ground {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -61,15 +59,12 @@ public class Lake extends Ground {
 
     public void tick(Location location) {
         super.tick(location);
-
-        rainInterval++;
         Random random = new Random();
 
-        if (rainInterval == 10) {
-            if (random.nextInt(100) + 1 <= 20) {
-                // todo rain
-            }
+        if (rain.isRaining()) {
+            waterSips = Math.max(waterSips + (int) (rain.getRainFall() * 20), 25);
         }
+
 
         // 60% for a new fish to be born
         if (random.nextInt(100) + 1 <= 60) {

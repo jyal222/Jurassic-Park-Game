@@ -30,6 +30,7 @@ public class Stegosaur extends Dinosaur {
 		super.corpseFoodLevel = 50;
 		super.eggEcoPoints = 100;
 		super.waterLevel =  60;
+		super.thirstyThreshold = 80;
 	}
 
 	/**
