@@ -19,9 +19,6 @@ public abstract class Dinosaur extends Actor {
     public static final String MALE = "male";
     public static final String FEMALE = "female";
 
-    public static final int MAX_WATER_LEVEL = 100;
-    public static final int INIT_WATER_LEVEL = 60;
-
     protected Map<Behaviour.Type, Behaviour> behaviourMap = new HashMap<>();
     protected Stage stage = adult; // default
     protected String gender;
@@ -30,6 +27,7 @@ public abstract class Dinosaur extends Actor {
     protected int babyAge = 0;
     protected int deadTurns = 0;
     protected int unconsciousTurns = 0;
+    protected int unconsciousTurnsDueToThirsty = 0;
     protected int pregnantTurns = 0;
     protected int attackTurns = 0;
 
@@ -45,7 +43,8 @@ public abstract class Dinosaur extends Actor {
 
     protected int waterLevel; // water level of the dinosaur
     protected int thirstyThreshold; // max turns to become thirsty
-    protected int waterLevelConsumed;
+    protected int waterLevelConsumed; // water level consumed by each dinosaur for 1 sip of water
+    protected int maxWaterLevel; // max water level of dinosaur
 
     private Rain rain = Rain.getInstance();
 
@@ -64,15 +63,17 @@ public abstract class Dinosaur extends Actor {
      * @param displayChar the character that will represent the Actor in the display
      * @param hitPoints   the Actor's starting hit points
      */
-    public Dinosaur(String name, char displayChar, int hitPoints, int maxHitPoints) {
+    public Dinosaur(String name, char displayChar, int hitPoints, int maxHitPoints, int waterLevel, int maxWaterLevel) {
         super(name, displayChar, hitPoints);
         super.maxHitPoints = maxHitPoints;
         // randomise the gender of dinosaur
         this.setGender(this.randomiseGender());
-
+        this.maxWaterLevel = maxWaterLevel;
+        this.waterLevel = waterLevel;
         behaviourMap.put(Behaviour.Type.WanderBehaviour, new WanderBehaviour());
         behaviourMap.put(Behaviour.Type.EatBehaviour, new EatBehaviour());
         behaviourMap.put(Behaviour.Type.BreedBehaviour, new BreedBehaviour());
+        behaviourMap.put(Behaviour.Type.DrinkBehaviour, new DrinkBehaviour());
     }
 
     public int getWaterLevel() {
@@ -196,9 +197,6 @@ public abstract class Dinosaur extends Actor {
         return waterLevel <= thirstyThreshold;
     }
 
-    public boolean isUnConsciousDueToThirsty() {
-        return waterLevel == 0;
-    }
 
 //    @Override
 //    public boolean isConscious() {
@@ -270,16 +268,20 @@ public abstract class Dinosaur extends Actor {
      * @param food food that is eaten
      */
     public void eat(Eatable food) {
+        food.decreaseFoodLevel(food.getFoodLevel());
         heal(food.getFoodLevel());
     }
 
     /**
-     *
-     * @param water
+     * @param sip
      */
-    public void drink(Water water) {
+    public void drink(int sip) {
+        waterLevel = Math.min(waterLevel + (waterLevelConsumed * sip), maxWaterLevel);
+    }
 
-        setWaterLevel(getWaterLevel() + waterLevelConsumed);
+    @Override
+    public boolean isConscious() {
+        return waterLevel <= 0 || hitPoints <= 0;
     }
 
     /**
@@ -292,21 +294,13 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * Returns a DrinkAction that will allow dinosaur to drink.
-     *
-     * @param location current location
-     * @return DrinkAction
+     * @param lake
+     * @return
      */
+    public DinosaurAction getDrinkAction(Lake lake) {
 
-    public DinosaurAction getDrinkAction(Location location, GameMap map) {
 
-        // check adjacent location for dinosaur for water
-        // todo dk need pass water or not and dk can do here ot not
-        for (Exit exit : map.locationOf(this).getExits()) {
-            if (exit.getDestination().getGround() instanceof Lake) {
-                return new DrinkWaterAction();
-            }
-        }
-        return null;
+        return new DrinkWaterAction(lake);
     }
 
     /**
@@ -334,26 +328,28 @@ public abstract class Dinosaur extends Actor {
         // minus 1 water level
         waterLevel--;
 
-        // TODO done raining action???
-        if (isUnConsciousDueToThirsty()){
-
-            if(rain.isRaining() && waterLevel <= 0){
-                waterLevel = 10;
-                unconsciousTurns = 0;
-            }
-            unconsciousTurns++;
-        }
 
         if (!isConscious()) {
 
-            unconsciousTurns++;
-            if (unconsciousTurns >= unconsciousThreshold) {
-                die(map);
+            if (waterLevel <= 0) {
+                unconsciousTurnsDueToThirsty++;
+                if (rain.isRaining()) {
+                    waterLevel = 10;
+                    unconsciousTurnsDueToThirsty = 0;
+                } else {
+                    if (unconsciousTurnsDueToThirsty >= 15) {
+                        die(map);
+                    }
+                }
             }
-
+            if (hitPoints <= 0) {
+                unconsciousTurns++;
+                if (unconsciousTurns >= unconsciousThreshold) {
+                    die(map);
+                }
+            }
             return new DoNothingAction();
         }
-
 
 
         // baby grow
@@ -386,7 +382,6 @@ public abstract class Dinosaur extends Actor {
         if (action == null) {
             action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
         }
-
 
 
         if (action != null)

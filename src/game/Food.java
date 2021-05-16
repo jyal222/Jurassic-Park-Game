@@ -50,4 +50,9 @@ public abstract class Food extends Item implements Eatable {
     public int getPrice() {
         return price;
     }
+
+    @Override
+    public void decreaseFoodLevel(int amount) {
+
+    }
 }

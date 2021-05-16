@@ -51,4 +51,8 @@ public class Dirt extends Ground {
     }
 
 
+    @Override
+    public boolean canDrink() {
+        return false;
+    }
 }

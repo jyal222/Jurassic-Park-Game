@@ -9,6 +9,7 @@ import edu.monash.fit2099.engine.Location;
 public class Corpse extends Item implements Eatable {
 
     private Dinosaur dinosaur;
+    private int foodLevel;
 
     /***
      * Constructor.
@@ -17,6 +18,7 @@ public class Corpse extends Item implements Eatable {
     public Corpse(Dinosaur dinosaur) {
         super("dead " + dinosaur, '%', false);
         this.dinosaur = dinosaur;
+        this.foodLevel = dinosaur.getCorpseFoodLevel();
     }
 
     /**
@@ -37,7 +39,12 @@ public class Corpse extends Item implements Eatable {
      */
     @Override
     public int getFoodLevel() {
-        return dinosaur.getCorpseFoodLevel();
+        return foodLevel;
+    }
+
+    @Override
+    public void decreaseFoodLevel(int amount) {
+        foodLevel = Math.max(foodLevel-amount, 0) ;
     }
 
     @Override

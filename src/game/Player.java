@@ -95,5 +95,10 @@ public class Player extends Actor {
 		actions.add(super.getAllowableActions(actor, direction, map));
 		return actions;
 	}
+
+	@Override
+	public boolean canEnterWater() {
+		return false;
+	}
 }
 

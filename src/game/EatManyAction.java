@@ -33,13 +33,13 @@ public class EatManyAction extends DinosaurAction {
         loc = map.locationOf(dinosaur);
         String message = dinosaur + "at (" + loc.x() + ", " + loc.y() + ") eating many fruits";
         List<Food> foodToRemove = new ArrayList<>();
-        for (Food food : source.getFruits()) {
+        for (Food food : source.getFood()) {
             if (!dinosaur.isHungry()) break;
             dinosaur.eat(food);
             foodToRemove.add(food);
             message += System.lineSeparator() + dinosaur + " eats" + food;
         }
-        source.removeFruits(foodToRemove);
+        source.removeAllFood(foodToRemove);
         return message;
     }
 

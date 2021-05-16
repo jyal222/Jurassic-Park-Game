@@ -11,6 +11,7 @@ public class Stegosaur extends Dinosaur {
 	public static final String STEGOSAUR = "stegosaur";
 	public static final int MAX_FOOD_LEVEL = 100;
 	public static final int BABY_FOOD_LEVEL = 20;
+	public static final int MAX_WATER_LEVEL = 100;
 
 	/**
 	 * Constructor.
@@ -19,7 +20,7 @@ public class Stegosaur extends Dinosaur {
 	 * @param hitPoints starting hit points of Stegosaur
 	 */
 	public Stegosaur(int hitPoints) {
-		super(STEGOSAUR, 's', hitPoints, 100);
+		super(STEGOSAUR, 's', hitPoints, MAX_FOOD_LEVEL, 60, MAX_WATER_LEVEL);
 		super.pregnantThreshold = 10;
 		super.eggHatchThreshold = 15;
 		super.babyThreshold = 30;
@@ -29,8 +30,8 @@ public class Stegosaur extends Dinosaur {
 		super.breedThreshold = 50;
 		super.corpseFoodLevel = 50;
 		super.eggEcoPoints = 100;
-		super.waterLevel =  60;
 		super.thirstyThreshold = 80;
+		super.waterLevelConsumed = 30;
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class Stegosaur extends Dinosaur {
 		Ground ground = location.getGround();
 		if (ground instanceof Bush) {
 			Bush bush = (Bush) ground;
-			for (Food food : bush.getFruits()) {
+			for (Food food : bush.getFood()) {
 				if (canEat(food)) {
 					return new EatAction(food, bush);
 				}
@@ -97,5 +98,9 @@ public class Stegosaur extends Dinosaur {
 		return (food instanceof Fruit || food instanceof VegetarianMealKit);
 	}
 
+	@Override
+	public boolean canEnterWater() {
+		return false;
+	}
 }
 

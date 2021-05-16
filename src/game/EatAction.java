@@ -2,8 +2,6 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-import java.util.List;
-
 public class EatAction extends DinosaurAction {
 
     private Food food;
@@ -41,14 +39,16 @@ public class EatAction extends DinosaurAction {
     public String execute(Dinosaur dinosaur, GameMap map) {
         loc = map.locationOf(dinosaur);
         if (source != null) {
-            // eat fruits from ground
+            // eat food from ground
             dinosaur.eat(food);
-            loc.removeItem(food);
+            if (food.getFoodLevel() <= 0){
+                loc.removeItem(food);
+            }
             return menuDescription(dinosaur);
         } else {
-            // eat fruits from bush
+            // eat food from bush/ tree/ lake
             dinosaur.eat(food);
-            source.removeFruit(food);
+            source.removeFood(food);
             return menuDescription(dinosaur);
         }
     }

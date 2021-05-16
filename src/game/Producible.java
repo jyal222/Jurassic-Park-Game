@@ -6,9 +6,9 @@ import java.util.List;
  * See if the fruit is producible by ground.
  */
 public interface Producible {
-    List<Food> getFruits();
+    List<Food> getFood();
 
-    boolean removeFruit(Food fruitToRemove);
+    boolean removeFood(Food foodToRemove);
 
-    boolean removeFruits(List<Food> fruitsToRemove);
+    boolean removeAllFood(List<Food> foodsToRemove);
 }

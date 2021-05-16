@@ -16,6 +16,7 @@ public class Brachiosaur extends Dinosaur {
     public static final String BRACHIOSAUR = "brachiosaur";
     public static final int BABY_FOOD_LEVEL = 10;
     public static final int MAX_FOOD_LEVEL = 160;
+    public static final int MAX_WATER_LEVEL = 200;
 
     /**
      * Constructor of Brachiosaur class
@@ -24,7 +25,7 @@ public class Brachiosaur extends Dinosaur {
      * @param hitPoints starting hit points of Brachiosaur
      */
     public Brachiosaur(int hitPoints) {
-        super(BRACHIOSAUR, 'b', hitPoints, 160);
+        super(BRACHIOSAUR, 'b', hitPoints, MAX_FOOD_LEVEL, 140, MAX_WATER_LEVEL);
         super.pregnantThreshold = 30;
         super.eggHatchThreshold = 15;
         super.babyThreshold = 50;
@@ -34,8 +35,8 @@ public class Brachiosaur extends Dinosaur {
         super.breedThreshold = 70;
         super.corpseFoodLevel = 100;
         super.eggEcoPoints = 1000;
-        super.waterLevel =  100;
         super.thirstyThreshold = 150;
+        super.waterLevelConsumed = 80;
     }
 
     public Brachiosaur() {
@@ -93,5 +94,9 @@ public class Brachiosaur extends Dinosaur {
         return (food instanceof Fruit || food instanceof VegetarianMealKit);
     }
 
+    @Override
+    public boolean canEnterWater() {
+        return true;
+    }
 }
 

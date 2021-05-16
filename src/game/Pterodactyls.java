@@ -2,23 +2,21 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-public class Pterodactyls extends Dinosaur{
+public class Pterodactyls extends Dinosaur {
 
     public static final String PTERODACTYLS = "pterodactyls";
     public static final int BABY_FOOD_LEVEL = 20;
     public static final int MAX_FOOD_LEVEL = 100;
+    public static final int MAX_WATER_LEVEL = 100;
+
 
     /**
      * Constructor of Dinosaur class
      *
-     * @param hitPoints    the Actor's starting hit points
-
+     * @param hitPoints the Actor's starting hit points
      */
     public Pterodactyls(int hitPoints) {
-        super(PTERODACTYLS, 'p', hitPoints, 100);
+        super(PTERODACTYLS, 'p', hitPoints, MAX_FOOD_LEVEL, 60, MAX_WATER_LEVEL);
         super.pregnantThreshold = 10;
         super.eggHatchThreshold = 15;
         super.babyThreshold = 30;
@@ -28,13 +26,15 @@ public class Pterodactyls extends Dinosaur{
         super.breedThreshold = 50;
         super.corpseFoodLevel = 30;
         super.eggEcoPoints = 100;
-        super.waterLevel =  60;
         super.thirstyThreshold = 80;
+        super.waterLevelConsumed = 30;
+
+        behaviourMap.put(Behaviour.Type.CatchFishBehaviour, new CatchFishBehaviour());
 
     }
 
     /**
-     * A constructor to set initial food level of stegosaur
+     * A constructor to set initial food level of Pterodactyls
      */
     public Pterodactyls() {
         this(50);
@@ -48,34 +48,18 @@ public class Pterodactyls extends Dinosaur{
     @Override
     public DinosaurAction getEatAction(Location location) {
 
-        Ground ground = location.getGround();
-        if (ground instanceof Lake) {
-            for (Item item : location.getItems()) {
-                if (item instanceof Eatable && canEat((Eatable) item)) {
-                    return new EatAction((Food) item);
-                }
+        // Search for corpse
+        for (Item item : location.getItems()) {
+            if (item instanceof Eatable && canEat((Eatable) item)) {
+                return new EatAction((Food) item);
             }
         }
 
-        else {
-            // Search for dead corpse
-            for (Item item : location.getItems()) {
-                if (item instanceof Eatable && canEat((Eatable) item)) {
-                    return new EatAction((Food) item);
-                }
-            }
-        }
         return null;
     }
 
-    public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
-        Actions actions = new Actions();
-        Location current = map.locationOf(this);
-        return actions;
-    }
 
     /**
-     *
      * @param actions    collection of possible Actions for this Actor
      * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
      * @param map        the map containing the Actor
@@ -85,9 +69,25 @@ public class Pterodactyls extends Dinosaur{
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 
-        Location location = map.locationOf(this);
-
-
+        Action action = behaviourMap.get(Behaviour.Type.CatchFishBehaviour).getAction(this, map);
+        if (action != null) {
+            return action;
+        }
         return super.playTurn(actions, lastAction, map, display);
+    }
+
+    @Override
+    public boolean canEnterWater() {
+        return true;
+    }
+
+    @Override
+    public void eat(Eatable food) {
+        if (food instanceof Corpse){
+            food.decreaseFoodLevel(10);
+            heal(10);
+        }else{
+            super.eat(food);
+        }
     }
 }

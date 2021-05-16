@@ -5,18 +5,19 @@ import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 
 public class DrinkWaterAction extends DinosaurAction {
-    private Water water;
     private Location loc;
     protected Lake waterSource;
+
+    public DrinkWaterAction(Lake waterSource) {
+        this.waterSource = waterSource;
+    }
 
     @Override
     public String execute(Dinosaur dinosaur, GameMap map) {
         loc = map.locationOf(dinosaur);
-        if (waterSource.getWaterSips() >= 0) {
-            dinosaur.drink(water);
-            waterSource.setWaterSips(waterSource.getWaterSips() - 1);
-        }
-        return null;
+        dinosaur.drink(1);
+        waterSource.setWaterSips(waterSource.getWaterSips() - 1);
+        return menuDescription(dinosaur);
     }
 
     @Override

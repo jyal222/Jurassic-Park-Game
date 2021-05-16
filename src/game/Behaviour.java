@@ -33,6 +33,6 @@ public interface Behaviour {
 	 * This is the enum type of behaviours.
 	 */
 	enum Type {
-		BreedBehaviour, EatBehaviour, WanderBehaviour, AttackBehaviour, DrinkBehaviour
+		BreedBehaviour, EatBehaviour, WanderBehaviour, AttackBehaviour, DrinkBehaviour, CatchFishBehaviour
 	}
 }

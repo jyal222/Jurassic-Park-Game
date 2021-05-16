@@ -1,6 +1,7 @@
 package game;
 
 import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Exit;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 
@@ -17,7 +18,11 @@ public class DrinkBehaviour extends DinosaurBehaviour {
         Location loc = map.locationOf(dinosaur);
         if (dinosaur.isThirsty()) {
             System.out.println(dinosaur + " at (" + loc.x() + ", " + loc.y() + ") is getting thirsty!");
-            return dinosaur.getDrinkAction(loc, map);
+            for (Exit exit : map.locationOf(dinosaur).getExits()) {
+                if (exit.getDestination().getGround().canDrink()) {
+                    return dinosaur.getDrinkAction((Lake)exit.getDestination().getGround());
+                }
+            }
         }
         return null;
     }

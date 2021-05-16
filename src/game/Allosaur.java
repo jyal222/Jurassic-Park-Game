@@ -13,6 +13,7 @@ public class Allosaur extends Dinosaur {
     public static final String ALLOSAUR = "allosaur";
     public static final int BABY_FOOD_LEVEL = 20;
     public static final int MAX_FOOD_LEVEL = 100;
+    public static final int MAX_WATER_LEVEL = 100;
 
     private List<Dinosaur> attackedDinosaursList = new ArrayList<>();
 
@@ -23,7 +24,7 @@ public class Allosaur extends Dinosaur {
      * @param hitPoints starting hit points of Allosaur
      */
     public Allosaur(int hitPoints) {
-        super(ALLOSAUR, 'a', hitPoints, 100);
+        super(ALLOSAUR, 'a', hitPoints, MAX_FOOD_LEVEL, 60, MAX_WATER_LEVEL);
         super.pregnantThreshold = 20;
         super.eggHatchThreshold = 50;
         super.babyThreshold = 50;
@@ -33,8 +34,8 @@ public class Allosaur extends Dinosaur {
         super.breedThreshold = 50;
         super.corpseFoodLevel = 50;
         super.eggEcoPoints = 1000;
-        super.waterLevel =  60;
         super.thirstyThreshold = 80;
+        super.waterLevelConsumed = 30;
 
         behaviourMap.put(Behaviour.Type.AttackBehaviour, new AttackBehaviour());
     }
@@ -77,6 +78,18 @@ public class Allosaur extends Dinosaur {
                 return new EatAction((Food) item);
             }
         }
+        for (Exit exit : location.getExits()) {
+            Ground ground = exit.getDestination().getGround();
+            if (ground instanceof Lake) {
+                Producible source = (Producible) ground;
+                for (Food food : source.getFood()) {
+                    if (canEat(food)) {
+                        return new EatAction(food, source);
+                    }
+                }
+            }
+
+        }
         return null;
     }
 
@@ -93,7 +106,7 @@ public class Allosaur extends Dinosaur {
             Egg egg = (Egg) food;
             canEatEgg = !(egg.getDinosaur() instanceof Allosaur);
         }
-        return (food instanceof CarnivoreMealKit || (food instanceof Egg && canEatEgg) || food instanceof Corpse);
+        return (food instanceof CarnivoreMealKit || (food instanceof Egg && canEatEgg) || food instanceof Corpse || food instanceof Fish);
     }
 
 
@@ -114,5 +127,10 @@ public class Allosaur extends Dinosaur {
      */
     public Action getAttackAction(Dinosaur dinosaur) {
         return new DinosaurAttackAction(dinosaur);
+    }
+
+    @Override
+    public boolean canEnterWater() {
+        return false;
     }
 }

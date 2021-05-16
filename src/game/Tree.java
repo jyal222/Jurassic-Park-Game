@@ -94,28 +94,33 @@ public class Tree extends Ground implements Producible {
 	 * @return a list of fruit in the tree.
 	 */
 	@Override
-	public List<Food> getFruits() {
+	public List<Food> getFood() {
 		return fruits;
 	}
 
 	/**
 	 * To remove fruit from list.
 	 *
-	 * @param fruitToRemove fruit to remove
+	 * @param foodToRemove fruit to remove
 	 * @return boolean
 	 */
 	@Override
-	public boolean removeFruit(Food fruitToRemove) {
-		return fruits.remove(fruitToRemove);
+	public boolean removeFood(Food foodToRemove) {
+		return fruits.remove(foodToRemove);
 	}
 
 	@Override
-	public boolean removeFruits(List<Food> fruitsToRemove) {
-		return fruits.removeAll(fruitsToRemove);
+	public boolean removeAllFood(List<Food> foodsToRemove) {
+		return fruits.removeAll(foodsToRemove);
 	}
 
 	@Override
 	public String toString() {
 		return "Tree";
+	}
+
+	@Override
+	public boolean canDrink() {
+		return false;
 	}
 }

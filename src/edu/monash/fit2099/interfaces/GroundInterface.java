@@ -10,5 +10,6 @@ import java.util.List;
  */
 
 public interface GroundInterface {
+    boolean canDrink();
 
 }

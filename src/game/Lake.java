@@ -9,10 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Lake extends Ground {
+public class Lake extends Ground implements Producible{
 
     private int waterSips = 25;
-    private List<Food> fishes = new ArrayList<>(5);
+    private static final int MAX_FISH_NUMBER = 25;
+    private List<Food> fishes = new ArrayList<>() {
+        {
+            add(new Fish());
+            add(new Fish());
+            add(new Fish());
+            add(new Fish());
+            add(new Fish());
+        }
+    };
     private Rain rain = Rain.getInstance();
 
     /**
@@ -22,31 +31,15 @@ public class Lake extends Ground {
         super('~');
     }
 
-    /**
-     * Returns an Action list.
-     *
-     * @param actor     the Actor acting
-     * @param location  the current Location
-     * @param direction the direction of the Ground from the Actor
-     * @return
-     */
-    @Override
-    public Actions allowableActions(Actor actor, Location location, String direction) {
-//        Actions actions = new Actions();
-//        if (location.map().locationOf(actor) == location) {
-//            actions.add(new PickFruitAction(this));
-//        }
-//        return actions;
-        return null;
-    }
 
     /**
      * @param actor the Actor to check
-     * @return
+     * @return boolean
      */
     @Override
     public boolean canActorEnter(Actor actor) {
-        return false;
+        return actor.canEnterWater();
+
     }
 
     /**
@@ -64,16 +57,14 @@ public class Lake extends Ground {
         if (rain.isRaining()) {
             waterSips = Math.max(waterSips + (int) (rain.getRainFall() * 20), 25);
         }
-
-
         // 60% for a new fish to be born
         if (random.nextInt(100) + 1 <= 60) {
-            if (fishes.size() <= 25) {
-                fishes.add(new Fish(5));
+            if (fishes.size() <= MAX_FISH_NUMBER) {
+                fishes.add(new Fish());
             }
         }
-
     }
+
 
     public int getWaterSips() {
         return waterSips;
@@ -81,5 +72,25 @@ public class Lake extends Ground {
 
     public void setWaterSips(int waterSips) {
         this.waterSips = waterSips;
+    }
+
+    @Override
+    public boolean canDrink() {
+        return waterSips > 0;
+    }
+
+    @Override
+    public List<Food> getFood() {
+        return fishes;
+    }
+
+    @Override
+    public boolean removeFood(Food foodToRemove) {
+        return fishes.remove(foodToRemove);
+    }
+
+    @Override
+    public boolean removeAllFood(List<Food> foodsToRemove) {
+        return fishes.removeAll(foodsToRemove);
     }
 }

@@ -26,11 +26,11 @@ public class PickFruitAction extends Action {
             Player player = (Player) actor;
             Random random = new Random();
             int number = random.nextInt(10) + 1;
-            if (number > 6 && !source.getFruits().isEmpty()) {
-                Food fruit = source.getFruits().get(0);
+            if (number > 6 && !source.getFood().isEmpty()) {
+                Food fruit = source.getFood().get(0);
                 player.earn(10);
                 player.addItemToInventory(fruit);
-                source.removeFruit(fruit);
+                source.removeFood(fruit);
                 return actor + " successfully picked fruit from " + source;
             } else {
                 return actor + " searched the tree or bush for fruit, but can't find any ripe ones.";
