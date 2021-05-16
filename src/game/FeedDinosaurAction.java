@@ -49,7 +49,7 @@ public class FeedDinosaurAction extends Action {
      * Returns a string showing the food item to be fed to the dinosaur at the location
      *
      * @param actor The actor performing the action.
-     * @return
+     * @return String message
      */
     @Override
     public String menuDescription(Actor actor) {

@@ -10,12 +10,16 @@ import java.util.Random;
  */
 public class Dirt extends Ground {
 
+    /**
+     * Constructor for Dirt class
+     */
     public Dirt() {
         super('.');
     }
 
     /**
      * This method is to tick all the dirts in the map.
+     *
      * @param location The location of the Ground
      */
     @Override
@@ -27,9 +31,9 @@ public class Dirt extends Ground {
         int noAdjacentTree = 0;
 
 
-        for (Exit ext: location.getExits()) {
-            if ( ext.getDestination().getGround() instanceof Bush) noAdjacentBush++;
-            if ( ext.getDestination().getGround() instanceof Tree) noAdjacentTree++;
+        for (Exit ext : location.getExits()) {
+            if (ext.getDestination().getGround() instanceof Bush) noAdjacentBush++;
+            if (ext.getDestination().getGround() instanceof Tree) noAdjacentTree++;
         }
 
         Random random = new Random();
@@ -51,10 +55,21 @@ public class Dirt extends Ground {
 
     /**
      * To check if the location can be drink
+     *
      * @return boolean
      */
     @Override
     public boolean canDrink() {
         return false;
+    }
+
+    @Override
+    public boolean canDinosaurStand() {
+        return false;
+    }
+
+    @Override
+    public void setDinosaur(Actor actor) {
+
     }
 }

@@ -23,6 +23,7 @@ public class Corpse extends Item implements Eatable {
 
     /**
      * To tick all the dead dinosaur in the game map
+     *
      * @param currentLocation The location of the ground on which we lie.
      */
     @Override
@@ -35,6 +36,7 @@ public class Corpse extends Item implements Eatable {
 
     /**
      * To get food level of corpse
+     *
      * @return
      */
     @Override
@@ -42,11 +44,21 @@ public class Corpse extends Item implements Eatable {
         return foodLevel;
     }
 
+    /**
+     * To decrease the food level of the corpse
+     *
+     * @param amount
+     */
     @Override
     public void decreaseFoodLevel(int amount) {
-        foodLevel = Math.max(foodLevel-amount, 0) ;
+        foodLevel = Math.max(foodLevel - amount, 0);
     }
 
+    /**
+     * To get the price of corpse. In this case, it is 0 as it cannot be sold
+     *
+     * @return int 0
+     */
     @Override
     public int getPrice() {
         return 0;

@@ -14,6 +14,7 @@ public class EatManyAction extends DinosaurAction {
 
     /**
      * A constructor that has a list of food as its parameter.
+     *
      * @param source a producible source of food
      */
     public EatManyAction(Producible source) {
@@ -24,7 +25,7 @@ public class EatManyAction extends DinosaurAction {
      * This method is to let dinosaur to eat food in the food list.
      *
      * @param dinosaur The dinosaur performing the action.
-     * @param map   The map the actor is on.
+     * @param map      The map the actor is on.
      * @return
      */
     @Override

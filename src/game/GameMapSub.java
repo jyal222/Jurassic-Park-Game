@@ -1,5 +1,6 @@
 package game;
 
+import edu.monash.fit2099.engine.ActorLocations;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.GroundFactory;
 
@@ -11,6 +12,7 @@ public class GameMapSub extends GameMap {
 
     /**
      * Constructor for GameMapSub Class
+     *
      * @param groundFactory
      * @param lines
      */
@@ -27,4 +29,14 @@ public class GameMapSub extends GameMap {
         rain.raining();
         super.tick();
     }
+
+    /**
+     * To get actor locations
+     *
+     * @return ActorLocations actorLocations
+     */
+    public ActorLocations getActorLocations() {
+        return actorLocations;
+    }
+
 }

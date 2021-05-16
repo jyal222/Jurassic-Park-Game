@@ -31,4 +31,14 @@ public class LockedDoor extends Ground {
 	public boolean canDrink() {
 		return false;
 	}
+
+	@Override
+	public boolean canDinosaurStand() {
+		return false;
+	}
+
+	@Override
+	public void setDinosaur(Actor actor) {
+
+	}
 }

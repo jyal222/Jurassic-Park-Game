@@ -41,10 +41,11 @@ public class VendingMachine extends Ground {
 
     /**
      * Returns an Action list.
-     * @param actor the Actor acting
-     * @param location the current Location
+     *
+     * @param actor     the Actor acting
+     * @param location  the current Location
      * @param direction the direction of the Ground from the Actor
-     * @return
+     * @return Actions actions
      */
     @Override
     public Actions allowableActions(Actor actor, Location location, String direction) {
@@ -60,8 +61,33 @@ public class VendingMachine extends Ground {
         return actions;
     }
 
+    /**
+     * Check if the location can be drink
+     *
+     * @return boolean
+     */
     @Override
     public boolean canDrink() {
         return false;
+    }
+
+    /**
+     * Check if the dinosaur can stand on the location
+     *
+     * @return boolean
+     */
+    @Override
+    public boolean canDinosaurStand() {
+        return false;
+    }
+
+    /**
+     * To set the dinosaur
+     *
+     * @param actor
+     */
+    @Override
+    public void setDinosaur(Actor actor) {
+
     }
 }

@@ -1,5 +1,6 @@
 package edu.monash.fit2099.demo.conwayslife;
 
+import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 
@@ -25,5 +26,15 @@ public class Tree extends Ground {
 	@Override
 	public boolean canDrink() {
 		return false;
+	}
+
+	@Override
+	public boolean canDinosaurStand() {
+		return false;
+	}
+
+	@Override
+	public void setDinosaur(Actor actor) {
+
 	}
 }

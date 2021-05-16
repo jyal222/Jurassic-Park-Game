@@ -20,7 +20,7 @@ public class EatAction extends DinosaurAction {
     /**
      * A constructor that has a food as its parameter.
      *
-     * @param food a food that is found from the source
+     * @param food   a food that is found from the source
      * @param source the source of the food
      */
     public EatAction(Food food, Producible source) {
@@ -41,7 +41,7 @@ public class EatAction extends DinosaurAction {
         if (source != null) {
             // eat food from ground
             dinosaur.eat(food);
-            if (food.getFoodLevel() <= 0){
+            if (food.getFoodLevel() <= 0) {
                 loc.removeItem(food);
             }
             return menuDescription(dinosaur);

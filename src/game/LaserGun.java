@@ -19,6 +19,11 @@ public class LaserGun extends WeaponItem {
         this.price = 500;
     }
 
+    /**
+     * To get the price of laser gun
+     *
+     * @return int price
+     */
     @Override
     public int getPrice() {
         return price;

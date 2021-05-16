@@ -61,7 +61,7 @@ public class Bush extends Ground implements Producible {
     }
 
     /**
-     * TO remove fruit from the list
+     * To remove fruit from the list
      *
      * @param foodToRemove fruit
      * @return boolean
@@ -71,18 +71,53 @@ public class Bush extends Ground implements Producible {
         return fruits.remove(foodToRemove);
     }
 
+    /**
+     * To remove all the fruits from the list
+     *
+     * @param foodsToRemove
+     * @return boolean
+     */
     @Override
     public boolean removeAllFood(List<Food> foodsToRemove) {
         return fruits.removeAll(foodsToRemove);
     }
 
+    /**
+     * To string method for Bush
+     *
+     * @return string Bush
+     */
     @Override
     public String toString() {
         return "Bush";
     }
 
+    /**
+     * Check if the location can be drink
+     *
+     * @return boolean
+     */
     @Override
     public boolean canDrink() {
         return false;
+    }
+
+    /**
+     * Check if the dinosaur can stand on the location
+     *
+     * @return boolean
+     */
+    @Override
+    public boolean canDinosaurStand() {
+        return false;
+    }
+
+    /**
+     * To set the dinosaur
+     *
+     * @param actor
+     */
+    @Override
+    public void setDinosaur(Actor actor) {
     }
 }

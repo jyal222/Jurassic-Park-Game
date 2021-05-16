@@ -11,6 +11,7 @@ public class DinosaurAttackAction extends DinosaurAction {
 
     /**
      * Constructor
+     *
      * @param target to be attacked
      */
     public DinosaurAttackAction(Dinosaur target) {
@@ -18,9 +19,8 @@ public class DinosaurAttackAction extends DinosaurAction {
     }
 
     /**
-     *
      * @param dinosaur attacking
-     * @param map game map
+     * @param map      game map
      * @return string showing which dinosaur attack which dinosaur
      */
     @Override
@@ -55,6 +55,7 @@ public class DinosaurAttackAction extends DinosaurAction {
 
     /**
      * This method is to return string showing which dinosaur attack which dinosaur
+     *
      * @param actor The actor performing the action.
      * @return string showing which dinosaur attack which dinosaur
      */

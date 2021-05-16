@@ -10,6 +10,7 @@ public class DrinkWaterAction extends DinosaurAction {
 
     /**
      * A constructor for action performing drink water
+     *
      * @param waterSource
      */
     public DrinkWaterAction(Lake waterSource) {
@@ -18,8 +19,9 @@ public class DrinkWaterAction extends DinosaurAction {
 
     /**
      * This method is to let dinosaur to drink water.
+     *
      * @param dinosaur The dinosaur performing the action.
-     * @param map game map
+     * @param map      game map
      * @return string printing dinosaur drink water
      */
     @Override
@@ -32,6 +34,7 @@ public class DrinkWaterAction extends DinosaurAction {
 
     /**
      * This method is to print a line showing which dinosaur has drink water.
+     *
      * @param actor The actor performing the action.
      * @return a string printing dinosaur has drink water
      */

@@ -18,7 +18,7 @@ public class AttackBehaviour extends DinosaurBehaviour {
      * @return null if condition does not fulfilled
      */
     @Override
-    public Action getAction(Dinosaur dinosaur, GameMap map) {
+    public Action getAction(Dinosaur dinosaur, GameMapSub map) {
         if (dinosaur instanceof Allosaur) {
             Allosaur allosaur = (Allosaur) dinosaur;
             // Allosaur attacks other types of dinosaur
@@ -41,5 +41,4 @@ public class AttackBehaviour extends DinosaurBehaviour {
         }
         return null;
     }
-
 }

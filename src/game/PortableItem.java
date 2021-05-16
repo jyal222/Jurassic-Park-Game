@@ -7,10 +7,19 @@ import edu.monash.fit2099.engine.Item;
  */
 public class PortableItem extends Item {
 
+	/**
+	 * Constructor for PortableItem
+	 * @param name
+	 * @param displayChar
+	 */
 	public PortableItem(String name, char displayChar) {
 		super(name, displayChar, true);
 	}
 
+	/**
+	 * To get price of the item
+	 * @return int 0
+	 */
 	@Override
 	public int getPrice() {
 		return 0;

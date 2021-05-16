@@ -1,5 +1,6 @@
 package edu.monash.fit2099.interfaces;
 
+import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Location;
 
 import java.util.List;
@@ -12,4 +13,7 @@ import java.util.List;
 public interface GroundInterface {
     boolean canDrink();
 
+    boolean canDinosaurStand();
+
+    void setDinosaur(Actor actor);
 }

@@ -9,100 +9,97 @@ import java.util.ArrayList;
  */
 public class Player extends Actor {
 
-	private Menu menu = new Menu();
-	int ecoPoints = 1000;
-	protected ActorLocations actorLocations = new ActorLocations();
-	ArrayList<GameMap> gameMaps;
-	GameMap playersMap;
+    public static final int INITIAL_ECO_POINTS = 1000;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param name        Name to call the player in the UI
-	 * @param displayChar Character to represent the player in the UI
-	 * @param hitPoints   Player's starting number of hitpoints
-	 */
-	public Player(String name, char displayChar, int hitPoints) {
-		super(name, displayChar, hitPoints);
-	}
+    private Menu menu = new Menu();
+    private int ecoPoints = INITIAL_ECO_POINTS;
+    protected ActorLocations actorLocations = new ActorLocations();
+    protected int turns = 0;
 
-	@Override
-	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-		Ground currentGround = map.locationOf(this).getGround();
-		actions.add(currentGround.allowableActions(this, map.locationOf(this), "same"));
-		// Handle multi-turn Actions
-		if (lastAction.getNextAction() != null)
-			return lastAction.getNextAction();
-		return menu.showMenu(this, actions, display);
-	}
+    /**
+     * Constructor for Player class
+     *
+     * @param name        Name to call the player in the UI
+     * @param displayChar Character to represent the player in the UI
+     * @param hitPoints   Player's starting number of hitpoints
+     */
+    public Player(String name, char displayChar, int hitPoints) {
+        super(name, displayChar, hitPoints);
+    }
 
-	/**
-	 * To get the number of EcoPoints that the player currently having
-	 *
-	 * @return ecoPoints
-	 */
-	public int getEcoPoints() {
-		return ecoPoints;
-	}
+    /**
+     * Player's every play turn
+     *
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return action
+     */
+    @Override
+    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        turns++;
 
-	/**
-	 * To set the number of EcoPoints of the player
-	 *
-	 * @param ecoPoints the amount of starting ecopoints of a player.
-	 */
-//    public void setEcoPoints(int ecoPoints) {
-//        this.ecoPoints = ecoPoints;
-//    }
-	public boolean canSpend(int ecoPoints) {
-		return ecoPoints <= this.ecoPoints;
-	}
+        // Interact with my ground
+        Ground currentGround = map.locationOf(this).getGround();
+        actions.add(currentGround.allowableActions(this, map.locationOf(this), "same"));
 
-	public void earn(int ecoPoints) {
-		this.ecoPoints += ecoPoints;
-	}
+        // Add quit game action
+        actions.add(new EndGameAction());
 
-	public void spend(int ecoPoints) {
-		if (canSpend(ecoPoints)) {
-			this.ecoPoints -= ecoPoints;
-		}
-	}
+        // Handle multi-turn Actions
+        if (lastAction.getNextAction() != null)
+            return lastAction.getNextAction();
+        return menu.showMenu(this, actions, display);
+    }
 
-	/**
-	 * Returns a collection of the Actions that the otherActor can do to the current Actor.
-	 *
-	 * @param actor the Actor that might be performing attack
-	 * @param direction  String representing the direction of the other Actor
-	 * @param map        current GameMap
-	 * @return
-	 */
-	@Override
-	public Actions getAllowableActions(Actor actor, String direction, GameMap map) {
-		Actions actions = new Actions();
-		GameMap firstMap = this.gameMaps.get(0);
-		GameMap secondMap = this.gameMaps.get(1);
-		playersMap = actorLocations.locationOf(actor).map();
-		if (this.gameMaps.size() == 2) {
-			if (actor instanceof Player) {
+    /**
+     * To get the number of EcoPoints that the player currently having
+     *
+     * @return ecoPoints
+     */
+    public int getEcoPoints() {
+        return ecoPoints;
+    }
 
-					if (actorLocations.locationOf(actor).map().equals(firstMap) && actorLocations.locationOf(actor).y() == 0) {
-						actions.add(new CrossMapAction(map));
-					} else if (actorLocations.locationOf(actor).map().equals(secondMap) && actorLocations.locationOf(actor).y() == 24) {
-						actions.add(new CrossMapAction(map));
-					}
-				}
-			}
+    /**
+     * Check if the ecoPoints can be spent
+     *
+     * @param ecoPoints
+     * @return boolean
+     */
+    public boolean canSpend(int ecoPoints) {
+        return ecoPoints <= this.ecoPoints;
+    }
 
-		actions.add(super.getAllowableActions(actor, direction, map));
-		return actions;
-	}
+    /**
+     * Eco Points earn
+     *
+     * @param ecoPoints
+     */
+    public void earn(int ecoPoints) {
+        this.ecoPoints += ecoPoints;
+    }
 
-	/**
-	 * To check if player is able to enter the water
-	 * @return boolean
-	 */
-	@Override
-	public boolean canEnterWater() {
-		return false;
-	}
+    /**
+     * Eco Points spend
+     *
+     * @param ecoPoints
+     */
+    public void spend(int ecoPoints) {
+        if (canSpend(ecoPoints)) {
+            this.ecoPoints -= ecoPoints;
+        }
+    }
+
+    /**
+     * To check if player is able to enter the water
+     *
+     * @return boolean
+     */
+    @Override
+    public boolean canEnterWater() {
+        return false;
+    }
 }
 

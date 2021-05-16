@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Lake extends Ground implements Producible{
+public class Lake extends Ground implements Producible {
 
     private int waterSips = 25;
     private static final int MAX_FISH_NUMBER = 25;
+
+    // game begins with 5 fish
     private List<Food> fishes = new ArrayList<>() {
         {
             add(new Fish());
@@ -33,6 +35,8 @@ public class Lake extends Ground implements Producible{
     }
 
     /**
+     * Check if the actor can enter the location
+     *
      * @param actor the Actor to check
      * @return boolean
      */
@@ -44,6 +48,7 @@ public class Lake extends Ground implements Producible{
 
     /**
      * Override this to implement terrain that blocks thrown objects but not movement, or vice versa
+     *
      * @return true
      */
     @Override
@@ -53,6 +58,7 @@ public class Lake extends Ground implements Producible{
 
     /**
      * This method is to tick Lake.
+     *
      * @param location The location of the Ground
      */
     public void tick(Location location) {
@@ -72,6 +78,7 @@ public class Lake extends Ground implements Producible{
 
     /**
      * To get water sips of lake
+     *
      * @return int waterSips
      */
     public int getWaterSips() {
@@ -80,6 +87,7 @@ public class Lake extends Ground implements Producible{
 
     /**
      * To set water sips of lake
+     *
      * @param waterSips
      */
     public void setWaterSips(int waterSips) {
@@ -88,6 +96,7 @@ public class Lake extends Ground implements Producible{
 
     /**
      * Return true if water sips more than 0
+     *
      * @return boolean
      */
     @Override
@@ -97,6 +106,7 @@ public class Lake extends Ground implements Producible{
 
     /**
      * To get fishes in a lake
+     *
      * @return list of fish
      */
     @Override
@@ -106,6 +116,7 @@ public class Lake extends Ground implements Producible{
 
     /**
      * To remove food (fish) from the list
+     *
      * @param foodToRemove
      * @return boolean
      */
@@ -116,11 +127,32 @@ public class Lake extends Ground implements Producible{
 
     /**
      * To remove all the fishes in the list
+     *
      * @param foodsToRemove
      * @return boolean
      */
     @Override
     public boolean removeAllFood(List<Food> foodsToRemove) {
         return fishes.removeAll(foodsToRemove);
+    }
+
+    /**
+     * Check if the dinosaur can stand on the location
+     *
+     * @return boolean
+     */
+    @Override
+    public boolean canDinosaurStand() {
+        return false;
+    }
+
+    /**
+     * To set the dinosaur
+     *
+     * @param actor
+     */
+    @Override
+    public void setDinosaur(Actor actor) {
+
     }
 }

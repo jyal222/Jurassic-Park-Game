@@ -10,8 +10,9 @@ import edu.monash.fit2099.engine.GameMap;
 public abstract class DinosaurAction extends Action {
     /**
      * Allow the Actor to do action.
+     *
      * @param actor The actor performing the action.
-     * @param map The map the actor is on.
+     * @param map   The map the actor is on.
      * @return execute
      */
     @Override
@@ -24,8 +25,9 @@ public abstract class DinosaurAction extends Action {
 
     /**
      * This is to be overridden by other dinosaur action.
+     *
      * @param dinosaur The dinosaur performing the action.
-     * @param map game map
+     * @param map      game map
      * @return execute
      */
     public abstract String execute(Dinosaur dinosaur, GameMap map);

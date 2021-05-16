@@ -33,13 +33,17 @@ public class Egg extends Food {
         } else if (type.equals(Allosaur.ALLOSAUR)) {
             super.name = "Allosaur Egg";
             super.price = 1000;
-        }
-        else if (type.equals(Pterodactyls.PTERODACTYLS)) {
+        } else if (type.equals(Pterodactyls.PTERODACTYLS)) {
             super.name = "Pterodactyls Egg";
             super.price = 200;
         }
     }
 
+    /**
+     * To get Dinosaur type
+     *
+     * @return Dinosaur dinosaur
+     */
     public Dinosaur getDinosaur() {
         return dinosaur;
     }
@@ -87,8 +91,7 @@ public class Egg extends Food {
                 baby = new Brachiosaur(Brachiosaur.BABY_FOOD_LEVEL);
             } else if (type.equals(Allosaur.ALLOSAUR)) {
                 baby = new Allosaur(Allosaur.BABY_FOOD_LEVEL);
-            }
-            else if (type.equals(Pterodactyls.PTERODACTYLS)) {
+            } else if (type.equals(Pterodactyls.PTERODACTYLS)) {
                 baby = new Pterodactyls(Pterodactyls.BABY_FOOD_LEVEL);
             }
             if (baby == null) return;

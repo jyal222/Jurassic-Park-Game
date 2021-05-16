@@ -6,7 +6,7 @@ package game;
  */
 public interface Eatable {
 
-    int getFoodLevel();
+    int getFoodLevel(); // get the food level
 
-    void decreaseFoodLevel(int amount);
+    void decreaseFoodLevel(int amount); // decrease food level of food
 }

@@ -35,7 +35,6 @@ public class Pterodactyls extends Dinosaur {
 
     /**
      * A constructor to set initial food level of Pterodactyls
-     *
      */
     public Pterodactyls() {
         this(50);
@@ -43,6 +42,7 @@ public class Pterodactyls extends Dinosaur {
 
     /**
      * This method is to check whether the food is eatable for pterodactyls. In this case, only fish and corpse are eatable.
+     *
      * @param food
      * @return boolean depends on whether the food is eatable
      */
@@ -89,6 +89,7 @@ public class Pterodactyls extends Dinosaur {
 
     /**
      * To check if pterodactyls is able to enter the water
+     *
      * @return boolean
      */
     @Override
@@ -103,10 +104,10 @@ public class Pterodactyls extends Dinosaur {
      */
     @Override
     public void eat(Eatable food) {
-        if (food instanceof Corpse){
+        if (food instanceof Corpse) {
             food.decreaseFoodLevel(10);
             heal(10);
-        }else{
+        } else {
             super.eat(food);
         }
     }

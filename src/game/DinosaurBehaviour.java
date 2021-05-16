@@ -9,26 +9,38 @@ public abstract class DinosaurBehaviour implements Behaviour {
     /**
      * This method is to returns a Dinosaur Action for the dinosaur.
      * If no action to do, return null
+     *
      * @param actor the Actor acting
-     * @param map the GameMap containing the Actor
+     * @param map   the GameMap containing the Actor
      * @return get action of dinosaur
      */
     @Override
     public Action getAction(Actor actor, GameMap map) {
         if (actor instanceof Dinosaur) {
-            return getAction((Dinosaur) actor, map);
+            return getAction((Dinosaur) actor, (GameMapSub) map);
         }
         return null;
     }
 
     /**
      * To be overridden by other dinosaur's behaviour.
+     *
      * @param dinosaur the dinosaur acting
-     * @param map the GameMap containing the Dinosaur
+     * @param map      the GameMap containing the Dinosaur
      * @return action
      */
-    public abstract Action getAction(Dinosaur dinosaur, GameMap map);
+    public abstract Action getAction(Dinosaur dinosaur, GameMapSub map);
 
+    /**
+     * This method is to find direction for dinosaur.
+     *
+     * @param currentLct
+     * @param nearestLct
+     * @param map
+     * @param actor
+     * @param preferY
+     * @return move action
+     */
     public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
 
         int x2 = nearestLct.x();

@@ -78,6 +78,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get the water level of dinosaur
+     *
      * @return int waterLevel
      */
     public int getWaterLevel() {
@@ -86,6 +87,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To set the water level of dinosaur
+     *
      * @param waterLevel
      */
     public void setWaterLevel(int waterLevel) {
@@ -183,6 +185,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get dead threshold of dinosaur
+     *
      * @return int deadThreshold
      */
     public int getDeadThreshold() {
@@ -191,6 +194,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get corpse food level of dinosaur
+     *
      * @return int corpseFoodLevel
      */
     public int getCorpseFoodLevel() {
@@ -199,6 +203,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get eco points of each dinosaur's egg
+     *
      * @return int eggEcoPoints
      */
     public int getEggEcoPoints() {
@@ -207,6 +212,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * To get the egg hatching threshold
+     *
      * @return int eggHatchThreshold
      */
     public int getEggHatchThreshold() {
@@ -215,6 +221,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * Return true if hit points less and equal than hungry threshold set, dinosaur is hungry
+     *
      * @return boolean
      */
     public boolean isHungry() {
@@ -223,6 +230,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * Return true if water level less and equal than thirsty threshold set, dinosaur is thirsty
+     *
      * @return boolean
      */
     public boolean isThirsty() {
@@ -297,6 +305,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * Dinosaur consumes water until its maximum water level
+     *
      * @param sip
      */
     public void drink(int sip) {
@@ -305,6 +314,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * Return true if dinosaur is conscious.
+     *
      * @return boolean
      */
     @Override
@@ -322,6 +332,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * Returns a DrinkAction that will allow dinosaur to drink.
+     *
      * @param lake
      * @return
      */

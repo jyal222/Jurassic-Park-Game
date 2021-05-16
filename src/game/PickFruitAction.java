@@ -43,7 +43,7 @@ public class PickFruitAction extends Action {
     /**
      * To return a string showing action
      * @param actor The actor performing the action.
-     * @return
+     * @return String
      */
     @Override
     public String menuDescription(Actor actor) {

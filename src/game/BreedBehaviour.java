@@ -9,12 +9,13 @@ public class BreedBehaviour extends DinosaurBehaviour {
 
     /**
      * This method is to get location of nearest dinosaur to breed and return breed action if possible.
+     *
      * @param dinosaur the Actor acting
-     * @param map the GameMap containing the Actor
+     * @param map      the GameMap containing the Actor
      * @return getBreedAction if breedable dinosaur is in adjacent location, find Direction method if no breedable dinosaur in adjacent location.
      */
     @Override
-    public Action getAction(Dinosaur dinosaur, GameMap map) {
+    public Action getAction(Dinosaur dinosaur, GameMapSub map) {
         // check adjacent location for dinosaur
         for (Exit exit : map.locationOf(dinosaur).getExits()) {
             if (exit.getDestination().getActor() instanceof Dinosaur) {
@@ -56,55 +57,20 @@ public class BreedBehaviour extends DinosaurBehaviour {
         return null;
     }
 
+
     /**
      * This method is to find direction for dinosaur to walk.
+     *
      * @param currentLct current location of dinosaur
      * @param nearestLct current location of breedable dinosaur
-     * @param map game map
-     * @param actor actor acting
-     * @param preferY boolean
+     * @param map        game map
+     * @param actor      actor acting
+     * @param preferY    boolean
      * @return move action
      */
     @Override
     public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
-        return super.findDirection(currentLct,nearestLct, map, actor, preferY);
+        return super.findDirection(currentLct, nearestLct, map, actor, preferY);
     }
-
-    /*
-    public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
-
-        int x2 = nearestLct.x();
-        int y2 = nearestLct.y();
-        int x1 = currentLct.x();
-        int y1 = currentLct.y();
-        int dx = x2 - x1;
-        int dy = y2 - y1;
-
-        if (dy >= dx && dy != 0 && preferY) {
-            if (dy > 0) { // move upwards
-                MoveActorAction action = map.at(x1, y1 + 1).getMoveAction(actor, "north", "a");
-                if (action == null) {
-                    return findDirection(currentLct, nearestLct, map, actor, false);
-                }
-            } else {
-                //move downwards
-                MoveActorAction action = map.at(x1, y1 - 1).getMoveAction(actor, "south", "a");
-                if (action == null) {
-                    return findDirection(currentLct, nearestLct, map, actor, false);
-                }
-            }
-        } else if (dy < dx && dx != 0) {
-            //move in x axis
-            if (dx > 0) { // move right
-                return map.at(x1 + 1, y1).getMoveAction(actor, "east", "a");
-            } else {
-                //move left
-                return map.at(x1 - 1, y1).getMoveAction(actor, "west", "a");
-            }
-        }
-        return null;
-    }
-
-     */
 
 }

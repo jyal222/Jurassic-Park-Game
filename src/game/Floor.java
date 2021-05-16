@@ -1,5 +1,6 @@
 package game;
 
+import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Ground;
 import edu.monash.fit2099.engine.Location;
 
@@ -10,12 +11,37 @@ import java.util.List;
  */
 public class Floor extends Ground {
 
-	public Floor() {
-		super('_');
-	}
+    public Floor() {
+        super('_');
+    }
 
-	@Override
-	public boolean canDrink() {
-		return false;
-	}
+    /**
+     * To check if the location can drink
+     *
+     * @return boolean
+     */
+    @Override
+    public boolean canDrink() {
+        return false;
+    }
+
+    /**
+     * To check if the dinosaur can stand on the location
+     *
+     * @return boolean
+     */
+    @Override
+    public boolean canDinosaurStand() {
+        return false;
+    }
+
+    /**
+     * To set dinosaur
+     *
+     * @param actor
+     */
+    @Override
+    public void setDinosaur(Actor actor) {
+
+    }
 }

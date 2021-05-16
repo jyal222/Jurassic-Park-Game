@@ -16,7 +16,7 @@ public class EatBehaviour extends DinosaurBehaviour {
      * @return eat action
      */
     @Override
-    public Action getAction(Dinosaur dinosaur, GameMap map) {
+    public Action getAction(Dinosaur dinosaur, GameMapSub map) {
         Location loc = map.locationOf(dinosaur);
         if (dinosaur.isHungry()) {
             System.out.println(dinosaur + " at (" + loc.x() + ", " + loc.y() + ") is getting hungry!");
