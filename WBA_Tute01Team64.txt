@@ -39,6 +39,7 @@ FIT2099 Assignment 3: Work Breakdown Agreements 2021
 Lim Shir Yin is responsible for doing the followings:
 - Pterodactyls
 - Second map
+- Add comments
 
 Tan Jie Yen is responsible for doing the followings:
 - Lakes, water and rain
