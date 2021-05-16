@@ -129,6 +129,10 @@ public class Allosaur extends Dinosaur {
         return new DinosaurAttackAction(dinosaur);
     }
 
+    /**
+     * To check if allosaur is able to enter the water
+     * @return boolean
+     */
     @Override
     public boolean canEnterWater() {
         return false;

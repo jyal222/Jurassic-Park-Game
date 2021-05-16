@@ -8,4 +8,9 @@ public class Floor extends Ground {
 		super('.');
 		addCapability(Status.DEAD);
 	}
+
+	@Override
+	public boolean canDrink() {
+		return false;
+	}
 }

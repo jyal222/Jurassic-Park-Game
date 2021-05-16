@@ -46,11 +46,19 @@ public abstract class Food extends Item implements Eatable {
         this.foodLevel = foodLevel;
     }
 
+    /**
+     * To get the price of food
+     * @return int price
+     */
     @Override
     public int getPrice() {
         return price;
     }
 
+    /**
+     * To check the food level decrease of a food
+     * @param amount
+     */
     @Override
     public void decreaseFoodLevel(int amount) {
 

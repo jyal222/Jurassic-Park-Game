@@ -98,6 +98,10 @@ public class Stegosaur extends Dinosaur {
 		return (food instanceof Fruit || food instanceof VegetarianMealKit);
 	}
 
+	/**
+	 * To check if stegosaur is able to enter the water
+	 * @return boolean
+	 */
 	@Override
 	public boolean canEnterWater() {
 		return false;

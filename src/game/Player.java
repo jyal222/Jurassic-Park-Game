@@ -96,6 +96,10 @@ public class Player extends Actor {
 		return actions;
 	}
 
+	/**
+	 * To check if player is able to enter the water
+	 * @return boolean
+	 */
 	@Override
 	public boolean canEnterWater() {
 		return false;

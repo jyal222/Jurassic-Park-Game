@@ -14,6 +14,8 @@ public class Floor extends Ground {
 		super('_');
 	}
 
-
-
+	@Override
+	public boolean canDrink() {
+		return false;
+	}
 }

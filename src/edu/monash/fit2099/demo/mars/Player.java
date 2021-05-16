@@ -29,4 +29,9 @@ public class Player extends Actor {
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 		return menu.showMenu(this, actions, display);
 	}
+
+	@Override
+	public boolean canEnterWater() {
+		return false;
+	}
 }

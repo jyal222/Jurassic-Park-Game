@@ -65,6 +65,12 @@ public class BreedBehaviour extends DinosaurBehaviour {
      * @param preferY boolean
      * @return move action
      */
+    @Override
+    public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
+        return super.findDirection(currentLct,nearestLct, map, actor, preferY);
+    }
+
+    /*
     public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
 
         int x2 = nearestLct.x();
@@ -98,5 +104,7 @@ public class BreedBehaviour extends DinosaurBehaviour {
         }
         return null;
     }
+
+     */
 
 }

@@ -8,10 +8,11 @@ import edu.monash.fit2099.engine.Location;
 public class DrinkBehaviour extends DinosaurBehaviour {
 
     /**
+     * This method is to returns a DrinkAction for the dinosaur to drink, if thirsty.
      *
      * @param dinosaur the dinosaur acting
      * @param map the GameMap containing the Dinosaur
-     * @return
+     * @return drink action
      */
     @Override
     public Action getAction(Dinosaur dinosaur, GameMap map) {

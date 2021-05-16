@@ -35,16 +35,28 @@ public class Pterodactyls extends Dinosaur {
 
     /**
      * A constructor to set initial food level of Pterodactyls
+     *
      */
     public Pterodactyls() {
         this(50);
     }
 
+    /**
+     * This method is to check whether the food is eatable for pterodactyls. In this case, only fish and corpse are eatable.
+     * @param food
+     * @return boolean depends on whether the food is eatable
+     */
     @Override
     public boolean canEat(Eatable food) {
         return (food instanceof Fish || food instanceof Corpse);
     }
 
+    /**
+     * This method is to create a new eat action when the food in the location is eatable for pterodactyls.
+     *
+     * @param location of the pterodactyls
+     * @return a new EatAction(foodList) if condition is met, null if location not valid or food is not eatable.
+     */
     @Override
     public DinosaurAction getEatAction(Location location) {
 
@@ -57,7 +69,6 @@ public class Pterodactyls extends Dinosaur {
 
         return null;
     }
-
 
     /**
      * @param actions    collection of possible Actions for this Actor
@@ -76,11 +87,20 @@ public class Pterodactyls extends Dinosaur {
         return super.playTurn(actions, lastAction, map, display);
     }
 
+    /**
+     * To check if pterodactyls is able to enter the water
+     * @return boolean
+     */
     @Override
     public boolean canEnterWater() {
         return true;
     }
 
+    /**
+     * Increase the pterodactyls's food level if the food is eaten
+     *
+     * @param food food that is eaten
+     */
     @Override
     public void eat(Eatable food) {
         if (food instanceof Corpse){

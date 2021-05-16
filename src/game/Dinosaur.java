@@ -76,10 +76,18 @@ public abstract class Dinosaur extends Actor {
         behaviourMap.put(Behaviour.Type.DrinkBehaviour, new DrinkBehaviour());
     }
 
+    /**
+     * To get the water level of dinosaur
+     * @return int waterLevel
+     */
     public int getWaterLevel() {
         return waterLevel;
     }
 
+    /**
+     * To set the water level of dinosaur
+     * @param waterLevel
+     */
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
     }
@@ -173,38 +181,53 @@ public abstract class Dinosaur extends Actor {
         this.attackTurns = attackTurns;
     }
 
+    /**
+     * To get dead threshold of dinosaur
+     * @return int deadThreshold
+     */
     public int getDeadThreshold() {
         return deadThreshold;
     }
 
+    /**
+     * To get corpse food level of dinosaur
+     * @return int corpseFoodLevel
+     */
     public int getCorpseFoodLevel() {
         return corpseFoodLevel;
     }
 
+    /**
+     * To get eco points of each dinosaur's egg
+     * @return int eggEcoPoints
+     */
     public int getEggEcoPoints() {
         return eggEcoPoints;
     }
 
+    /**
+     * To get the egg hatching threshold
+     * @return int eggHatchThreshold
+     */
     public int getEggHatchThreshold() {
         return eggHatchThreshold;
     }
 
+    /**
+     * Return true if hit points less and equal than hungry threshold set, dinosaur is hungry
+     * @return boolean
+     */
     public boolean isHungry() {
         return hitPoints <= hungryThreshold;
     }
 
+    /**
+     * Return true if water level less and equal than thirsty threshold set, dinosaur is thirsty
+     * @return boolean
+     */
     public boolean isThirsty() {
         return waterLevel <= thirstyThreshold;
     }
-
-
-//    @Override
-//    public boolean isConscious() {
-//        if (waterLevel == 0){
-//            // add a return for water level == 0 or need to have is unconscious due to water level
-//        }
-//        return super.isConscious();
-//    }
 
     /**
      * To set a dinosaur to be dead
@@ -273,12 +296,17 @@ public abstract class Dinosaur extends Actor {
     }
 
     /**
+     * Dinosaur consumes water until its maximum water level
      * @param sip
      */
     public void drink(int sip) {
         waterLevel = Math.min(waterLevel + (waterLevelConsumed * sip), maxWaterLevel);
     }
 
+    /**
+     * Return true if dinosaur is conscious.
+     * @return boolean
+     */
     @Override
     public boolean isConscious() {
         return waterLevel <= 0 || hitPoints <= 0;
@@ -298,8 +326,6 @@ public abstract class Dinosaur extends Actor {
      * @return
      */
     public DinosaurAction getDrinkAction(Lake lake) {
-
-
         return new DrinkWaterAction(lake);
     }
 

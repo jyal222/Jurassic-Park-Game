@@ -24,4 +24,5 @@ public class EatBehaviour extends DinosaurBehaviour {
         }
         return null;
     }
+
 }

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Rain{
+
     private boolean isRaining;
     private double rainFall;
     private static final Rain instance= new Rain();
@@ -17,6 +18,9 @@ public class Rain{
         return instance;
     }
 
+    /**
+     * This raining method will fall rain.
+     */
     public void raining(){
         Random random = new Random();
         rainInterval++;
@@ -35,10 +39,18 @@ public class Rain{
         }
     }
 
+    /**
+     * To get the random value for rainfall
+     * @return double rainfall
+     */
     public double getRainFall() {
         return rainFall;
     }
 
+    /**
+     * Check if it is raining
+     * @return boolean
+     */
     public boolean isRaining() {
         return isRaining;
     }

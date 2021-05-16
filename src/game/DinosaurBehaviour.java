@@ -1,8 +1,6 @@
 package game;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.*;
 
 /**
  * An abstract class implements Behaviour.
@@ -30,4 +28,38 @@ public abstract class DinosaurBehaviour implements Behaviour {
      * @return action
      */
     public abstract Action getAction(Dinosaur dinosaur, GameMap map);
+
+    public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
+
+        int x2 = nearestLct.x();
+        int y2 = nearestLct.y();
+        int x1 = currentLct.x();
+        int y1 = currentLct.y();
+        int dx = x2 - x1;
+        int dy = y2 - y1;
+
+        if (dy >= dx && dy != 0 && preferY) {
+            if (dy > 0) { // move upwards
+                MoveActorAction action = map.at(x1, y1 + 1).getMoveAction(actor, "north", "a");
+                if (action == null) {
+                    return findDirection(currentLct, nearestLct, map, actor, false);
+                }
+            } else {
+                //move downwards
+                MoveActorAction action = map.at(x1, y1 - 1).getMoveAction(actor, "south", "a");
+                if (action == null) {
+                    return findDirection(currentLct, nearestLct, map, actor, false);
+                }
+            }
+        } else if (dy < dx && dx != 0) {
+            //move in x axis
+            if (dx > 0) { // move right
+                return map.at(x1 + 1, y1).getMoveAction(actor, "east", "a");
+            } else {
+                //move left
+                return map.at(x1 - 1, y1).getMoveAction(actor, "west", "a");
+            }
+        }
+        return null;
+    }
 }

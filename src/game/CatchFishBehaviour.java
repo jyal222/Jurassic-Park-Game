@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Random;
 
 public class CatchFishBehaviour extends DinosaurBehaviour {
+
+    /**
+     * This method is to returns a Catch Fish Action for the dinosaur.
+     * @param dinosaur the dinosaur acting
+     * @param map the GameMap containing the Dinosaur
+     * @return get action of dinosaur
+     */
     @Override
     public Action getAction(Dinosaur dinosaur, GameMap map) {
         Location loc = map.locationOf(dinosaur);

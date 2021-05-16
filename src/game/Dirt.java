@@ -32,7 +32,6 @@ public class Dirt extends Ground {
             if ( ext.getDestination().getGround() instanceof Tree) noAdjacentTree++;
         }
 
-
         Random random = new Random();
 
         // If no tree in adjacent location, 1% to grow bush
@@ -50,7 +49,10 @@ public class Dirt extends Ground {
 
     }
 
-
+    /**
+     * To check if the location can be drink
+     * @return boolean
+     */
     @Override
     public boolean canDrink() {
         return false;

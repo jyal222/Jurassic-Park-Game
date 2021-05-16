@@ -22,15 +22,15 @@ public class Lake extends Ground implements Producible{
             add(new Fish());
         }
     };
+
     private Rain rain = Rain.getInstance();
 
     /**
-     *
+     * Constructor for Lake.
      */
     public Lake() {
         super('~');
     }
-
 
     /**
      * @param actor the Actor to check
@@ -43,13 +43,18 @@ public class Lake extends Ground implements Producible{
     }
 
     /**
-     * @return
+     * Override this to implement terrain that blocks thrown objects but not movement, or vice versa
+     * @return true
      */
     @Override
     public boolean blocksThrownObjects() {
         return true;
     }
 
+    /**
+     * This method is to tick Lake.
+     * @param location The location of the Ground
+     */
     public void tick(Location location) {
         super.tick(location);
         Random random = new Random();
@@ -65,30 +70,55 @@ public class Lake extends Ground implements Producible{
         }
     }
 
-
+    /**
+     * To get water sips of lake
+     * @return int waterSips
+     */
     public int getWaterSips() {
         return waterSips;
     }
 
+    /**
+     * To set water sips of lake
+     * @param waterSips
+     */
     public void setWaterSips(int waterSips) {
         this.waterSips = waterSips;
     }
 
+    /**
+     * Return true if water sips more than 0
+     * @return boolean
+     */
     @Override
     public boolean canDrink() {
         return waterSips > 0;
     }
 
+    /**
+     * To get fishes in a lake
+     * @return list of fish
+     */
     @Override
     public List<Food> getFood() {
         return fishes;
     }
 
+    /**
+     * To remove food (fish) from the list
+     * @param foodToRemove
+     * @return boolean
+     */
     @Override
     public boolean removeFood(Food foodToRemove) {
         return fishes.remove(foodToRemove);
     }
 
+    /**
+     * To remove all the fishes in the list
+     * @param foodsToRemove
+     * @return boolean
+     */
     @Override
     public boolean removeAllFood(List<Food> foodsToRemove) {
         return fishes.removeAll(foodsToRemove);
