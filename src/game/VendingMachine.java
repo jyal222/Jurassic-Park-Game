@@ -24,6 +24,7 @@ public class VendingMachine extends Ground {
         this.items.add(new Egg(new Stegosaur()));
         this.items.add(new Egg(new Brachiosaur()));
         this.items.add(new Egg(new Allosaur()));
+        this.items.add(new Egg(new Pterodactyls()));
         this.items.add(new LaserGun());
     }
 
@@ -59,4 +60,8 @@ public class VendingMachine extends Ground {
         return actions;
     }
 
+    @Override
+    public boolean canDrink() {
+        return false;
+    }
 }

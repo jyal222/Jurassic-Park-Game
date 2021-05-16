@@ -34,6 +34,10 @@ public class Egg extends Food {
             super.name = "Allosaur Egg";
             super.price = 1000;
         }
+        else if (type.equals(Pterodactyls.PTERODACTYLS)) {
+            super.name = "Pterodactyls Egg";
+            super.price = 200;
+        }
     }
 
     public Dinosaur getDinosaur() {
@@ -83,6 +87,9 @@ public class Egg extends Food {
                 baby = new Brachiosaur(Brachiosaur.BABY_FOOD_LEVEL);
             } else if (type.equals(Allosaur.ALLOSAUR)) {
                 baby = new Allosaur(Allosaur.BABY_FOOD_LEVEL);
+            }
+            else if (type.equals(Pterodactyls.PTERODACTYLS)) {
+                baby = new Pterodactyls(Pterodactyls.BABY_FOOD_LEVEL);
             }
             if (baby == null) return;
             baby.setStage(Dinosaur.Stage.baby);
