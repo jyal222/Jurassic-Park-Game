@@ -111,4 +111,20 @@ public class Pterodactyls extends Dinosaur {
             super.eat(food);
         }
     }
+
+    /**
+     * To lay egg on tree.
+     * @param l location of dinosaur
+     */
+    @Override
+    protected void layEgg(Location l) {
+        pregnantTurns++;
+        if (pregnantTurns >= pregnantThreshold) {
+            if (l.getGround() instanceof Tree) { // todo can do like this or not (lay egg on tree)
+                l.addItem(new Egg(this));
+                pregnantTurns = 0;
+                isPregnant = false;
+            }
+        }
+    }
 }

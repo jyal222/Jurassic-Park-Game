@@ -17,15 +17,32 @@ public class BreedBehaviour extends DinosaurBehaviour {
     @Override
     public Action getAction(Dinosaur dinosaur, GameMapSub map) {
         // check adjacent location for dinosaur
-        for (Exit exit : map.locationOf(dinosaur).getExits()) {
-            if (exit.getDestination().getActor() instanceof Dinosaur) {
-                Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
-                if (dinosaur.canBreedWith(otherDinosaur)) {
-                    System.out.println(dinosaur.gender + " " + dinosaur + " found a mate.");
-                    return dinosaur.getBreedAction(otherDinosaur);
+
+        // TODO pterodactyl breed
+        if (dinosaur instanceof Pterodactyls) {
+            for (Exit exit : map.locationOf(dinosaur).getExits()) {
+                if (map.locationOf(dinosaur).getGround() instanceof Tree) {// if current dinosaur is on Tree{
+                    if (exit.getDestination().getActor() instanceof Dinosaur && exit.getDestination().getGround() instanceof Tree) { // if adjecent location is tree
+                        Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
+                        if (dinosaur.canBreedWith(otherDinosaur)) {
+                            System.out.println(dinosaur.gender + " " + dinosaur + " found a mate.");
+                            return dinosaur.getBreedAction(otherDinosaur);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (Exit exit : map.locationOf(dinosaur).getExits()) {
+                if (exit.getDestination().getActor() instanceof Dinosaur) {
+                    Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
+                    if (dinosaur.canBreedWith(otherDinosaur)) {
+                        System.out.println(dinosaur.gender + " " + dinosaur + " found a mate.");
+                        return dinosaur.getBreedAction(otherDinosaur);
+                    }
                 }
             }
         }
+
 
         // if adjacent location no dinosaur, find the nearest dinosaur from the whole map
         NumberRange xRange = map.getXRange();
@@ -36,7 +53,8 @@ public class BreedBehaviour extends DinosaurBehaviour {
         double shortestDistance = 999;
         Location nearestLct = null;
 
-        for (Integer x : xRange) {
+        for (
+                Integer x : xRange) {
             for (Integer y : yRange) {
                 Location lct = map.at(x, y);
                 if (lct.containsAnActor() && lct.getActor() instanceof Dinosaur) {

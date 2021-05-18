@@ -258,6 +258,8 @@ public abstract class Dinosaur extends Actor {
     public boolean canBreedWith(Dinosaur dinosaur) {
         // check food level and pregnant and not baby
         return this.getClass() == dinosaur.getClass() && this.getGender() != dinosaur.getGender() && this.hasCapability(breed) && dinosaur.hasCapability(breed);
+
+
     }
 
     /**
@@ -277,7 +279,7 @@ public abstract class Dinosaur extends Actor {
     /**
      * To set a baby dinosaur to adult after number of turns alive of a baby dinosaur is sufficient
      */
-    protected void babyDinosaurGrows() {
+    protected void babyDinosaurGrows() { // todo display character
         babyAge++;
         if (babyAge >= babyThreshold) {
             this.setStage(Stage.adult);

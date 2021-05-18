@@ -18,6 +18,19 @@ public class FlyBehaviour extends DinosaurBehaviour {
      */
     @Override
     public Action getAction(Dinosaur dinosaur, GameMapSub map) {
+
+        for (Exit exit : map.locationOf(dinosaur).getExits()) {
+            if (exit.getDestination().getActor() instanceof Dinosaur) {
+                Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
+                if (dinosaur.canBreedWith(otherDinosaur)) {
+                    System.out.println(dinosaur.gender + " " + dinosaur + " found a mate.");
+                    return dinosaur.getBreedAction(otherDinosaur);
+                }
+            }
+        }
+
+
+
         Location here = map.locationOf(dinosaur);
         map.removeActor(dinosaur);
 
