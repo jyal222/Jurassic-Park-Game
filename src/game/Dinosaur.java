@@ -257,7 +257,7 @@ public abstract class Dinosaur extends Actor {
      */
     public boolean canBreedWith(Dinosaur dinosaur) {
         // check food level and pregnant and not baby
-        return this.getClass() == dinosaur.getClass() && this.getGender() != dinosaur.getGender() && this.hasCapability(breed) && dinosaur.hasCapability(breed);
+        return this.getClass() == dinosaur.getClass() && this.getGender() != dinosaur.getGender() && dinosaur.hasCapability(breed);
 
 
     }
@@ -347,8 +347,18 @@ public abstract class Dinosaur extends Actor {
      *
      * @return BreedAction
      */
-    public BreedAction getBreedAction(Dinosaur anotherDinosaur) {
-        return new BreedAction(anotherDinosaur);
+    public BreedAction getBreedAction(Location currentLct) {
+        for (Exit exit : currentLct.getExits()) {
+            if (exit.getDestination().getActor() instanceof Dinosaur) {
+                Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
+                if (this.canBreedWith(otherDinosaur)) {
+                    System.out.println(this.gender + " " + this.name + " found a mate.");
+                    return new BreedAction(otherDinosaur);
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

@@ -20,13 +20,4 @@ public class Crater extends Ground {
 		return false;
 	}
 
-	@Override
-	public boolean canDinosaurStand() {
-		return false;
-	}
-
-	@Override
-	public void setDinosaur(Actor actor) {
-
-	}
 }

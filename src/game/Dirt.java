@@ -63,13 +63,4 @@ public class Dirt extends Ground {
         return false;
     }
 
-    @Override
-    public boolean canDinosaurStand() {
-        return false;
-    }
-
-    @Override
-    public void setDinosaur(Actor actor) {
-
-    }
 }

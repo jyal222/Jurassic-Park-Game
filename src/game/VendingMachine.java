@@ -71,23 +71,4 @@ public class VendingMachine extends Ground {
         return false;
     }
 
-    /**
-     * Check if the dinosaur can stand on the location
-     *
-     * @return boolean
-     */
-    @Override
-    public boolean canDinosaurStand() {
-        return false;
-    }
-
-    /**
-     * To set the dinosaur
-     *
-     * @param actor
-     */
-    @Override
-    public void setDinosaur(Actor actor) {
-
-    }
 }

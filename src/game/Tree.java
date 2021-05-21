@@ -146,23 +146,11 @@ public class Tree extends Ground implements Producible {
         return false;
     }
 
-    /**
-     * Check if the dinosaur can stand on the location
-     *
-     * @return boolean
-     */
-    public boolean canDinosaurStand() {
-        return dinosaur == null;
-    }
-
-    /**
-     * To set the dinosaur
-     *
-     * @param actor
-     */
     @Override
-    public void setDinosaur(Actor actor) {
-        this.dinosaur = actor;
+    public void removeDinosaur(Actor actor){
+        if (dinosaur == actor){
+            dinosaur = null;
+        }
     }
 
 }

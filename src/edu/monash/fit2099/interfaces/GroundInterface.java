@@ -13,7 +13,4 @@ import java.util.List;
 public interface GroundInterface {
     boolean canDrink();
 
-    boolean canDinosaurStand();
-
-    void setDinosaur(Actor actor);
 }

@@ -33,7 +33,7 @@ public class AttackAction extends Action {
 	}
 
 	/**
-	 * This method is to attack dinosaur with weapon in invertory of player.
+	 * This method is to attack dinosaur with weapon in inventory of player.
 	 *
 	 * @param actor The actor performing the action.
 	 * @param map   The map the actor is on.

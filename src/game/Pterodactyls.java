@@ -127,4 +127,22 @@ public class Pterodactyls extends Dinosaur {
             }
         }
     }
+
+    @Override
+    public BreedAction getBreedAction(Location currentLct) {
+        if (currentLct.getGround() instanceof Tree) {
+            for (Exit exit : currentLct.getExits()) {
+                // if current dinosaur is on Tree{
+                if (exit.getDestination().getActor() instanceof Dinosaur && exit.getDestination().getGround() instanceof Tree) { // if adjacent location is tree
+                    Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
+                    if (this.canBreedWith(otherDinosaur)) {
+                        System.out.println(this.gender + " " + this.name + " found a mate.");
+                        return new BreedAction(otherDinosaur);
+                    }
+                }
+
+            }
+        }
+        return null;
+    }
 }
