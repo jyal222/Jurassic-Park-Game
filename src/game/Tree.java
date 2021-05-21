@@ -146,11 +146,4 @@ public class Tree extends Ground implements Producible {
         return false;
     }
 
-    @Override
-    public void removeDinosaur(Actor actor){
-        if (dinosaur == actor){
-            dinosaur = null;
-        }
-    }
-
 }

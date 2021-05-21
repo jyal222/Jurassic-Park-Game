@@ -71,8 +71,8 @@ public class Application {
                 ".............+++++..............................................................",
                 "...............++........................................+++++..................",
                 ".............+++....................................++++++++....................",
-                "............+++.......................................+++.......................",
-                "..........................~~~...................................................",
+                "............+++.........++............................+++.......................",
+                "........................++~~~...................................................",
                 "..........................~~~............................................++.....",
                 "........................................................................++.++...",
                 ".........................................................................++++...",
@@ -121,14 +121,17 @@ public class Application {
         gameMap.at(32, 12).addActor(new Stegosaur());
         gameMap.at(33, 12).addActor(new Stegosaur());
 
-        gameMap.at(50, 12).addActor(new Brachiosaur());
-        gameMap.at(52, 12).addActor(new Brachiosaur());
-        gameMap.at(53, 12).addActor(new Brachiosaur());
-        gameMap.at(54, 12).addActor(new Brachiosaur());
-        gameMap.at(55, 12).addActor(new Brachiosaur());
-        gameMap.at(56, 12).addActor(new Brachiosaur());
-        gameMap.at(57, 12).addActor(new Brachiosaur());
-        gameMap.at(58, 12).addActor(new Brachiosaur());
+        gameMap.at(50, 12).addActor(new Brachiosaur("male"));
+        gameMap.at(51, 12).addActor(new Brachiosaur("female"));
+//        gameMap.at(53, 12).addActor(new Brachiosaur());
+//        gameMap.at(54, 12).addActor(new Brachiosaur());
+//        gameMap.at(55, 12).addActor(new Brachiosaur());
+//        gameMap.at(56, 12).addActor(new Brachiosaur());
+//        gameMap.at(57, 12).addActor(new Brachiosaur());
+//        gameMap.at(58, 12).addActor(new Brachiosaur());
+
+        gameMap.at(25, 18).addActor(new Pterodactyls());
+        gameMap.at(24, 19).addActor(new Pterodactyls());
 
 
         gameMap.at(15, 9).setGround(new VendingMachine());

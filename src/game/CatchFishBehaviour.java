@@ -20,7 +20,7 @@ public class CatchFishBehaviour extends DinosaurBehaviour {
     @Override
     public Action getAction(Dinosaur dinosaur, GameMapSub map) {
         Location loc = map.locationOf(dinosaur);
-        if (loc.getGround() instanceof Lake) {
+        if (dinosaur.isFlying() && (dinosaur.isThirsty() || dinosaur.isHungry()) && loc.getGround() instanceof Lake) {
             Lake lake = (Lake) loc.getGround();
             int foodSize = lake.getFood().size();
             Random random = new Random();

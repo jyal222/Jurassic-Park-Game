@@ -40,8 +40,12 @@ public class Allosaur extends Dinosaur {
         behaviourMap.put(Behaviour.Type.AttackBehaviour, new AttackBehaviour());
     }
 
+    /**
+     * A constructor to instantiate adult Allosaur
+     */
     public Allosaur() {
         this(50);
+        displayChar = 'A';
     }
 
 
@@ -79,6 +83,7 @@ public class Allosaur extends Dinosaur {
             }
         }
         for (Exit exit : location.getExits()) {
+            // Search for fish
             Ground ground = exit.getDestination().getGround();
             if (ground instanceof Lake) {
                 Producible source = (Producible) ground;
@@ -88,8 +93,13 @@ public class Allosaur extends Dinosaur {
                     }
                 }
             }
-
+            // Search for Pterodactyls
+            Actor actor = exit.getDestination().getActor();
+            if (actor instanceof Eatable && canEat((Eatable) actor)) {
+                return new EatActorAction(actor);
+            }
         }
+
         return null;
     }
 
@@ -102,13 +112,21 @@ public class Allosaur extends Dinosaur {
     @Override
     public boolean canEat(Eatable food) {
         boolean canEatEgg = true;
+        boolean canEatPtero = true;
+
         if (food instanceof Egg) {
             Egg egg = (Egg) food;
-            canEatEgg = !(egg.getDinosaur() instanceof Allosaur);
+            canEatEgg = !(egg.getDinosaur() instanceof Allosaur) && !egg.isOnTree();
         }
-        return (food instanceof CarnivoreMealKit || (food instanceof Egg && canEatEgg) || food instanceof Corpse || food instanceof Fish);
+        if (food instanceof Pterodactyls) {
+            canEatPtero = !((Pterodactyls) food).isFlying();
+        }
+        return food instanceof CarnivoreMealKit ||
+                food instanceof Corpse ||
+                food instanceof Fish ||
+                (food instanceof Egg && canEatEgg) ||
+                (food instanceof Pterodactyls && canEatPtero);
     }
-
 
     /**
      * This method will return a list of dinosaur that is attacked by the allosaur
@@ -131,6 +149,7 @@ public class Allosaur extends Dinosaur {
 
     /**
      * To check if allosaur is able to enter the water
+     *
      * @return boolean
      */
     @Override

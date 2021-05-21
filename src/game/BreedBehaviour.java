@@ -19,61 +19,37 @@ public class BreedBehaviour extends DinosaurBehaviour {
     @Override
     public Action getAction(Dinosaur dinosaur, GameMapSub map) {
         // check adjacent location for dinosaur
-        Location currentLct = map.locationOf(dinosaur);
+        Location currentLoc = map.locationOf(dinosaur);
 
         if (dinosaur.hasCapability(breed)) {
-            Action breedAction = dinosaur.getBreedAction(currentLct);
+            System.out.println(dinosaur + " at (" + currentLoc.x() + ", " + currentLoc.y() + ") is getting horny!"); // todo: nothing
+
+            Action breedAction = dinosaur.getBreedAction(currentLoc);
 
             if (breedAction != null){
                 return breedAction;
             }
 
             // if adjacent location no dinosaur, find the nearest dinosaur from the whole map
-            NumberRange xRange = map.getXRange();
-            NumberRange yRange = map.getYRange();
-            Location curLocation = map.locationOf(dinosaur);
-            int x1 = curLocation.x();
-            int y1 = curLocation.y();
-            double shortestDistance = 999;
-            Location nearestLct = null;
-
-            for (Integer x : xRange) {
-                for (Integer y : yRange) {
-                    Location lct = map.at(x, y);
-                    if (lct.containsAnActor() && lct.getActor() instanceof Dinosaur) {
-                        Dinosaur otherDinosaur = (Dinosaur) lct.getActor();
-                        if (dinosaur.canBreedWith(otherDinosaur)) {
-                            double distance = Math.sqrt(Math.pow((x - x1), 2) + Math.pow((y - y1), 2));
-                            if (distance < shortestDistance) {
-                                shortestDistance = distance;
-                                nearestLct = lct;
-                            }
-                        }
+            int shortestDistance = 999;
+            Actor nearestDinosaur = null;
+            for (Actor actor : map.getActorLocations()) {
+                Location loc = map.locationOf(actor);
+                if (dinosaur.canBreedWith(actor)) {
+                    int distance = distance(currentLoc, loc);
+                    if (distance < shortestDistance) {
+                        shortestDistance = distance;
+                        nearestDinosaur = actor;
                     }
                 }
             }
 
-            if (nearestLct != null) {
-                return findDirection(curLocation, nearestLct, map, dinosaur, true);
+            if (nearestDinosaur != null) {
+                return new FollowBehaviour(nearestDinosaur).getAction(dinosaur, map);
             }
         }
+
         return null;
-    }
-
-
-    /**
-     * This method is to find direction for dinosaur to walk.
-     *
-     * @param currentLct current location of dinosaur
-     * @param nearestLct current location of breedable dinosaur
-     * @param map        game map
-     * @param actor      actor acting
-     * @param preferY    boolean
-     * @return move action
-     */
-    @Override
-    public MoveActorAction findDirection(Location currentLct, Location nearestLct, GameMap map, Actor actor, boolean preferY) {
-        return super.findDirection(currentLct, nearestLct, map, actor, preferY);
     }
 
 }

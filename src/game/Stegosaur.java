@@ -35,10 +35,11 @@ public class Stegosaur extends Dinosaur {
     }
 
     /**
-     * A constructor to set initial food level of stegosaur
+     * A constructor to instantiate adult Stegosaur
      */
     public Stegosaur() {
         this(50);
+        displayChar = 'S';
     }
 
     /**

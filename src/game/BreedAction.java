@@ -3,6 +3,8 @@ package game;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 
+import static game.Capability.breed;
+
 /**
  * An action that is for dinosaur's breeding.
  */
@@ -28,8 +30,10 @@ public class BreedAction extends DinosaurAction {
     public String execute(Dinosaur dinosaur, GameMap map) {
         if (anotherDinosaur.getGender().equals(Dinosaur.FEMALE)) {
             anotherDinosaur.setPregnant(true);
+            anotherDinosaur.removeCapability(breed);
         } else if (dinosaur.getGender().equals(Dinosaur.FEMALE)) {
             dinosaur.setPregnant(true);
+            dinosaur.removeCapability(breed);
         }
         return menuDescription(dinosaur);
     }

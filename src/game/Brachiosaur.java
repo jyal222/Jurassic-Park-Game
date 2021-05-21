@@ -2,8 +2,6 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static game.Capability.breed;
@@ -40,11 +38,21 @@ public class Brachiosaur extends Dinosaur {
     }
 
     /**
-     * Constructor for Brachiosaur class
+     * Constructor for adult Brachiosaur class
      */
     public Brachiosaur() {
         this(100);
         addCapability(breed);
+        displayChar = 'B';
+    }
+    /**
+     * Constructor for adult Brachiosaur class
+     */
+    public Brachiosaur(String gender) {
+        this(100);
+        addCapability(breed);
+        super.gender = gender;
+        displayChar = 'B';
     }
 
     /**

@@ -62,6 +62,6 @@ public class EatAction extends DinosaurAction {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + "at (" + loc.x() + ", " + loc.y() + ") eats" + food;
+        return actor + " at (" + loc.x() + ", " + loc.y() + ") eats " + food;
     }
 }

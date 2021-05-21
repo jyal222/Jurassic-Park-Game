@@ -14,6 +14,7 @@ public class Egg extends Food {
 
     private Dinosaur dinosaur;
     private int turnsOnGround;
+    private boolean isOnTree;
 
     /**
      * Constructor of Egg class
@@ -37,6 +38,11 @@ public class Egg extends Food {
             super.name = "Pterodactyls Egg";
             super.price = 200;
         }
+    }
+
+    public Egg(Dinosaur dinosaur, boolean isOnTree) {
+        this(dinosaur);
+        this.isOnTree = isOnTree;
     }
 
     /**
@@ -81,7 +87,7 @@ public class Egg extends Food {
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         turnsOnGround++;
-        // TODO different dinosaur turn
+
         if (turnsOnGround > dinosaur.getEggHatchThreshold() && !currentLocation.containsAnActor()) {
             Dinosaur baby = null;
             String type = dinosaur.toString();
@@ -101,5 +107,13 @@ public class Egg extends Food {
             currentLocation.removeItem(this);
             incrementPlayersEcoPoints(currentLocation.map());
         }
+    }
+
+    /**
+     * To return true if the egg is on tree.
+     * @return boolean
+     */
+    public boolean isOnTree() {
+        return isOnTree;
     }
 }

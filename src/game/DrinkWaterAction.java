@@ -40,6 +40,6 @@ public class DrinkWaterAction extends DinosaurAction {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + "at (" + loc.x() + ", " + loc.y() + ") drink water.";
+        return actor + " at (" + loc.x() + ", " + loc.y() + ") drink water.";
     }
 }

@@ -2,16 +2,21 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-public class Pterodactyls extends Dinosaur {
+import static game.Capability.breed;
+
+public class Pterodactyls extends Dinosaur implements Eatable {
 
     public static final String PTERODACTYLS = "pterodactyls";
     public static final int BABY_FOOD_LEVEL = 20;
     public static final int MAX_FOOD_LEVEL = 100;
     public static final int MAX_WATER_LEVEL = 100;
+    public static final int MAX_FUEL = 30;
 
+    private boolean isFlying = false;
+    private int fuel = 0;
 
     /**
-     * Constructor of Dinosaur class
+     * A constructor to set initial food level of Pterodactyls
      *
      * @param hitPoints the Actor's starting hit points
      */
@@ -30,14 +35,15 @@ public class Pterodactyls extends Dinosaur {
         super.waterLevelConsumed = 30;
 
         behaviourMap.put(Behaviour.Type.CatchFishBehaviour, new CatchFishBehaviour());
-
     }
 
     /**
-     * A constructor to set initial food level of Pterodactyls
+     * A constructor to instantiate adult Pterodactyls
      */
     public Pterodactyls() {
-        this(50);
+        this(60); //50
+        addCapability(breed);
+        displayChar = 'P';
     }
 
     /**
@@ -59,10 +65,20 @@ public class Pterodactyls extends Dinosaur {
      */
     @Override
     public DinosaurAction getEatAction(Location location) {
-
+        // Search for fish
+        Ground ground = location.getGround();
+        if (ground instanceof Lake) {
+            Lake lake = (Lake) ground;
+            for (Food food : lake.getFood()) {
+                if (canEat(food)) {
+                    return new EatAction(food, lake);
+                }
+            }
+        }
         // Search for corpse
         for (Item item : location.getItems()) {
             if (item instanceof Eatable && canEat((Eatable) item)) {
+                if (item instanceof Corpse) isFlying = false;
                 return new EatAction((Food) item);
             }
         }
@@ -79,12 +95,26 @@ public class Pterodactyls extends Dinosaur {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        if (isFlying) fuel--;
+        if (fuel <= 0) isFlying = false;
+        if (map.locationOf(this).getGround() instanceof Tree) {
+            System.out.println("Peri REFUEL");
+            fuel = MAX_FUEL;
+            isFlying = true;
+        }
 
-        Action action = behaviourMap.get(Behaviour.Type.CatchFishBehaviour).getAction(this, map);
+        Action action = super.playTurn(actions, lastAction, map, display);
+
+        if (!(action instanceof DoNothingAction)) {
+            return action;
+        }
+
+        action = behaviourMap.get(Behaviour.Type.CatchFishBehaviour).getAction(this, map);
         if (action != null) {
             return action;
         }
-        return super.playTurn(actions, lastAction, map, display);
+
+        return new DoNothingAction();
     }
 
     /**
@@ -94,7 +124,7 @@ public class Pterodactyls extends Dinosaur {
      */
     @Override
     public boolean canEnterWater() {
-        return true;
+        return isFlying;
     }
 
     /**
@@ -105,8 +135,9 @@ public class Pterodactyls extends Dinosaur {
     @Override
     public void eat(Eatable food) {
         if (food instanceof Corpse) {
-            food.decreaseFoodLevel(10);
-            heal(10);
+            int level = Math.min(food.getFoodLevel(), 10);
+            food.decreaseFoodLevel(level);
+            heal(level);
         } else {
             super.eat(food);
         }
@@ -114,6 +145,7 @@ public class Pterodactyls extends Dinosaur {
 
     /**
      * To lay egg on tree.
+     *
      * @param l location of dinosaur
      */
     @Override
@@ -128,11 +160,16 @@ public class Pterodactyls extends Dinosaur {
         }
     }
 
+    /**
+     * This method will create a Breed Action.
+     * @param currentLoc
+     * @return BreedAction
+     */
     @Override
-    public BreedAction getBreedAction(Location currentLct) {
-        if (currentLct.getGround() instanceof Tree) {
-            for (Exit exit : currentLct.getExits()) {
-                // if current dinosaur is on Tree{
+    public BreedAction getBreedAction(Location currentLoc) {
+        if (currentLoc.getGround() instanceof Tree) {
+            for (Exit exit : currentLoc.getExits()) {
+                // if current dinosaur is on Tree
                 if (exit.getDestination().getActor() instanceof Dinosaur && exit.getDestination().getGround() instanceof Tree) { // if adjacent location is tree
                     Dinosaur otherDinosaur = (Dinosaur) exit.getDestination().getActor();
                     if (this.canBreedWith(otherDinosaur)) {
@@ -144,5 +181,32 @@ public class Pterodactyls extends Dinosaur {
             }
         }
         return null;
+    }
+
+    /**
+     * To return true if pterodactyl is flying
+     * @return boolean
+     */
+    @Override
+    public boolean isFlying() {
+        return isFlying;
+    }
+
+    /**
+     * To get food level of pterodactyl
+     * @return
+     */
+    @Override
+    public int getFoodLevel() {
+        return hitPoints;
+    }
+
+    /**
+     * To decrease Food Level.
+     * @param amount of food level
+     */
+    @Override
+    public void decreaseFoodLevel(int amount) {
+
     }
 }

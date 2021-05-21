@@ -14,11 +14,10 @@ public class Portal extends Item {
         super("Portal", 'O', false);
 
         if (direction.equals("north")) {
-            allowableActions.add(new MoveActorAction(destMap.at(currentLocation.x(), destMap.getYRange().max()), "to second Map!"));
+            super.allowableActions.add(new MoveActorAction(destMap.at(currentLocation.x(), destMap.getYRange().max()), "to second Map!"));
         } else if (direction.equals("south")) {
-            allowableActions.add(new MoveActorAction(destMap.at(currentLocation.x(), destMap.getYRange().min()), "to first Map!"));
+            super.allowableActions.add(new MoveActorAction(destMap.at(currentLocation.x(), destMap.getYRange().min()), "to first Map!"));
         }
-
     }
 
     /**

@@ -252,14 +252,16 @@ public abstract class Dinosaur extends Actor {
     /**
      * To check if a dinosaur can breed
      *
-     * @param dinosaur to be checked
+     * @param actor to be checked
      * @return boolean
      */
-    public boolean canBreedWith(Dinosaur dinosaur) {
-        // check food level and pregnant and not baby
-        return this.getClass() == dinosaur.getClass() && this.getGender() != dinosaur.getGender() && dinosaur.hasCapability(breed);
-
-
+    public boolean canBreedWith(Actor actor) {
+        if (actor instanceof Dinosaur) {
+            Dinosaur dinosaur = (Dinosaur) actor;
+            // check food level and pregnant and not baby
+            return this.getClass() == dinosaur.getClass() && this.getGender() != dinosaur.getGender() && dinosaur.hasCapability(breed);
+        }
+        return false;
     }
 
     /**
@@ -283,7 +285,7 @@ public abstract class Dinosaur extends Actor {
         babyAge++;
         if (babyAge >= babyThreshold) {
             this.setStage(Stage.adult);
-
+            displayChar = Character.toUpperCase(displayChar);
         }
     }
 
@@ -294,6 +296,10 @@ public abstract class Dinosaur extends Actor {
      * @return
      */
     public abstract boolean canEat(Eatable food);
+
+    public boolean isFlying() {
+        return false;
+    }
 
     /**
      * Increase the dinosaur's food level if the food is eaten
@@ -321,7 +327,7 @@ public abstract class Dinosaur extends Actor {
      */
     @Override
     public boolean isConscious() {
-        return waterLevel <= 0 || hitPoints <= 0;
+        return waterLevel > 0 || hitPoints > 0;
     }
 
     /**
@@ -377,7 +383,6 @@ public abstract class Dinosaur extends Actor {
         // minus 1 water level
         waterLevel--;
 
-
         if (!isConscious()) {
 
             if (waterLevel <= 0) {
@@ -428,14 +433,9 @@ public abstract class Dinosaur extends Actor {
             action = behaviourMap.get(Behaviour.Type.DrinkBehaviour).getAction(this, map);
         }
 
-        if (action == null) {
-            action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
-        }
-
-
-        if (action != null)
+        if (action != null) {
             return action;
-
+        }
 
         return new DoNothingAction();
     }
@@ -470,4 +470,6 @@ public abstract class Dinosaur extends Actor {
     public String toString() {
         return super.name;
     }
+
+
 }
