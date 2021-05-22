@@ -22,7 +22,6 @@ public class BreedBehaviour extends DinosaurBehaviour {
         Location currentLoc = map.locationOf(dinosaur);
 
         if (dinosaur.hasCapability(breed)) {
-            System.out.println(dinosaur + " at (" + currentLoc.x() + ", " + currentLoc.y() + ") is getting horny!"); // todo: nothing
 
             Action breedAction = dinosaur.getBreedAction(currentLoc);
 

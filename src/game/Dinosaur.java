@@ -281,7 +281,7 @@ public abstract class Dinosaur extends Actor {
     /**
      * To set a baby dinosaur to adult after number of turns alive of a baby dinosaur is sufficient
      */
-    protected void babyDinosaurGrows() { // todo display character
+    protected void babyDinosaurGrows() {
         babyAge++;
         if (babyAge >= babyThreshold) {
             this.setStage(Stage.adult);

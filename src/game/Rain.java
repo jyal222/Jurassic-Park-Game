@@ -3,7 +3,7 @@ package game;
 import java.text.DecimalFormat;
 import java.util.Random;
 
-public class Rain { // todo dk where to put in class diagram
+public class Rain {
 
     private boolean isRaining;
     private double rainFall;

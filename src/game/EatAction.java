@@ -48,7 +48,9 @@ public class EatAction extends DinosaurAction {
         } else {
             // eat food from bush/ tree/ lake
             dinosaur.eat(food);
-            source.removeFood(food);
+            if (this.source != null){
+                source.removeFood(food);
+            }
             return menuDescription(dinosaur);
         }
     }

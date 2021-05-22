@@ -152,7 +152,7 @@ public class Pterodactyls extends Dinosaur implements Eatable {
     protected void layEgg(Location l) {
         pregnantTurns++;
         if (pregnantTurns >= pregnantThreshold) {
-            if (l.getGround() instanceof Tree) { // todo can do like this or not (lay egg on tree)
+            if (l.getGround() instanceof Tree) {
                 l.addItem(new Egg(this));
                 pregnantTurns = 0;
                 isPregnant = false;
