@@ -52,6 +52,7 @@ public class AttackAction extends Action {
 		String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
 
 		target.hurt(damage);
+		System.out.println(target.isConscious());
 		if (!target.isConscious()) {
 			target.die(map);
 			Actions dropActions = new Actions();

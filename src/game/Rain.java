@@ -28,19 +28,25 @@ public class Rain {
      */
     public void raining() {
         Random random = new Random();
-        rainInterval++;
+        rainInterval++; //todo it rains in 5 intervals
         float min = 0.1f;
         float max = 0.6f;
 
         if (rainInterval == 10) {
+            rainInterval = 0;
+            String msg;
+
             if (random.nextInt(100) + 1 <= 20) {
                 isRaining = true;
+                msg = "It's raining!";
+
                 float randomFloat = min + random.nextFloat() * (max - min);
                 DecimalFormat value = new DecimalFormat("#.#");
                 rainFall = Double.parseDouble(value.format(randomFloat));
-                rainInterval = 0;
-            }
+            }else{
+                msg = "It's not raining!";
 
+            }System.out.println(msg);
         }
     }
 

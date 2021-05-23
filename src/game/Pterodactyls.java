@@ -46,6 +46,13 @@ public class Pterodactyls extends Dinosaur implements Eatable {
         displayChar = 'P';
     }
 
+    public Pterodactyls(String gender) {
+        this(60);
+        addCapability(breed);
+        super.gender = gender;
+        displayChar = 'P';
+    }
+
     /**
      * This method is to check whether the food is eatable for pterodactyls. In this case, only fish and corpse are eatable.
      *

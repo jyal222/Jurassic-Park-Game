@@ -89,6 +89,7 @@ public class Egg extends Food {
         turnsOnGround++;
 
         if (turnsOnGround > dinosaur.getEggHatchThreshold() && !currentLocation.containsAnActor()) {
+            turnsOnGround = 0;
             Dinosaur baby = null;
             String type = dinosaur.toString();
             if (type.equals(Stegosaur.STEGOSAUR)) {

@@ -327,7 +327,8 @@ public abstract class Dinosaur extends Actor {
      */
     @Override
     public boolean isConscious() {
-        return waterLevel > 0 || hitPoints > 0;
+        return waterLevel > 0 && hitPoints > 0;
+
     }
 
     /**
@@ -386,6 +387,7 @@ public abstract class Dinosaur extends Actor {
         if (!isConscious()) {
 
             if (waterLevel <= 0) {
+                System.out.println("Die due to thirsty");
                 unconsciousTurnsDueToThirsty++;
                 if (rain.isRaining()) {
                     waterLevel = 10;
@@ -397,6 +399,7 @@ public abstract class Dinosaur extends Actor {
                 }
             }
             if (hitPoints <= 0) {
+                System.out.println("Die due to hungry");
                 unconsciousTurns++;
                 if (unconsciousTurns >= unconsciousThreshold) {
                     die(map);
