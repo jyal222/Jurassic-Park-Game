@@ -3,7 +3,7 @@ package game;
 import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.World;
 
-public class ChallengeWorld extends World {
+public class ChallengeWorld extends WorldSub {
 
     private final int maxMoveNumber;
     private final int targetEcoPoint;

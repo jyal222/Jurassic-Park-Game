@@ -6,19 +6,17 @@ import edu.monash.fit2099.engine.Location;
 /**
  * A class represent corpse after dead of dinosaur.(could be eaten)
  */
-public class Corpse extends Item implements Eatable {
+public class Corpse extends Food{
 
     private Dinosaur dinosaur;
-    private int foodLevel;
 
     /***
      * Constructor.
      *  @param dinosaur the dead dinosaur
      */
     public Corpse(Dinosaur dinosaur) {
-        super("dead " + dinosaur, '%', false);
+        super(dinosaur.getCorpseFoodLevel(), 0, 0, "dead " + dinosaur, 'X', false);
         this.dinosaur = dinosaur;
-        this.foodLevel = dinosaur.getCorpseFoodLevel();
     }
 
     /**
@@ -63,4 +61,6 @@ public class Corpse extends Item implements Eatable {
     public int getPrice() {
         return 0;
     }
+
+
 }

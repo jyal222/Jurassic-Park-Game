@@ -34,7 +34,7 @@ public class Application {
             char key = getUserInput(message, chars, display);
 
             if (key == '1') {
-                getNewWorld(new World(display)).run();
+                getNewWorld(new WorldSub(display)).run();
             } else if (key == '2') {
                 // must have more than 5 moves
                 int moves = getIntegerInput("Enter number of moves (> 5): ", 5, display);

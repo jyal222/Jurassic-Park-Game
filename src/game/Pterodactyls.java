@@ -116,10 +116,17 @@ public class Pterodactyls extends Dinosaur implements Eatable {
             return action;
         }
 
-        action = behaviourMap.get(Behaviour.Type.CatchFishBehaviour).getAction(this, map);
-        if (action != null) {
-            return action;
+        if (isConscious()){
+            action = behaviourMap.get(Behaviour.Type.CatchFishBehaviour).getAction(this, map);
+            if (action != null) {
+                return action;
+            }
+            action = behaviourMap.get(Behaviour.Type.WanderBehaviour).getAction(this, map);
+            if (action != null) {
+                return action;
+            }
         }
+
 
         return new DoNothingAction();
     }

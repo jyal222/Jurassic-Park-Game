@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GameMapSub extends GameMap {
 
-    private Rain rain = Rain.getInstance();
+
 
     /**
      * Constructor for GameMapSub Class
@@ -20,15 +20,6 @@ public class GameMapSub extends GameMap {
         super(groundFactory, lines);
     }
 
-
-    /**
-     * To tick gameMap
-     */
-    @Override
-    public void tick() {
-        rain.raining();
-        super.tick();
-    }
 
     /**
      * To get actor locations
