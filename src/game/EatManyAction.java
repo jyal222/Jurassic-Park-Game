@@ -26,7 +26,7 @@ public class EatManyAction extends DinosaurAction {
      *
      * @param dinosaur The dinosaur performing the action.
      * @param map      The map the actor is on.
-     * @return
+     * @return string message
      */
     @Override
     public String execute(Dinosaur dinosaur, GameMap map) {
@@ -38,7 +38,7 @@ public class EatManyAction extends DinosaurAction {
             if (!dinosaur.isHungry()) break;
             dinosaur.eat(food);
             foodToRemove.add(food);
-            message += System.lineSeparator() + dinosaur + " eats" + food;
+            message += System.lineSeparator() + dinosaur + " eats " + food;
         }
         source.removeAllFood(foodToRemove);
         return message;

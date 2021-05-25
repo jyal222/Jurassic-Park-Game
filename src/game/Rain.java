@@ -30,11 +30,11 @@ public class Rain {
     public void raining() {
         Random random = new Random();
         rainInterval++;
-        System.out.println("rain " + rainInterval);
+        System.out.println("rain interval = " + rainInterval);
         float min = 0.1f;
         float max = 0.6f;
 
-        if (rainInterval >= 10) {
+        if (rainInterval == 10) {
             rainInterval = 0;
             String msg;
 
@@ -51,6 +51,14 @@ public class Rain {
             }
             System.out.println(msg);
         }
+    }
+
+    /**
+     * To set the rain interval
+     * @param rainInterval
+     */
+    public void setRainInterval(int rainInterval) {
+        this.rainInterval = rainInterval;
     }
 
     /**

@@ -13,6 +13,7 @@ public class WorldSub extends World {
 
     public WorldSub(Display display) {
         super(display);
+        rain.setRainInterval(0);
     }
 
     @Override
